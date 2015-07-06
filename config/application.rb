@@ -7,6 +7,7 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 module Cogitate
+  # The Rails::Application configuration for Cogitate
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -27,13 +28,15 @@ module Cogitate
       g.assets = false
       g.helper = false
 
-      g.test_framework :rspec,
+      g.test_framework(
+        :rspec,
         fixtures: false,
         view_specs: false,
         helper_specs: false,
         routing_specs: false,
         controller_specs: false,
         request_specs: false
+      )
     end
   end
 end
