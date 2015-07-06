@@ -1,0 +1,12 @@
+## Generation Notes:
+##   This file was generated via the commitment:install generator. You are free
+##   and expected to change this file.
+scss_files: "app/**/*.scss"
+
+linters:
+  PlaceholderInExtend:
+    exclude: app/assets/stylesheets/framework_and_overrides.css.scss
+  StringQuotes:
+    enabled: false
+  Comment:
+    exclude: app/assets/stylesheets/application.css.scss

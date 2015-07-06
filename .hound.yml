@@ -1,0 +1,41 @@
+################################################################################
+## Releasing the hounds in your local environment.
+##
+## Setup:
+## $ gem install rubocop
+##
+## Run:
+## $ rubocop ./path/to/file ./or/path/to/directory -c ./.hound.yml
+##
+## Generation Notes:
+##   This file was generated via the commitment:install generator. You are free
+##   and expected to change this file.
+################################################################################
+AllCops:
+  Include:
+    - Rakefile
+  Exclude:
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - 'bin/**/*'
+  RunRailsCops: true
+
+LineLength:
+  Description: 'Limit lines to 140 characters.'
+  Max: 140
+  Enabled: true
+
+Style/StringLiterals:
+  Description: 'Checks if uses of quotes match the configured preference.'
+  Enabled: false
+
+PercentLiteralDelimiters:
+  Description: 'Use `%`-literal delimiters consistently'
+  Enabled: false
+
+Documentation:
+  Description: 'Document classes and non-namespace modules.'
+  Enabled: true
+  Exclude:
+  - spec/**/*
+  - test/**/*
