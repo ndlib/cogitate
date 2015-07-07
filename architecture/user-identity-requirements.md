@@ -52,6 +52,7 @@ What follows are a list of feature requirements and out of scope (though nice to
 
 * A user's identifier will be unique across group and user identifiers
 * A group's identifier will be unique across group and user identifiers
+* All external identifiers (i.e. ORCID, Email, OAuth2) must be validated via a custom validation service (OAuth2 authentication, one-time tokens, etc.)
 
 ### For a given user, get all associated identifiers
 
