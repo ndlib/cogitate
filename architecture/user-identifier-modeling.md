@@ -20,8 +20,8 @@ Scenario: 1
 Given a deactivated NetID identifier
 And the deactivated NetID is in "good standing"
 When a request is issued for the given identity's identifiers
-Then the response should include unverified associated
 Then the response should NOT include unverified associated identities
+And the response should NOT include verified associated identities
 And the response should include the given identity
 ```
 
@@ -30,8 +30,8 @@ Scenario: 1a
 Given a deactivated NetID identifier
 And the deactivated NetID is NOT in "good standing"
 When a request is issued for the given identity's identifiers
-Then the response should NOT include unverified associated
 Then the response should NOT include unverified associated identities
+And the response should NOT include verified associated identities
 And the response should include the given identity
 ```
 
