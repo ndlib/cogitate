@@ -39,3 +39,6 @@ Documentation:
   Exclude:
   - spec/**/*
   - test/**/*
+
+Style/WordArray:
+  Enabled: false
