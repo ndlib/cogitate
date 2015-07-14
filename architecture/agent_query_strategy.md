@@ -52,9 +52,9 @@ The response document assumes `:urlsafe_base64_encoded_identifiers` is for a sin
     "id": "1",
     "attributes": { "preferred_name": "Jeremy Friesen", "preferred_email": "jeremy@friesen.com" },
     "relationships": {
-      "identifiers": [
+      "identities": [
         { "type": "verified_authentication_vectors", "id": "1234", "attributes": { "type": "netid" } },
-        { "type": "identifiers", "id": "abc", "attributes": { "type": "scopus" } },
+        { "type": "identities", "id": "abc", "attributes": { "type": "scopus" } },
         { "type": "groups", "id": "abc", "attributes": { "name": "Cogitate Developer" } },
       ],
       "communication_vectors": [
