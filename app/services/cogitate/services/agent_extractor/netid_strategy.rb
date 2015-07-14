@@ -3,12 +3,12 @@ module Cogitate
     module AgentExtractor
       # Responsible for extracting the relevant information based on a given Netid
       class NetidStrategy
-        def initialize(identity:, agent: default_agent)
+        def initialize(identity:)
           self.identity = identity
           self.agent = agent
         end
 
-        def call
+        def call(agent: default_agent)
           agent.identities << identity
           agent.verified_authentication_vectors << identity if fetch_remote_data_for_netid
         end

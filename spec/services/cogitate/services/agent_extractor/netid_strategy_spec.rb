@@ -8,16 +8,16 @@ module Cogitate
       RSpec.describe NetidStrategy do
         let(:identity) { Parameters::Identifier.new(strategy: 'netid', identifying_value: 'hello') }
         let(:agent) { double(identities: [], verified_authentication_vectors: []) }
-        subject { described_class.new(identity: identity, agent: agent) }
+        subject { described_class.new(identity: identity) }
 
         context 'with a Netid that does not exist in the remote system' do
           before { allow(subject).to receive(:fetch_remote_data_for_netid).and_return(nil)  }
           it 'will not have any verified authentication vectors' do
-            subject.call
+            subject.call(agent: agent)
             expect(agent.verified_authentication_vectors).to eq([])
           end
           it 'will have one identity (the given netid)' do
-            subject.call
+            subject.call(agent: agent)
             expect(agent.identities).to eq([identity])
           end
         end
@@ -25,7 +25,7 @@ module Cogitate
           before { allow(subject).to receive(:fetch_remote_data_for_netid).and_return(true)  }
           context 'verified authentication vectors' do
             it 'will include the given Netid' do
-              subject.call
+              subject.call(agent: agent)
               expect(agent.verified_authentication_vectors).to include(identity)
             end
             it 'will include any associated verified authentication vectors'
