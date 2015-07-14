@@ -1,7 +1,11 @@
 require 'base64'
+require 'cogitate/parameters/identifier'
 
 module Cogitate
   module Services
+    # A service module for extracting identifiers from an encoded payload.
+    #
+    # @see Cogitate::Services::IdentifieresDecoder.call
     module IdentifiersDecoder
       # When the thing we are trying to decode is improperly encoded, this exception is to provide clarity
       class InvalidIdentifierEncoding < ArgumentError
@@ -35,17 +39,17 @@ module Cogitate
 
         decoded_string.split("\n").each_with_object([]) do |strategy_value, object|
           strategy, value = strategy_value.split("\t")
-          fail InvalidIdentifierFormat.new(decoded_string: decoded_string) if strategy.to_s.size == 0 || value.to_s.size == 0
-          object << { strategy.to_s.downcase.to_sym => value }
+          if strategy.to_s.size == 0 || value.to_s.size == 0
+            fail InvalidIdentifierFormat, decoded_string: decoded_string
+          end
+          object << Parameters::Identifier.new(strategy: strategy, identifying_value: value)
         end
       end
 
       def decode(encoded_string)
-        begin
-          Base64.urlsafe_decode64(encoded_string.to_s)
-        rescue ArgumentError
-          raise InvalidIdentifierEncoding.new(encoded_string: encoded_string)
-        end
+        Base64.urlsafe_decode64(encoded_string.to_s)
+      rescue ArgumentError
+        raise InvalidIdentifierEncoding, encoded_string: encoded_string
       end
       private_class_method :decode
     end

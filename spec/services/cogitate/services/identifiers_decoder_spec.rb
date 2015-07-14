@@ -7,13 +7,17 @@ module Cogitate
     RSpec.describe IdentifiersDecoder do
       [
         {
-          given: "NETID\tsoup", expected: [{ netid: 'soup' }]
+          given: "NETID\tsoup", expected: [Parameters::Identifier.new(strategy: 'netid', identifying_value: 'soup')]
         }, {
-          given: "netid\tsoup", expected: [{ netid: 'soup' }]
+          given: "netid\tsoup", expected: [Parameters::Identifier.new(strategy: 'netid', identifying_value: 'soup')]
         }, {
-          given: "netid\tsoup\nORCID\t0001-0002-0003-0004", expected: [{ netid: 'soup' }, { orcid: '0001-0002-0003-0004' }]
+          given: "netid\tsoup\nORCID\t0001-0002-0003-0004",
+          expected: [
+            Parameters::Identifier.new(strategy: 'netid', identifying_value: 'soup'),
+            Parameters::Identifier.new(strategy: 'orcid', identifying_value: '0001-0002-0003-0004')
+          ]
         }, {
-          given: "netid\tsoup", expected: [{ netid: 'soup' }]
+          given: "netid\tsoup", expected: [Parameters::Identifier.new(strategy: 'netid', identifying_value: 'soup')]
         }
       ].each do |scenario_entry|
         it "will convert a Base64 urlsafe encoded #{scenario_entry.fetch(:given).inspect} to #{scenario_entry.fetch(:expected).inspect}" do
@@ -21,7 +25,7 @@ module Cogitate
           expect(subject.call(encoded_payload)).to eq(scenario_entry.fetch(:expected))
         end
 
-        it "will not convert a non-urlsafe base Base64 encoded #{scenario_entry.fetch(:given).inspect} to #{scenario_entry.fetch(:expected).inspect}" do
+        it "will not convert a non-urlsafe base Base64 encoded #{scenario_entry[:given].inspect} to #{scenario_entry[:expected].inspect}" do
           encoded_payload = Base64.encode64(scenario_entry.fetch(:given))
           expect { subject.call(encoded_payload) }.to raise_error(described_class::InvalidIdentifierEncoding)
         end
