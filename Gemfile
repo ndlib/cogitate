@@ -10,6 +10,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'bootstrap-sass'
 gem 'figaro', '>= 1.0.0.rc1'
 gem 'mysql2'
+gem 'contracts'
 
 group :development, :test do
   gem 'web-console', '~> 2.0'
