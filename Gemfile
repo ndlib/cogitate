@@ -19,6 +19,7 @@ group :development, :test do
   gem 'pry-rescue'
   gem 'rspec-rails'
   gem 'commitment'
+  gem 'rspec-its'
 end
 
 group :development do
