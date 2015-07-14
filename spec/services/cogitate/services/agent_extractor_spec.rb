@@ -1,12 +1,12 @@
 require 'spec_fast_helper'
-require 'cogitate/services/identity_extractor'
+require 'cogitate/services/agent_extractor'
 require 'cogitate/parameters/identifier'
 
 module Cogitate
   module Services
-    RSpec.describe IdentityExtractor do
+    RSpec.describe AgentExtractor do
       before do
-        module IdentityExtractor
+        module AgentExtractor
           class MockStrategy
             def initialize(identifier:)
               @identifier = identifier

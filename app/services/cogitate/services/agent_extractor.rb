@@ -3,7 +3,7 @@ require 'active_support/inflector/methods'
 module Cogitate
   module Services
     # Responsible for brokering the IdentityExtraction
-    module IdentityExtractor
+    module AgentExtractor
       module_function
 
       # @param identifier [Cogitate::Parameters::Identifier]
