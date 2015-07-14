@@ -39,8 +39,14 @@ Adding a complication is that I do not want to persist NetIDs unless they are us
 
 ## API Response Document
 
+Building the `urlsafe_base64_encoded_identifiers` is as follows:
+
+```ruby
+urlsafe_base64_encoded_identifiers = Base64.urlsafe_encode64("NETID\tjfriesen\nORCID\t0001-0002-0003-0004")
+```
+
 Below is a proposed JSON-API formatted response document for a query.
-The response document assumes `:urlsafe_base64_encoded_identifiers` is for a single agent's identity.
+In the below example, the response document assumes `:urlsafe_base64_encoded_identifiers` is for a single agent's identity. However, the query should handle multiple identity requests.
 
 ```json
 {
@@ -48,17 +54,20 @@ The response document assumes `:urlsafe_base64_encoded_identifiers` is for a sin
     "self": "http://cogitate.library.nd.edu/identifiers/:urlsafe_base64_encoded_identifiers"
   },
   "data": [{
-    "type": "agents",
-    "id": "1",
+    "type": "identifiers",
+    "id": "the-given-identifier",
     "attributes": { "preferred_name": "Jeremy Friesen", "preferred_email": "jeremy@friesen.com" },
     "relationships": {
+      "verified_authentication_vectors": [
+        { "type": "verified_authentication_vectors", "id": "1234", "attributes": { "strategy": "netid" } },
+      ],
       "identities": [
-        { "type": "verified_authentication_vectors", "id": "1234", "attributes": { "type": "netid" } },
-        { "type": "identities", "id": "abc", "attributes": { "type": "scopus" } },
-        { "type": "groups", "id": "abc", "attributes": { "name": "Cogitate Developer" } },
+        { "type": "authentication_vectors", "id": "1234", "attributes": { "strategy": "netid" } },
+        { "type": "identities", "id": "abc", "attributes": { "strategy": "scopus" } },
+        { "type": "groups", "id": "def", "attributes": { "strategy": "group", "name": "Cogitate Developer" } },
       ],
       "communication_vectors": [
-        { "type": "communication_vectors", "id": "jeremy@friesen.com", "attributes": { "type": "preferred_email" } },
+        { "type": "communication_vectors", "id": "jeremy@friesen.com", "attributes": { "strategy": "preferred_email" } },
       ]
     }
   }]
