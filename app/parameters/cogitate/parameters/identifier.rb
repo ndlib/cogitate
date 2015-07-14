@@ -1,7 +1,11 @@
+require 'contracts'
 module Cogitate
   module Parameters
     # A parameter object that defines how we go from decoding identifiers to extracting an identity.
     class Identifier
+      include Contracts
+
+      Contract(KeywordArgs[strategy: RespondTo[:to_s], identifying_value: Any] => Any)
       def initialize(strategy:, identifying_value:)
         self.strategy = strategy
         self.identifying_value = identifying_value
@@ -10,6 +14,8 @@ module Cogitate
       attr_reader :strategy, :identifying_value
 
       include Comparable
+
+      Contract RespondTo[:strategy, :identifying_value] => Num
       def <=>(other)
         strategy_sort = strategy <=> other.strategy
         return strategy_sort if strategy_sort != 0
