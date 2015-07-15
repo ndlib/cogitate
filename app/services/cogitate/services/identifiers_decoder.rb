@@ -22,8 +22,6 @@ module Cogitate
         end
       end
 
-      module_function
-
       # Responsible for decoding a string into a collection of identifier types and identifier ids
       #
       # @param encoded_string [#to_s] The thing we are going to decode
@@ -32,9 +30,11 @@ module Cogitate
       # @raise InvalidIdentifierEncoding
       #
       # @api private
-      # @note I have chosen to not use a strategyword, as I don't want to imply the "form" of object is that is being passed in.
+      # @note I have chosen to not use a keyword, as I don't want to imply the "form" of object is that is being passed in.
       # @todo Determine if we should return an Array of hashes or if it should be a more proper class?
-      def call(encoded_string)
+      extend Contracts
+      Contract(String => Contracts::ArrayOf[Parameters::Identifier::Interface])
+      def self.call(encoded_string)
         decoded_string = decode(encoded_string)
 
         decoded_string.split("\n").each_with_object([]) do |strategy_value, object|
@@ -46,7 +46,7 @@ module Cogitate
         end
       end
 
-      def decode(encoded_string)
+      def self.decode(encoded_string)
         Base64.urlsafe_decode64(encoded_string.to_s)
       rescue ArgumentError
         raise InvalidIdentifierEncoding, encoded_string: encoded_string

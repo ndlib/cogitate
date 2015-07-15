@@ -4,6 +4,7 @@ module Cogitate
     # A parameter object that defines how we go from decoding identifiers to extracting an identity.
     class Identifier
       include Contracts
+      Interface = RespondTo[:strategy, :identifying_value]
 
       Contract(KeywordArgs[strategy: RespondTo[:to_s], identifying_value: Any] => Any)
       def initialize(strategy:, identifying_value:)
@@ -15,7 +16,7 @@ module Cogitate
 
       include Comparable
 
-      Contract RespondTo[:strategy, :identifying_value] => Num
+      Contract(Interface => Num)
       def <=>(other)
         strategy_sort = strategy <=> other.strategy
         return strategy_sort if strategy_sort != 0
