@@ -1,5 +1,5 @@
 require 'contracts'
-require 'cogitate/parameters/identifier'
+require 'cogitate_interfaces'
 
 module Cogitate
   module Services
@@ -8,15 +8,14 @@ module Cogitate
       class NetidStrategy
         include Contracts
 
-        Contract(KeywordArgs[identity: Parameters::Identifier::Interface] => Any)
+        # The Any keyword is a requirement for initialize methods
+        Contract(KeywordArgs[identity: Cogitate::IdentifierInterface] => Any)
         def initialize(identity:)
           self.identity = identity
           self.agent = agent
         end
 
-
-        AgentInterface = RespondTo[:identities, :verified_authentication_vectors]
-        Contract(KeywordArgs[agent: AgentInterface] => AgentInterface)
+        Contract(KeywordArgs[agent: Cogitate::AgentInterface] => Cogitate::AgentInterface)
         def call(agent: default_agent)
           agent.identities << identity
           agent.verified_authentication_vectors << identity if fetch_remote_data_for_netid

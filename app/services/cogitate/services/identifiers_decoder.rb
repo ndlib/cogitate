@@ -1,5 +1,5 @@
 require 'base64'
-require 'cogitate/parameters/identifier'
+require 'cogitate_interfaces'
 
 module Cogitate
   module Services
@@ -33,8 +33,11 @@ module Cogitate
       # @note I have chosen to not use a keyword, as I don't want to imply the "form" of object is that is being passed in.
       # @todo Determine if we should return an Array of hashes or if it should be a more proper class?
       extend Contracts
-      Contract(String => Contracts::ArrayOf[Parameters::Identifier::Interface])
-      def self.call(encoded_string)
+      Contract(
+        String, Contracts::KeywordArgs[identifier_builder: Contracts::Func[Cogitate::IdentifierBuilderInterface]] =>
+        Contracts::ArrayOf[Cogitate::IdentifierInterface],
+      )
+      def self.call(encoded_string, identifier_builder: default_identifier_builder)
         decoded_string = decode(encoded_string)
 
         decoded_string.split("\n").each_with_object([]) do |strategy_value, object|
@@ -42,7 +45,7 @@ module Cogitate
           if strategy.to_s.size == 0 || value.to_s.size == 0
             fail InvalidIdentifierFormat, decoded_string: decoded_string
           end
-          object << Parameters::Identifier.new(strategy: strategy, identifying_value: value)
+          object << identifier_builder.call(strategy: strategy, identifying_value: value)
         end
       end
 
@@ -52,6 +55,11 @@ module Cogitate
         raise InvalidIdentifierEncoding, encoded_string: encoded_string
       end
       private_class_method :decode
+
+      def self.default_identifier_builder
+        require 'cogitate/parameters/identifier' unless defined?(Parameters::Identifier)
+        Parameters::Identifier.method(:new)
+      end
     end
   end
 end

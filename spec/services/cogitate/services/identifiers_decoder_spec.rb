@@ -1,5 +1,6 @@
 require 'spec_fast_helper'
 require 'cogitate/services/identifiers_decoder'
+require 'cogitate/parameters/identifier'
 require 'base64'
 
 module Cogitate

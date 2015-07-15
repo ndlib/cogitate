@@ -1,4 +1,5 @@
 require 'contracts'
+require 'cogitate_interfaces'
 require 'active_support/inflector/methods'
 
 module Cogitate
@@ -6,9 +7,8 @@ module Cogitate
     # Responsible for brokering the IdentityExtraction
     module AgentExtractor
       extend Contracts
-      # @param identifier [Cogitate::Parameters::Identifier]
-      # @todo Define the contract for the following method
-      Contract(Contracts::KeywordArgs[identifier: Parameters::Identifier::Interface] => Contracts::Any)
+      # @todo Define the contract for what should be returned by call
+      Contract(Contracts::KeywordArgs[identifier: Cogitate::IdentifierInterface] => Contracts::Any)
       def self.call(identifier:)
         find_strategy_specific_extractor(identifier).call
       end
