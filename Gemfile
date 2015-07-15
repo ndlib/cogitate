@@ -37,4 +37,5 @@ end
 group :documentation do
   gem 'yard'
   gem 'yard-contracts'
+  gem 'yard-activerecord'
 end
