@@ -33,3 +33,8 @@ group :development do
   gem 'quiet_assets'
   gem 'rails_layout'
 end
+
+group :documentation do
+  gem 'yard'
+  gem 'yard-contracts'
+end

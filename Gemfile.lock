@@ -264,6 +264,10 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    yard (0.8.7.6)
+    yard-contracts (0.1.5)
+      contracts (~> 0.7)
+      yard (~> 0.8)
 
 PLATFORMS
   ruby
@@ -295,3 +299,5 @@ DEPENDENCIES
   spring
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
+  yard
+  yard-contracts
