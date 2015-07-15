@@ -1,48 +1,21 @@
-Cogitate
-================
+# Cogitate
 
-This application was generated with the [rails_apps_composer](https://github.com/RailsApps/rails_apps_composer) gem
-provided by the [RailsApps Project](http://railsapps.github.io/).
+[![Build Status](https://travis-ci.org/ndlib/cogitate.png?branch=master)](https://travis-ci.org/ndlib/cogitate)
+[![Code Climate](https://codeclimate.com/github/ndlib/cogitate.png)](https://codeclimate.com/github/ndlib/cogitate)
+[![Test Coverage](https://codeclimate.com/github/ndlib/cogitate/badges/coverage.svg)](https://codeclimate.com/github/ndlib/cogitate)
+[![Dependency Status](https://gemnasium.com/ndlib/cogitate.svg)](https://gemnasium.com/ndlib/cogitate)
+[![Documentation Status](http://inch-ci.org/github/ndlib/cogitate.svg?branch=master)](http://inch-ci.org/github/ndlib/cogitate)
+[![APACHE 2 License](http://img.shields.io/badge/APACHE2-license-blue.svg)](./LICENSE)
 
-Rails Composer is open source and supported by subscribers. Please join RailsApps to support development of Rails Composer.
+Welcome to Cogitate, a federated identity management system for managing:
 
-Problems? Issues?
------------
+* User authentication through various providers
+* User identities through:
+  * Group membership
+  * Alternate authentication strategies (ORCID, email, etc.)
+  * Non-verifiable identities (Preferred Name, Scopus, etc.)
 
-Need help? Ask on Stack Overflow with the tag 'railsapps.'
+## Tasks and Automation
 
-Your application contains diagnostics in the README file. Please provide a copy of the README file when reporting any issues.
-
-If the application doesn't work as expected, please [report an issue](https://github.com/RailsApps/rails_apps_composer/issues)
-and include the diagnostics.
-
-Ruby on Rails
--------------
-
-This application requires:
-
-- Ruby 2.2.1
-- Rails 4.2.1
-
-Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.html).
-
-Getting Started
----------------
-
-Documentation and Support
--------------------------
-
-Issues
--------------
-
-Similar Projects
-----------------
-
-Contributing
-------------
-
-Credits
--------
-
-License
--------
+* Generating documentation: `$ bundle exec yardoc --plugin contracts`
+* Running the test suite: `$ rake`
