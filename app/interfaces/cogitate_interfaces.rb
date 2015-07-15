@@ -1,4 +1,6 @@
 require 'contracts'
+
+# Herein lies the Cogitate namespace
 module Cogitate
   AgentInterface = Contracts::RespondTo[:identities, :verified_authentication_vectors]
 

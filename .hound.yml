@@ -42,3 +42,7 @@ Documentation:
 
 Style/WordArray:
   Enabled: false
+
+Style/BracesAroundHashParameters:
+  Exclude:
+    - app/services/cogitate/services/identifiers_decoder.rb
