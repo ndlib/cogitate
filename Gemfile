@@ -21,6 +21,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'commitment', require: false
   gem 'rspec-its'
+  gem 'shoulda-matchers'
 end
 
 group :development do
