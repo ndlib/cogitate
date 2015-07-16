@@ -16,7 +16,7 @@ module Cogitate
       )
       def self.find(identifier:)
         response_hash = query_service(identifier.identifying_value).to_hash
-        AuthenticationVector::NetidVector.new(response_hash)
+        AuthenticationVector::NetidVector.new(identifier: identifier, **response_hash)
       end
 
       # @todo This should be a configuration option for the application
