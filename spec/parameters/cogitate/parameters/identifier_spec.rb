@@ -4,6 +4,11 @@ require 'cogitate/parameters/identifier'
 module Cogitate
   module Parameters
     RSpec.describe Identifier do
+      subject { described_class.new(strategy: 'orcid', identifying_value: '1234') }
+      it 'will implement Cogitate::Interfaces::IdentifierInterface' do
+        Contract.valid?(subject, Cogitate::Interfaces::IdentifierInterface)
+      end
+
       context '#strategy coercion' do
         [
           ['orcid', 'orcid'],

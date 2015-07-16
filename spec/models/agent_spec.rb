@@ -1,6 +1,11 @@
 require 'rails_helper'
+require 'cogitate/interfaces'
 
 RSpec.describe Agent, type: :model do
+  subject { Agent.new }
+  include Cogitate::RSpecMatchers
+  it { should contractually_honor(Cogitate::Interfaces::AgentInterface) }
+
   xit 'will have a GUID'
   xit { should have_many :communication_vectors }
   xit { should have_many :authentication_vectors }

@@ -1,14 +1,16 @@
 require 'spec_fast_helper'
 require 'cogitate/services/agent_extractor/netid_strategy'
-require 'cogitate/parameters/identifier'
 
 module Cogitate
   module Services
     module AgentExtractor
       RSpec.describe NetidStrategy do
-        let(:identity) { Parameters::Identifier.new(strategy: 'netid', identifying_value: 'hello') }
+        let(:identity) { double(strategy: 'netid', identifying_value: 'hello') }
         let(:agent) { double(identities: [], verified_authentication_vectors: []) }
         subject { described_class.new(identity: identity) }
+
+        include Cogitate::RSpecMatchers
+        its(:default_agent) { should contractually_honor(Cogitate::Interfaces::AgentInterface) }
 
         context 'with a Netid that does not exist in the remote system' do
           before { allow(subject).to receive(:fetch_remote_data_for_netid).and_return(nil)  }

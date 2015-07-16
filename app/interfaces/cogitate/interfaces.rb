@@ -9,6 +9,6 @@ module Cogitate
 
     IdentifierInitializationInterface = Contracts::KeywordArgs[strategy: Contracts::RespondTo[:to_s], identifying_value: Contracts::Any]
     IdentifierBuilderInterface = Contracts::Func[IdentifierInitializationInterface]
-    IdentifierInterface = Contracts::RespondTo[:strategy, :identifying_value]
+    IdentifierInterface = Contracts::RespondTo[:strategy, :identifying_value, :<=>]
   end
 end

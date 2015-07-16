@@ -12,7 +12,6 @@ module Cogitate
         Contract(KeywordArgs[identity: Cogitate::Interfaces::IdentifierInterface] => Any)
         def initialize(identity:)
           self.identity = identity
-          self.agent = agent
         end
 
         Contract(KeywordArgs[agent: Cogitate::Interfaces::AgentInterface] => Cogitate::Interfaces::AgentInterface)
@@ -24,13 +23,14 @@ module Cogitate
 
         private
 
-        attr_accessor :identity, :agent
+        attr_accessor :identity
 
         def fetch_remote_data_for_netid
         end
 
         def default_agent
-          []
+          require 'agent'
+          Agent.new
         end
       end
     end
