@@ -18,6 +18,7 @@ AllCops:
     - 'vendor/**/*'
     - 'tmp/**/*'
     - 'bin/**/*'
+    - 'db/schema.rb'
   RunRailsCops: true
 
 LineLength:
