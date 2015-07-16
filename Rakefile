@@ -24,5 +24,5 @@ task(
 
 namespace :spec do
   desc 'Run the Travis CI specs'
-  task travis: :default
+  task travis: ['db:create', 'db:schema:load', :default]
 end
