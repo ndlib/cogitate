@@ -19,7 +19,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-rescue'
   gem 'rspec-rails'
-  gem 'commitment'
+  gem 'commitment', require: false
   gem 'rspec-its'
 end
 
