@@ -20,3 +20,8 @@ task(
   ]
 )
 # END `commitment:install` generator
+
+namespace :spec do
+  desc 'Run the Travis CI specs'
+  task travis: :default
+end

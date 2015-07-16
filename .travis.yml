@@ -1,0 +1,20 @@
+language: ruby
+cache: bundler
+sudo: false
+rvm:
+  - "2.2.2"
+
+script: 'bundle exec rake spec:travis'
+
+bundler_args: --without development debug documentation
+
+before_install:
+  - gem install bundler
+
+addons:
+  code_climate:
+    repo_token: d25517494137c5bf0d9acca7243f70eba7ec0c354940c54eb33ec395b05900de
+
+env:
+  global:
+  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
