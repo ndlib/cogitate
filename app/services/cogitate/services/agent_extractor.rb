@@ -1,5 +1,5 @@
 require 'contracts'
-require 'cogitate_interfaces'
+require 'cogitate/interfaces'
 require 'active_support/inflector/methods'
 
 module Cogitate
@@ -8,7 +8,7 @@ module Cogitate
     module AgentExtractor
       extend Contracts
       # @todo Define the contract for what should be returned by call
-      Contract(Contracts::KeywordArgs[identifier: Cogitate::IdentifierInterface] => Contracts::Any)
+      Contract(Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] => Contracts::Any)
       def self.call(identifier:)
         find_strategy_specific_extractor(identifier).call
       end

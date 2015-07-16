@@ -1,5 +1,5 @@
 require 'contracts'
-require 'cogitate_interfaces'
+require 'cogitate/interfaces'
 
 module Cogitate
   module Services
@@ -9,13 +9,13 @@ module Cogitate
         include Contracts
 
         # The Any keyword is a requirement for initialize methods
-        Contract(KeywordArgs[identity: Cogitate::IdentifierInterface] => Any)
+        Contract(KeywordArgs[identity: Cogitate::Interfaces::IdentifierInterface] => Any)
         def initialize(identity:)
           self.identity = identity
           self.agent = agent
         end
 
-        Contract(KeywordArgs[agent: Cogitate::AgentInterface] => Cogitate::AgentInterface)
+        Contract(KeywordArgs[agent: Cogitate::Interfaces::AgentInterface] => Cogitate::Interfaces::AgentInterface)
         def call(agent: default_agent)
           agent.identities << identity
           agent.verified_authentication_vectors << identity if fetch_remote_data_for_netid

@@ -1,19 +1,12 @@
 require 'contracts'
-require 'cogitate_interfaces'
+require 'cogitate/interfaces'
 module Cogitate
   module Parameters
     # A parameter object that defines how we go from decoding identifiers to extracting an identity.
     class Identifier
       include Contracts
-      extend Contracts
 
-      # Ensuring that the Identifier object does in fact adhear to its defined Interface
-      Contract(IdentifierInitializationInterface => Cogitate::IdentifierInterface)
-      def self.new(*args)
-        super
-      end
-
-      Contract(Cogitate::IdentifierInitializationInterface => Cogitate::IdentifierInterface)
+      Contract(Cogitate::Interfaces::IdentifierInitializationInterface => Cogitate::Interfaces::IdentifierInterface)
       def initialize(strategy:, identifying_value:)
         self.strategy = strategy
         self.identifying_value = identifying_value
@@ -24,7 +17,7 @@ module Cogitate
 
       include Comparable
 
-      Contract(Cogitate::IdentifierInterface => Num)
+      Contract(Cogitate::Interfaces::IdentifierInterface => Num)
       def <=>(other)
         strategy_sort = strategy <=> other.strategy
         return strategy_sort if strategy_sort != 0

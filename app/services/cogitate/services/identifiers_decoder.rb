@@ -1,5 +1,6 @@
 require 'base64'
-require 'cogitate_interfaces'
+require 'contracts'
+require 'cogitate/interfaces'
 
 module Cogitate
   module Services
@@ -34,8 +35,8 @@ module Cogitate
       # @todo Determine if we should return an Array of hashes or if it should be a more proper class?
       extend Contracts
       Contract(
-        Contracts::String, { Contracts::KeywordArgs[identifier_builder: Contracts::Func[Cogitate::IdentifierBuilderInterface]] =>
-        Contracts::ArrayOf[Cogitate::IdentifierInterface] }
+        String, { Contracts::KeywordArgs[identifier_builder: Contracts::Func[Cogitate::Interfaces::IdentifierBuilderInterface]] =>
+        Contracts::ArrayOf[Cogitate::Interfaces::IdentifierInterface] }
       )
       def self.call(encoded_string, identifier_builder: default_identifier_builder)
         decoded_string = decode(encoded_string)
