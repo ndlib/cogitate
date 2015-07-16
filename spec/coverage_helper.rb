@@ -12,6 +12,7 @@ if ENV['COV'] || ENV['COVERAGE'] || ENV['TRAVIS']
       ]
       load_profile 'rails'
     end
+    CodeClimate::TestReporter.start
   elsif ENV['COV'] || ENV['COVERAGE']
     require 'simplecov'
     SimpleCov.start { load_profile 'rails' }
