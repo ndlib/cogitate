@@ -1,0 +1,22 @@
+# Dear curious person:
+#
+# These are not the real keys to the kingdom. They are, however, used during
+# development; Or more appropriately used as a frame of reference for our
+# development.
+#
+# They are included so we can share what the keys should be.
+hesburgh_api_auth_token: '12345'
+hesburgh_api_host: https://api.library.nd.edu/
+protocol: 'http'
+airbrake_api_key: 'this-makes-no-sense'
+airbrake_host: 'errbit.library.nd.edu'
+
+development:
+  domain_name: "localhost:3000"
+  url_host: "http://localhost:3000"
+  secret_key_base: '31fdea52df67b6f29cdd3b4ca0943b2baf696eb164fa5ed92858f4a66d142668a8a29c0bdccc46575c063de687ad456f58b4022f9ffde186ead80c0d292f500a'
+
+test:
+  domain_name: "localhost:3000"
+  url_host: "http://localhost:3000"
+  secret_key_base: '31fdea52df67b6f29cdd3b4ca0943b2baf696eb164fa5ed92858f4a66d142668a8a29c0bdccc46575c063de687ad456f58b4022f9ffde186ead80c0d292f500a'
