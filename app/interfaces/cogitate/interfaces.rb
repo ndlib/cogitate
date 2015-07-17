@@ -12,6 +12,7 @@ module Cogitate
 
     # All identifiers must be comparable, otherwise we could spiral into an endless visitation of related identifiers
     IdentifierInterface = RespondTo[:strategy, :identifying_value, :<=>]
+    VerifiedAuthenticationVectorInterface = RespondTo[:strategy, :identifying_value, :<=>]
 
     AuthenticationVectorNetidInterface = And[
       RespondTo[:first_name, :last_name, :netid, :full_name, :ndguid, :strategy, :identifying_value],

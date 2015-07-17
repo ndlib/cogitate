@@ -49,12 +49,16 @@ class AgentVisitor
       self
     end
 
+    Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
     def add_identity(input)
       agent.identities << input
+      input
     end
 
+    Contract(Cogitate::Interfaces::VerifiedAuthenticationVectorInterface => Cogitate::Interfaces::VerifiedAuthenticationVectorInterface)
     def add_verified_authentication_vector(input)
       agent.verified_authentication_vectors << input
+      input
     end
 
     private

@@ -31,15 +31,16 @@ RSpec.describe AgentVisitor::Builder do
   include Cogitate::RSpecMatchers
   it { should contractually_honor(Cogitate::Interfaces::AgentBuilderInterface) }
   its(:default_agent) { should contractually_honor(Cogitate::Interfaces::AgentInterface) }
+  let(:identity) { double(strategy: '', identifying_value: '', :<=> => '') }
 
   context '#add_identity' do
     it 'will update the given agent' do
-      expect { subject.add_identity(1) }.to change(agent, :identities).to([1])
+      expect { subject.add_identity(identity) }.to change(agent, :identities).to([identity])
     end
   end
   context '#add_verified_authentication_vector' do
     it 'will update the given agent' do
-      expect { subject.add_verified_authentication_vector(1) }.to change(agent, :verified_authentication_vectors).to([1])
+      expect { subject.add_verified_authentication_vector(identity) }.to change(agent, :verified_authentication_vectors).to([identity])
     end
   end
 end
