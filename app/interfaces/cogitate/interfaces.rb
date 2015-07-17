@@ -5,7 +5,10 @@ module Cogitate
   module Interfaces
     include Contracts
     AgentInterface = RespondTo[:identities, :verified_authentication_vectors]
+    InvitationInterface = RespondTo[:invite]
     VisitorInterface = RespondTo[:visit]
+
+    # All identifiers must be comparable, otherwise we could spiral into an endless visitation of related identifiers
     IdentifierInterface = RespondTo[:strategy, :identifying_value, :<=>]
 
     AuthenticationVectorNetidInterface = And[
