@@ -13,7 +13,7 @@ module Cogitate
 
           context '#invite a visitor' do
             it 'will increment the associated #identifiers' do
-              expect { subject.invite(visitor) }.to change{ agent.identifiers }.to([identifier])
+              expect { subject.invite(visitor) }.to change { agent.identifiers }.to([identifier])
             end
             it 'will increment the associated #verified_authentication_vectors' do
               expect { subject.invite(visitor) }.to change { agent.verified_authentication_vectors }.to([identifier])
@@ -30,7 +30,7 @@ module Cogitate
 
           context '#invite a visitor' do
             it 'will increment the associated #identifiers' do
-              expect { subject.invite(visitor) }.to change{ agent.identifiers }.to([identifier])
+              expect { subject.invite(visitor) }.to change { agent.identifiers }.to([identifier])
             end
             it 'will not increment the associated #verified_authentication_vectors' do
               expect { subject.invite(visitor) }.to_not change { agent.verified_authentication_vectors }

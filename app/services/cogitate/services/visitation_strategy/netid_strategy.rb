@@ -3,6 +3,8 @@ module Cogitate
     module VisitationStrategy
       # A containing module for various strategies of invitation
       module NetidStrategy
+        # :nodoc:
+        # @api Private
         class Base
           def initialize(identifier:)
             self.identifier = identifier
@@ -14,8 +16,8 @@ module Cogitate
 
           private
 
-          def receive(agent)
-            fail NotImplementedError, "You must implement #{self.class}#receive."
+          def receive(_agent)
+            fail NotImplementedError, "You must implement #{self.class}#receive(agent)."
           end
 
           attr_accessor :identifier
@@ -26,6 +28,7 @@ module Cogitate
         # of building up the identifiers for a verified netid.
         #
         # @see #receive
+        # @todo Favor composition over inheritance; But as of now, I have two patterns
         class Verified < Base
           private
 
