@@ -14,6 +14,13 @@ module Cogitate
             self.identifier = identifier
           end
 
+          # Double delegation at its finest.
+          #
+          # * Invite the visitor.
+          # * Visitor decides if it or its delegate will attend (via yielding)
+          # * If attending receive the visitor (or its delegate)
+          #
+          # @params visitor [#visit] what has been invited to visit this object
           def invite(visitor)
             visitor.visit(identifier) { |agent_builder| receive(agent_builder) }
           end
