@@ -7,7 +7,7 @@ module Cogitate
     AgentInterface = RespondTo[:identities, :verified_authentication_vectors]
     AgentBuilderInterface = RespondTo[:add_identity, :add_verified_authentication_vector]
 
-    InvitationInterface = RespondTo[:invite]
+    HostInterface = RespondTo[:invite]
     VisitorInterface = RespondTo[:visit]
 
     # All identifiers must be comparable, otherwise we could spiral into an endless visitation of related identifiers
