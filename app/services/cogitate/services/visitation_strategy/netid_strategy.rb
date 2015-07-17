@@ -1,3 +1,5 @@
+require 'cogitate/interfaces'
+
 module Cogitate
   module Services
     module VisitationStrategy
@@ -6,18 +8,22 @@ module Cogitate
         # :nodoc:
         # @api Private
         class Base
+          include Contracts
+
           def initialize(identifier:)
             self.identifier = identifier
           end
 
           def invite(visitor)
-            visitor.visit(identifier) { |agent| receive(agent) }
+            visitor.visit(identifier) { |agent_builder| receive(agent_builder) }
           end
 
           private
 
+          # @note Contracts are not inherited; Which is another reason to favor composition
+          Contract(Cogitate::Interfaces::AgentBuilderInterface => Cogitate::Interfaces::Any)
           def receive(_agent)
-            fail NotImplementedError, "You must implement #{self.class}#receive(agent)."
+            fail NotImplementedError, "You must implement #{self.class}#receive(agent_builder)."
           end
 
           attr_accessor :identifier
@@ -32,9 +38,10 @@ module Cogitate
         class Verified < Base
           private
 
-          def receive(agent)
-            agent.identifiers << identifier
-            agent.verified_authentication_vectors << identifier
+          Contract(Cogitate::Interfaces::AgentBuilderInterface => Cogitate::Interfaces::Any)
+          def receive(agent_builder)
+            agent_builder.add_identity(identifier)
+            agent_builder.add_verified_authentication_vector(identifier)
           end
         end
 
@@ -45,8 +52,9 @@ module Cogitate
         class Unverified < Base
           private
 
-          def receive(agent)
-            agent.identifiers << identifier
+          Contract(Cogitate::Interfaces::AgentBuilderInterface => Cogitate::Interfaces::Any)
+          def receive(agent_builder)
+            agent_builder.add_identity(identifier)
           end
         end
       end

@@ -5,6 +5,8 @@ module Cogitate
   module Interfaces
     include Contracts
     AgentInterface = RespondTo[:identities, :verified_authentication_vectors]
+    AgentBuilderInterface = RespondTo[:add_identity, :add_verified_authentication_vector]
+
     InvitationInterface = RespondTo[:invite]
     VisitorInterface = RespondTo[:visit]
 
