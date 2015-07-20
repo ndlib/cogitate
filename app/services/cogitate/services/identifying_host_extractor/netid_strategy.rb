@@ -37,7 +37,7 @@ module Cogitate
         attr_accessor :identifier, :repository, :host_builder
 
         def default_repository
-          require 'cogitate/repositories/remote_netid_repository'
+          require 'cogitate/repositories/remote_netid_repository' unless defined?(Repositories::RemoteNetidRepository)
           Repositories::RemoteNetidRepository
         end
 
