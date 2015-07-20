@@ -6,8 +6,18 @@ module Cogitate
   module Repositories
     RSpec.describe RemoteNetidRepository do
       let(:identifier) { Parameters::Identifier.new(strategy: 'netid', identifying_value: 'hello') }
-      it 'will query and coerce into an acceptable object' do
-        described_class.find(identifier: identifier)
+      before { expect(described_class).to receive(:query_service).with(identifier.identifying_value).and_return(response) }
+      context 'with an empty response' do
+        let(:response) { {} }
+        it 'will return an unverified object' do
+          expect(described_class.find(identifier: identifier)).to_not be_verified
+        end
+      end
+      context 'with a non-empty response' do
+        let(:response) { { hello: 'world' } }
+        it 'will return an verified object' do
+          expect(described_class.find(identifier: identifier)).to be_verified
+        end
       end
     end
 

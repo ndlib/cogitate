@@ -1,22 +1,26 @@
 require 'contracts'
 require 'cogitate/interfaces'
-require 'authentication_vector/netid_vector'
 require 'open-uri'
 require 'json'
+require 'figaro'
+require 'verified_identifier'
+require 'unverified_identifier'
 
 module Cogitate
   module Repositories
     # Container for repository services against the remote netid API
     module RemoteNetidRepository
       extend Contracts
-      # Given an identifier
       Contract(
-        Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] =>
-        Cogitate::Interfaces::AuthenticationVectorNetidInterface
+        Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] => Cogitate::Interfaces::VerifiableIdentifierInterface
       )
       def self.find(identifier:)
         response_hash = query_service(identifier.identifying_value).to_hash
-        AuthenticationVector::NetidVector.new(identifier: identifier, **response_hash)
+        if response_hash.present?
+          VerifiedIdentifier::Netid.new(identifier: identifier, attributes: response_hash)
+        else
+          UnverifiedIdentifier.new(identifier: identifier)
+        end
       end
 
       # @todo This should be a configuration option for the application
