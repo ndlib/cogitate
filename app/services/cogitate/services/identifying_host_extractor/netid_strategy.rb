@@ -5,10 +5,14 @@ module Cogitate
   module Services
     module IdentifyingHostExtractor
       # Responsible for determining the host that will be leveraged for inviting the agent.
+      #
+      # @api public
       class NetidStrategy
         include Contracts
 
         # The Any keyword is a requirement for initialize methods
+        #
+        # @api public
         Contract(
           KeywordArgs[
             identifier: Cogitate::Interfaces::IdentifierInterface,
@@ -22,6 +26,7 @@ module Cogitate
           self.host_builder = host_builder
         end
 
+        # @api public
         Contract(Contracts::None => Cogitate::Interfaces::HostInterface)
         def call
           verified_identifier = repository.find(identifier: identifier)
