@@ -23,5 +23,7 @@ module Cogitate
     IdentifierBuilderInterface = Func[IdentifierInitializationInterface]
 
     FindNetidRepositoryInterface = RespondTo[:find]
+
+    VerifiableIdentifierInterface = And[IdentifierInterface, RespondTo[:verified?]]
   end
 end
