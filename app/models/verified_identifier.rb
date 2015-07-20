@@ -3,6 +3,8 @@ require 'cogitate/interfaces'
 module VerifiedIdentifier
   # A verified Netid
   class Netid
+    ATTRIBUTE_NAMES = %w(first_name last_name netid full_name ndguid).freeze
+
     include Contracts
     Contract(
       Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface, attributes: Hash] =>
@@ -11,6 +13,7 @@ module VerifiedIdentifier
     def initialize(identifier:, attributes:)
       self.identifier = identifier
       attributes.each_pair do |key, value|
+        next unless ATTRIBUTE_NAMES.include?(key)
         send("#{key}=", value) if respond_to?("#{key}=", true)
       end
       self
@@ -20,7 +23,7 @@ module VerifiedIdentifier
       true
     end
 
-    attr_reader :first_name, :last_name, :netid, :full_name, :ndguid
+    attr_reader(*ATTRIBUTE_NAMES)
 
     extend Forwardable
     include Comparable
@@ -33,6 +36,6 @@ module VerifiedIdentifier
 
     attr_accessor :identifier
 
-    attr_writer :first_name, :last_name, :netid, :full_name, :ndguid
+    attr_writer(*ATTRIBUTE_NAMES)
   end
 end
