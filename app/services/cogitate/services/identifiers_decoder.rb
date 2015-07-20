@@ -30,7 +30,7 @@ module Cogitate
       # @raise InvalidIdentifierFormat
       # @raise InvalidIdentifierEncoding
       #
-      # @api private
+      # @api public
       # @note I have chosen to not use a keyword, as I don't want to imply the "form" of object is that is being passed in.
       # @todo Determine if we should return an Array of hashes or if it should be a more proper class?
       extend Contracts
@@ -50,6 +50,7 @@ module Cogitate
         end
       end
 
+      # @api private
       def self.decode(encoded_string)
         Base64.urlsafe_decode64(encoded_string.to_s)
       rescue ArgumentError
@@ -57,6 +58,7 @@ module Cogitate
       end
       private_class_method :decode
 
+      # @api private
       def self.default_identifier_builder
         require 'cogitate/parameters/identifier' unless defined?(Parameters::Identifier)
         Parameters::Identifier.method(:new)
