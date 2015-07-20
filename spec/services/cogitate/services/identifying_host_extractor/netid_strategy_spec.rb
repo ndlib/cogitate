@@ -16,6 +16,13 @@ module Cogitate
         its(:default_repository) { should contractually_honor(Cogitate::Interfaces::FindNetidRepositoryInterface) }
         its(:default_host_builder) { should contractually_honor(Cogitate::Interfaces::HostBuilderInterface) }
 
+        context '.call' do
+          it 'will be a convenience method' do
+            expect_any_instance_of(described_class).to receive(:call).and_return(host)
+            described_class.call(identifier: identifier)
+          end
+        end
+
         context '#call' do
           before { expect(repository).to receive(:find).and_return(repository_response) }
           context 'when Netid exists according to the remote query service' do

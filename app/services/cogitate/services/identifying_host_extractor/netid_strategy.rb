@@ -8,8 +8,13 @@ module Cogitate
       #
       # @api public
       class NetidStrategy
-        include Contracts
+        extend Contracts
+        Contract(Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] => Cogitate::Interfaces::HostInterface)
+        def self.call(identifier:, **keywords)
+          new(identifier: identifier, **keywords).call
+        end
 
+        include Contracts
         # The Any keyword is a requirement for initialize methods
         #
         # @api public
