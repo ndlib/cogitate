@@ -18,16 +18,18 @@ module Cogitate
         context '#call' do
           before { expect(repository).to receive(:find).and_return(repository_response) }
           context 'when Netid exists according to the remote query service' do
-            let(:repository_response) { double(present?: true) }
+            let(:repository_response) { double(verified?: true) }
             before do
               expect(host_builder).to receive(:call).with(invitation_strategy: :verified, identifier: repository_response).and_return(host)
             end
             its(:call) { should contractually_honor(Cogitate::Interfaces::HostInterface) }
           end
           context 'when Netid does not exist according to our remote query service' do
-            let(:repository_response) { double(present?: false) }
+            let(:repository_response) { double(verified?: false) }
             before do
-              expect(host_builder).to receive(:call).with(invitation_strategy: :unverified, identifier: identifier).and_return(host)
+              expect(host_builder).to receive(:call).with(
+                invitation_strategy: :unverified, identifier: repository_response
+              ).and_return(host)
             end
             its(:call) { should contractually_honor(Cogitate::Interfaces::HostInterface) }
           end

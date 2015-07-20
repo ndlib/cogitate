@@ -29,11 +29,11 @@ module Cogitate
         # @api public
         Contract(Contracts::None => Cogitate::Interfaces::HostInterface)
         def call
-          verified_identifier = repository.find(identifier: identifier)
-          if verified_identifier.present?
-            host_builder.call(invitation_strategy: :verified, identifier: verified_identifier)
+          remote_identifier = repository.find(identifier: identifier)
+          if remote_identifier.verified?
+            host_builder.call(invitation_strategy: :verified, identifier: remote_identifier)
           else
-            host_builder.call(invitation_strategy: :unverified, identifier: identifier)
+            host_builder.call(invitation_strategy: :unverified, identifier: remote_identifier)
           end
         end
 
