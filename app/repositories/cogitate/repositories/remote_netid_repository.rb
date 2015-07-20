@@ -12,26 +12,33 @@ module Cogitate
     module RemoteNetidRepository
       extend Contracts
       Contract(
-        Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] => Cogitate::Interfaces::VerifiableIdentifierInterface
+        Contracts::KeywordArgs[
+          identifier: Cogitate::Interfaces::IdentifierInterface,
+          query_service: Contracts::Optional[Contracts::RespondTo[:call]]
+        ] => Cogitate::Interfaces::VerifiableIdentifierInterface
       )
-      def self.find(identifier:)
-        response_hash = query_service(identifier.identifying_value).to_hash
-        if response_hash.present?
-          VerifiedIdentifier::Netid.new(identifier: identifier, attributes: response_hash)
+      def self.find(identifier:, query_service: default_query_service)
+        attributes = query_service.call(identifier.identifying_value)
+        if attributes.present?
+          VerifiedIdentifier::Netid.new(identifier: identifier, attributes: attributes)
         else
           UnverifiedIdentifier.new(identifier: identifier)
         end
       end
 
-      # @todo This should be a configuration option for the application
-      Contract(String => Contracts::RespondTo[:to_hash])
-      def self.query_service(identifying_value)
-        NetidQueryService.new(identifying_value)
+      def self.default_query_service
+        NetidQueryService
       end
-      private_class_method :query_service
+      private_class_method :default_query_service
 
       # Responsible for querying the remote NetID service.
       class NetidQueryService
+        include Contracts
+        Contract(String => Hash)
+        def self.call(identifying_value)
+          new(identifying_value).to_hash
+        end
+
         def initialize(netid)
           self.netid = netid
         end
@@ -39,7 +46,7 @@ module Cogitate
         attr_reader :netid
 
         def to_hash
-          person
+          parsed_response
         end
 
         private
@@ -53,7 +60,7 @@ module Cogitate
         # @return [netid] if the input is not a valid NetID
         # @return [String] if the input is a valid NetID
         def preferred_name
-          person.fetch('full_name')
+          parsed_response.fetch('full_name')
         rescue KeyError
           netid
         end
@@ -61,18 +68,20 @@ module Cogitate
         # @return [false] if the input is not a valid NetID
         # @return [String] if the input is a valid NetID
         def valid_netid?
-          person.fetch('netid')
+          parsed_response.fetch('netid')
         rescue KeyError
           false
         end
 
         private
 
-        def person
-          return {} if netid.length == 0
-          parse
-        rescue OpenURI::HTTPError
-          {}
+        def parsed_response
+          @parsed_response ||= begin
+            return {} if netid.length == 0
+            parse
+          rescue OpenURI::HTTPError
+            {}
+          end
         end
 
         def response

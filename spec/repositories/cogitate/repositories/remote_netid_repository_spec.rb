@@ -6,17 +6,19 @@ module Cogitate
   module Repositories
     RSpec.describe RemoteNetidRepository do
       let(:identifier) { Parameters::Identifier.new(strategy: 'netid', identifying_value: 'hello') }
-      before { expect(described_class).to receive(:query_service).with(identifier.identifying_value).and_return(response) }
+      let(:query_service) { double(call: response) }
+      subject { described_class }
+      its(:default_query_service) { should respond_to(:call) }
       context 'with an empty response' do
         let(:response) { {} }
         it 'will return an unverified object' do
-          expect(described_class.find(identifier: identifier)).to_not be_verified
+          expect(described_class.find(identifier: identifier, query_service: query_service)).to_not be_verified
         end
       end
       context 'with a non-empty response' do
         let(:response) { { hello: 'world' } }
         it 'will return an verified object' do
-          expect(described_class.find(identifier: identifier)).to be_verified
+          expect(described_class.find(identifier: identifier, query_service: query_service)).to be_verified
         end
       end
     end
@@ -26,12 +28,21 @@ module Cogitate
         let(:netid) { 'somenetid' }
         let(:full_name) { 'Full Name' }
         subject { described_class.new(netid) }
+        before { allow(subject).to receive(:open).and_return(StringIO.new(valid_response_with_netid)) }
+
+        it 'exposes a .call convenience method' do
+          response = { hello: 'world' }
+          expect_any_instance_of(described_class).to receive(:to_hash).and_return(response)
+          expect(described_class.call(netid)).to eq(response)
+        end
 
         it 'will assume an empty netid is invalid and not call the remote service' do
           subject = described_class.new(" ")
           expect(subject).to_not receive(:open)
           expect(subject.valid_netid?).to eq(false)
         end
+
+        its(:to_hash) { should be_a(Hash) }
 
         it 'gracefully handles a netid with a space in it' do
           # https://errbit.library.nd.edu/apps/55280e706a6f68a6d2090000/problems/5571ba3b6a6f685aa1141200
