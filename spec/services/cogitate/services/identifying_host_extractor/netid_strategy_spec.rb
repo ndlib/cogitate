@@ -43,8 +43,14 @@ module Cogitate
           let(:invitation_strategy) { :none }
           let(:guest) { double(visit: true) }
           let(:visitor) { double(add_identity: true, add_verified_authentication_vector: true) }
-          subject { described_class.new(invitation_strategy: invitation_strategy, identifier: identifier) }
+          let(:group_visitation_service) { double(call: true) }
+          subject do
+            described_class.new(
+              invitation_strategy: invitation_strategy, identifier: identifier, group_visitation_service: group_visitation_service
+            )
+          end
           before { allow(guest).to receive(:visit).and_yield(visitor) }
+          its(:default_group_visitation_service) { should respond_to(:call) }
           context ':verified invitation_strategy' do
             let(:invitation_strategy) { :verified }
             it 'will add the identity to the visitor' do
@@ -53,6 +59,10 @@ module Cogitate
             end
             it 'will NOT add a verified authentication vector to the visitor' do
               expect(visitor).to receive(:add_verified_authentication_vector).with(identifier)
+              subject.invite(guest)
+            end
+            it 'will call the associated group_visitation_service' do
+              expect(group_visitation_service).to receive(:call).with(identifier: identifier, visitor: visitor)
               subject.invite(guest)
             end
           end
@@ -64,6 +74,10 @@ module Cogitate
             end
             it 'will NOT add a verified authentication vector to the visitor' do
               expect(visitor).to_not receive(:add_verified_authentication_vector)
+              subject.invite(guest)
+            end
+            it 'will NOT call the associated group_visitation_service' do
+              expect(group_visitation_service).to_not receive(:call)
               subject.invite(guest)
             end
           end

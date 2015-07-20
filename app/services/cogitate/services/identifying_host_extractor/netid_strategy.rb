@@ -51,12 +51,15 @@ module Cogitate
         end
 
         # Responsible for inviting a guest to come and visit. A visiting guest will be received according to the invitation strategy.
+        #
+        # @todo: Should this be broken down into two separate classes? I have an #receive_unverified and #receive_verified method.
         class Host
           include Contracts
           Contract(Cogitate::Interfaces::HostInitializationInterface => Cogitate::Interfaces::HostInterface)
-          def initialize(invitation_strategy:, identifier:)
+          def initialize(invitation_strategy:, identifier:, group_visitation_service: default_group_visitation_service)
             self.invitation_strategy = invitation_strategy
             self.identifier = identifier
+            self.group_visitation_service = group_visitation_service
             self
           end
 
@@ -68,7 +71,7 @@ module Cogitate
 
           private
 
-          attr_accessor :invitation_strategy, :identifier
+          attr_accessor :invitation_strategy, :identifier, :group_visitation_service
 
           def receive(visitor)
             send("receive_#{invitation_strategy}", visitor)
@@ -81,6 +84,11 @@ module Cogitate
           def receive_verified(visitor)
             visitor.add_identity(identifier)
             visitor.add_verified_authentication_vector(identifier)
+            group_visitation_service.call(identifier: identifier, visitor: visitor)
+          end
+
+          def default_group_visitation_service
+            -> (**) {}
           end
         end
         private_constant :Host
