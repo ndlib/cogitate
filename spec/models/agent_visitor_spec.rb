@@ -2,12 +2,15 @@ require 'spec_fast_helper'
 require 'agent_visitor'
 
 RSpec.describe AgentVisitor do
-  let(:agent_builder) { double(add_identity: [], add_verified_authentication_vector: []) }
-  subject { described_class.new(agent_builder: agent_builder) }
+  let(:collector) { double(add_identity: [], add_verified_authentication_vector: []) }
+  let(:identity_collector_builder) { ->(**) { collector } }
+  subject { described_class.new(identity_collector_builder: identity_collector_builder) }
 
   include Cogitate::RSpecMatchers
   it { should contractually_honor(Cogitate::Interfaces::VisitorInterface) }
-  its(:default_agent_builder) { should contractually_honor(Cogitate::Interfaces::AgentBuilderInterface) }
+  its(:default_identity_collector_builder) do
+    should contractually_honor(Contracts::Func[Cogitate::Interfaces::AgentCollectorInitializationInterface])
+  end
 
   it { expect(described_class.new).to contractually_honor(Cogitate::Interfaces::VisitorInterface) }
 
@@ -16,20 +19,21 @@ RSpec.describe AgentVisitor do
     let(:node2) { double }
 
     it 'will yield the agent if the node has not yet been visited' do
-      expect { |b| subject.visit(node1, &b) }.to yield_with_args(agent_builder)
+      expect { |b| subject.visit(node1, &b) }.to yield_with_args(collector)
       expect { |b| subject.visit(node1, &b) }.to_not yield_control
 
       # And now we are visiting another node
-      expect { |b| subject.visit(node2, &b) }.to yield_with_args(agent_builder)
+      expect { |b| subject.visit(node2, &b) }.to yield_with_args(collector)
     end
   end
 end
 
-RSpec.describe AgentVisitor::Builder do
+RSpec.describe AgentVisitor::Collector do
   let(:agent) { double(identities: [], verified_authentication_vectors: []) }
-  subject { described_class.new(agent: agent) }
+  let(:visitor) { double(visit: true) }
+  subject { described_class.new(visitor: visitor, agent: agent) }
   include Cogitate::RSpecMatchers
-  it { should contractually_honor(Cogitate::Interfaces::AgentBuilderInterface) }
+  it { should contractually_honor(Cogitate::Interfaces::IdentityCollectorInterface) }
   its(:default_agent) { should contractually_honor(Cogitate::Interfaces::AgentInterface) }
   let(:identity) { double(strategy: '', identifying_value: '', :<=> => '') }
 

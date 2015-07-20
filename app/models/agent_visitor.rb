@@ -6,12 +6,13 @@ require 'cogitate/interfaces'
 class AgentVisitor
   include Contracts
   Contract(
-    Contracts::KeywordArgs[agent: Contracts::Optional[Cogitate::Interfaces::AgentBuilderInterface]] =>
-    Cogitate::Interfaces::VisitorInterface
+    Contracts::KeywordArgs[
+      identity_collector_builder: Contracts::Optional[Contracts::Func[Cogitate::Interfaces::AgentCollectorInitializationInterface]]
+    ] => Cogitate::Interfaces::VisitorInterface
   )
-  def initialize(agent_builder: default_agent_builder)
+  def initialize(identity_collector_builder: default_identity_collector_builder)
     self.visited_nodes = Set.new
-    self.agent_builder = agent_builder
+    self.collector = identity_collector_builder.call(visitor: self)
     self
   end
 
@@ -21,31 +22,31 @@ class AgentVisitor
   def visit(node)
     return node if visited_nodes.include?(node)
     visited_nodes << node
-    yield(agent_builder)
+    yield(collector)
     node
   end
 
   private
 
   attr_accessor :visited_nodes
-  attr_accessor :agent_builder
+  attr_accessor :collector
 
-  def default_agent_builder
-    Builder.new
+  def default_identity_collector_builder
+    Collector.method(:new)
   end
 
   DefaultAgent = Struct.new(:identities, :verified_authentication_vectors)
 
   # A builder for assisting in the generation an Agent. It is the intermediary
   # brokering direct access to an Agent's state.
-  class Builder
+  class Collector
     include Contracts
     Contract(
-      Contracts::KeywordArgs[agent: Contracts::Optional[Cogitate::Interfaces::AgentInterface]] =>
-      Cogitate::Interfaces::AgentBuilderInterface
+      Cogitate::Interfaces::AgentCollectorInitializationInterface => Cogitate::Interfaces::IdentityCollectorInterface
     )
-    def initialize(agent: default_agent)
+    def initialize(visitor:, agent: default_agent)
       self.agent = agent
+      self.visitor = visitor
       self
     end
 
@@ -63,7 +64,7 @@ class AgentVisitor
 
     private
 
-    attr_accessor :agent
+    attr_accessor :agent, :visitor
 
     def default_agent
       DefaultAgent.new(Set.new, Set.new)
