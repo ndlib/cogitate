@@ -17,7 +17,7 @@ module Cogitate
           KeywordArgs[
             identifier: Cogitate::Interfaces::IdentifierInterface,
             repository: Contracts::Optional[Cogitate::Interfaces::FindNetidRepositoryInterface],
-            host_builder: Contracts::Optional[RespondTo[:call]]
+            host_builder: Contracts::Optional[Cogitate::Interfaces::HostBuilderInterface]
           ] => Any
         )
         def initialize(identifier:, repository: default_repository, host_builder: default_host_builder)
@@ -53,7 +53,7 @@ module Cogitate
         # Responsible for inviting a guest to come and visit. A visiting guest will be received according to the invitation strategy.
         class Host
           include Contracts
-          Contract(KeywordArgs[invitation_strategy: Symbol, identifier: Cogitate::Interfaces::IdentifierInterface] => Any)
+          Contract(Cogitate::Interfaces::HostInitializationInterface => Cogitate::Interfaces::HostInterface)
           def initialize(invitation_strategy:, identifier:)
             self.invitation_strategy = invitation_strategy
             self.identifier = identifier

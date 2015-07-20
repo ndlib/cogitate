@@ -8,12 +8,13 @@ module Cogitate
       RSpec.describe NetidStrategy do
         let(:identifier) { double(strategy: 'netid', identifying_value: 'hello') }
         let(:repository) { double(find: true) }
-        let(:host_builder) { double(call: true) }
+        let(:host_builder) { ->(**_keywords) { host } }
         let(:host) { double(invite: true) }
         subject { described_class.new(identifier: identifier, repository: repository, host_builder: host_builder) }
 
         include Cogitate::RSpecMatchers
         its(:default_repository) { should contractually_honor(Cogitate::Interfaces::FindNetidRepositoryInterface) }
+        its(:default_host_builder) { should contractually_honor(Cogitate::Interfaces::HostBuilderInterface) }
 
         context '#call' do
           before { expect(repository).to receive(:find).and_return(repository_response) }
