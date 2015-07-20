@@ -1,5 +1,6 @@
 require 'spec_fast_helper'
 require 'agent_visitor'
+require 'shoulda/matchers'
 
 RSpec.describe AgentVisitor do
   let(:collector) { double(add_identity: [], add_verified_authentication_vector: []) }
@@ -34,8 +35,18 @@ RSpec.describe AgentVisitor::Collector do
   subject { described_class.new(visitor: visitor, agent: agent) }
   include Cogitate::RSpecMatchers
   it { should contractually_honor(Cogitate::Interfaces::IdentityCollectorInterface) }
+  it { should contractually_honor(Cogitate::Interfaces::VisitorInterface) }
+
   its(:default_agent) { should contractually_honor(Cogitate::Interfaces::AgentInterface) }
   let(:identity) { double(strategy: '', identifying_value: '', :<=> => '') }
+
+  context '#visit' do
+    it 'will delegate visit to the visitor' do
+      node = 1
+      expect(visitor).to receive(:visit).with(node).and_yield(subject)
+      expect { |b| subject.visit(node, &b) }.to yield_with_args(subject)
+    end
+  end
 
   context '#add_identity' do
     it 'will update the given agent' do

@@ -1,7 +1,7 @@
 require 'set'
 require 'cogitate/interfaces'
 
-# Responsible for visiting a node and tracking if the node has already
+# Responsible for visiting a host and tracking if the host has already
 # been visited.
 class AgentVisitor
   include Contracts
@@ -11,24 +11,24 @@ class AgentVisitor
     ] => Cogitate::Interfaces::VisitorInterface
   )
   def initialize(identity_collector_builder: default_identity_collector_builder)
-    self.visited_nodes = Set.new
+    self.visited_hosts = Set.new
     self.collector = identity_collector_builder.call(visitor: self)
     self
   end
 
-  # @note We don't want to visit a node more than once. Consider the scenario where we start by finding a Netid. From the Netid, we
+  # @note We don't want to visit a host more than once. Consider the scenario where we start by finding a Netid. From the Netid, we
   #   see that there is an associated ORCID. Now, from the ORCID we want to make sure we have other related identifiers. And we see that
   #   there is a Netid. If we don't track visitation of that Netid, we may well spiral into infinity.
-  def visit(node)
-    return node if visited_nodes.include?(node)
-    visited_nodes << node
+  def visit(host)
+    return host if visited_hosts.include?(host)
+    visited_hosts << host
     yield(collector)
-    node
+    host
   end
 
   private
 
-  attr_accessor :visited_nodes
+  attr_accessor :visited_hosts
   attr_accessor :collector
 
   def default_identity_collector_builder
@@ -48,6 +48,11 @@ class AgentVisitor
       self.agent = agent
       self.visitor = visitor
       self
+    end
+
+    # @note This may look a little funky but the given visitor is making sure it does not visit a host more than once.
+    def visit(host, &block)
+      visitor.visit(host, &block)
     end
 
     Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
