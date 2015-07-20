@@ -7,7 +7,7 @@ module Cogitate
     IdentifierInterface = RespondTo[:strategy, :identifying_value, :<=>]
 
     AgentInterface = RespondTo[:identities, :verified_authentication_vectors]
-    IdentityCollectorInterface = RespondTo[:add_identity, :add_verified_authentication_vector]
+    IdentityCollectorInterface = RespondTo[:add_identity, :add_verified_authentication_vector, :visit]
 
     VisitorInterface = RespondTo[:visit]
     AgentCollectorInitializationInterface = KeywordArgs[visitor: VisitorInterface, agent: Optional[AgentInterface]]
