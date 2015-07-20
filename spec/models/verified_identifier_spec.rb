@@ -10,6 +10,7 @@ module VerifiedIdentifier
     it { should contractually_honor(Cogitate::Interfaces::AuthenticationVectorNetidInterface) }
     it { should delegate_method(:strategy).to(:identifier) }
     it { should delegate_method(:<=>).to(:identifier) }
+    its(:first_name) { should eq('A First Name') }
 
     it 'will not obliterate the given identifier if the attributes have an identifier' do
       subject = described_class.new(identifier: identifier, attributes: { identifier: 'something else' })

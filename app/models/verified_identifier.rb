@@ -13,7 +13,7 @@ module VerifiedIdentifier
     def initialize(identifier:, attributes:)
       self.identifier = identifier
       attributes.each_pair do |key, value|
-        next unless ATTRIBUTE_NAMES.include?(key)
+        next unless ATTRIBUTE_NAMES.include?(key.to_s)
         send("#{key}=", value) if respond_to?("#{key}=", true)
       end
       self
