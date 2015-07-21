@@ -26,10 +26,26 @@ module Cogitate
         Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] => Cogitate::Interfaces::HostInterface
       )
       def self.identifying_host_for(identifier:)
+        hosting_strategy = find_hosting_strategy(identifier: identifier)
+        hosting_strategy.call(identifier: identifier)
+      end
+
+      def self.find_hosting_strategy(identifier:)
         # Instead of loading all of ActiveSupport make an explicit declaration.
         strategy_constant_name = ActiveSupport::Inflector.classify("#{identifier.strategy}_strategy")
-        const_get(strategy_constant_name).call(identifier: identifier)
+        begin
+          const_get(strategy_constant_name)
+        rescue NameError
+          fallback_hosting_strategy
+        end
       end
+      private_class_method :find_hosting_strategy
+
+      def self.fallback_hosting_strategy
+        require_relative './parroting_strategy' unless defined?(ParrotingStrategy)
+        ParrotingStrategy
+      end
+      private_class_method :fallback_hosting_strategy
     end
   end
 end
