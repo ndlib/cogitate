@@ -60,8 +60,8 @@ module Cogitate
 
       # @api private
       def self.default_identifier_builder
-        require 'cogitate/parameters/identifier' unless defined?(Parameters::Identifier)
-        Parameters::Identifier.method(:new)
+        require 'identifier' unless defined?(Identifier)
+        Identifier.method(:new)
       end
     end
   end

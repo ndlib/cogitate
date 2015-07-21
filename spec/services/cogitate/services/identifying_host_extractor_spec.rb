@@ -1,5 +1,5 @@
 require 'spec_fast_helper'
-require 'cogitate/parameters/identifier'
+require 'identifier'
 require 'cogitate/services/identifying_host_extractor'
 
 module Cogitate
@@ -18,7 +18,7 @@ module Cogitate
         # Because autoload doesn't like me removing "live" modules
         described_class.send(:remove_const, :MockStrategy)
       end
-      let(:identifier) { Parameters::Identifier.new(strategy: 'mock', identifying_value: 'hello') }
+      let(:identifier) { Identifier.new(strategy: 'mock', identifying_value: 'hello') }
       let(:host) { double('Host', invite: true) }
       let(:visitor) { double(visit: true) }
 

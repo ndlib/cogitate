@@ -24,7 +24,7 @@ module Cogitate
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
-    %w(interfaces parameters repositories services).each do |concept|
+    %w(interfaces repositories services).each do |concept|
       config.autoload_paths << Rails.root.join("app/#{concept}")
     end
 
