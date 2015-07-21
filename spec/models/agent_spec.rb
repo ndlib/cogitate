@@ -4,6 +4,7 @@ require 'agent'
 
 RSpec.describe Agent do
   subject { Agent.new }
+
   include Cogitate::RSpecMatchers
   it { should contractually_honor(Cogitate::Interfaces::AgentInterface) }
 
