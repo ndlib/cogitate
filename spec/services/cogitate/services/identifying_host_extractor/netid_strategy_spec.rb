@@ -56,7 +56,7 @@ module Cogitate
               invitation_strategy: invitation_strategy, identifier: identifier, group_visitation_service: group_visitation_service
             )
           end
-          before { allow(guest).to receive(:visit).and_yield(visitor) }
+          before { allow(guest).to receive(:visit).with(identifier).and_yield(visitor) }
           its(:default_group_visitation_service) { should respond_to(:call) }
           context ':verified invitation_strategy' do
             let(:invitation_strategy) { :verified }

@@ -70,7 +70,7 @@ module Cogitate
 
           Contract(Cogitate::Interfaces::VisitorInterface => Cogitate::Interfaces::VisitorInterface)
           def invite(guest)
-            guest.visit(self) { |visitor| receive(visitor) }
+            guest.visit(identifier) { |visitor| receive(visitor) }
             guest
           end
 
