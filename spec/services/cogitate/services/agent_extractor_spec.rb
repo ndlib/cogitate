@@ -15,6 +15,13 @@ module Cogitate
       its(:default_visitor) { should contractually_honor(Cogitate::Interfaces::VisitorV2Interface) }
 
       context '.call' do
+        it 'is a convenience method and public API endpoint' do
+          expect_any_instance_of(described_class).to receive(:call)
+          described_class.call(identifier: identifier)
+        end
+      end
+
+      context '#call' do
         it 'will return an agent' do
           expect(subject.call).to contractually_honor(Cogitate::Interfaces::AgentInterface)
         end

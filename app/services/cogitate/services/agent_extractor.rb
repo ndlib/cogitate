@@ -4,6 +4,11 @@ module Cogitate
   module Services
     # Responsible for coordinating the conversion of a single Identifier into an Agent
     class AgentExtractor
+      # @api public
+      def self.call(identifier:, **keywords)
+        new(identifier: identifier, **keywords).call
+      end
+
       include Contracts
       def initialize(identifier:, visitor: default_visitor, identifying_host_extractor: default_identifying_host_extractor)
         self.identifier = identifier
