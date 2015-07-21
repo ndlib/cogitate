@@ -1,6 +1,15 @@
 # An Agent is a "bucket" of identities.
+require 'set'
+
 class Agent
-  # TODO: I have a data structure visitor concept
-  # I also want the Agent to eventually be immutable.
-  attr_accessor :identities, :verified_authentication_vectors
+  def initialize
+    self.identities = Set.new
+    self.verified_authentication_vectors = Set.new
+  end
+
+  attr_reader :identities, :verified_authentication_vectors
+
+  private
+
+  attr_writer :identities, :verified_authentication_vectors
 end
