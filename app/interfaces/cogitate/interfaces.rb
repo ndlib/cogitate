@@ -10,6 +10,7 @@ module Cogitate
     IdentityCollectorInterface = RespondTo[:add_identity, :add_verified_authentication_vector, :visit]
 
     VisitorInterface = RespondTo[:visit]
+    VisitorV2Interface = And[VisitorInterface, RespondTo[:return_from_visitations]]
     AgentCollectorInitializationInterface = KeywordArgs[visitor: VisitorInterface, agent: Optional[AgentInterface]]
 
     # All identifiers must be comparable, otherwise we could spiral into an endless visitation of related identifiers

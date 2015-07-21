@@ -8,7 +8,7 @@ class AgentVisitor
   Contract(
     Contracts::KeywordArgs[
       identity_collector_builder: Contracts::Optional[Contracts::Func[Cogitate::Interfaces::AgentCollectorInitializationInterface]]
-    ] => Cogitate::Interfaces::VisitorInterface
+    ] => Cogitate::Interfaces::VisitorV2Interface
   )
   def initialize(identity_collector_builder: default_identity_collector_builder)
     self.visited_hosts = Set.new
@@ -26,6 +26,14 @@ class AgentVisitor
     host
   end
 
+  Contract(Contracts::None => Cogitate::Interfaces::AgentInterface)
+  def return_from_visitations
+    # Poking into the inner workings of the collector; I could rely on
+    # reference to the object, but I'd prefer to be more explicit. Yes
+    # this violates encapsulation, but I'm at a loss for other options.
+    collector.send(:agent)
+  end
+
   private
 
   attr_accessor :visited_hosts
@@ -41,9 +49,7 @@ class AgentVisitor
   # brokering direct access to an Agent's state.
   class Collector
     include Contracts
-    Contract(
-      Cogitate::Interfaces::AgentCollectorInitializationInterface => Cogitate::Interfaces::IdentityCollectorInterface
-    )
+    Contract(Cogitate::Interfaces::AgentCollectorInitializationInterface => Cogitate::Interfaces::IdentityCollectorInterface)
     def initialize(visitor:, agent: default_agent)
       self.agent = agent
       self.visitor = visitor
