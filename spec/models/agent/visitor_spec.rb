@@ -1,8 +1,8 @@
 require 'spec_fast_helper'
-require 'agent_visitor'
+require 'agent/visitor'
 require 'shoulda/matchers'
 
-RSpec.describe AgentVisitor do
+RSpec.describe Agent::Visitor do
   subject { described_class.new }
 
   include Cogitate::RSpecMatchers
@@ -18,18 +18,18 @@ RSpec.describe AgentVisitor do
     let(:node2) { double }
 
     it 'will yield the agent if the node has not yet been visited' do
-      expect { |b| subject.visit(node1, &b) }.to yield_with_args(kind_of(described_class::Collector))
+      expect { |b| subject.visit(node1, &b) }.to yield_with_args(kind_of(Agent::Collector))
       expect { |b| subject.visit(node1, &b) }.to_not yield_control
 
       # And now we are visiting another node
-      expect { |b| subject.visit(node2, &b) }.to yield_with_args(kind_of(described_class::Collector))
+      expect { |b| subject.visit(node2, &b) }.to yield_with_args(kind_of(Agent::Collector))
     end
 
     its(:return_from_visitations) { should contractually_honor(Cogitate::Interfaces::AgentInterface) }
   end
 end
 
-RSpec.describe AgentVisitor::Collector do
+RSpec.describe Agent::Collector do
   let(:agent) { double(identities: [], verified_authentication_vectors: []) }
   let(:visitor) { double(visit: true) }
   subject { described_class.new(visitor: visitor, agent: agent) }

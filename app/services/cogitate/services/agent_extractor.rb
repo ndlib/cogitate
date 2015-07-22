@@ -36,8 +36,8 @@ module Cogitate
       end
 
       def default_visitor
-        require 'agent_visitor' unless defined?(AgentVisitor)
-        AgentVisitor.new
+        require 'agent/visitor' unless defined?(Agent::Visitor)
+        Agent::Visitor.new
       end
     end
   end
