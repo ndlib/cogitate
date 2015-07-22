@@ -3,8 +3,8 @@ require 'cogitate/interfaces'
 require 'open-uri'
 require 'json'
 require 'figaro'
-require 'verified_identifier'
-require 'unverified_identifier'
+require 'identifier/verified'
+require 'identifier/unverified'
 
 module Cogitate
   module Repositories
@@ -20,9 +20,9 @@ module Cogitate
       def self.find(identifier:, query_service: default_query_service)
         attributes = query_service.call(identifier.identifying_value)
         if attributes.present?
-          VerifiedIdentifier::Netid.new(identifier: identifier, attributes: attributes)
+          Identifier::Verified::Netid.new(identifier: identifier, attributes: attributes)
         else
-          UnverifiedIdentifier.new(identifier: identifier)
+          Identifier::Unverified.new(identifier: identifier)
         end
       end
 

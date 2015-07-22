@@ -1,8 +1,8 @@
 require 'spec_fast_helper'
 require 'shoulda/matchers'
-require 'unverified_identifier'
+require 'identifier/unverified'
 
-RSpec.describe UnverifiedIdentifier do
+RSpec.describe Identifier::Unverified do
   let(:identifier) { double('Identifier', strategy: 'netid', identifying_value: '123', :<=> => 0) }
   subject { described_class.new(identifier: identifier) }
 
