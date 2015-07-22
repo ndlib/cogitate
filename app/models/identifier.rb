@@ -1,3 +1,4 @@
+require 'base64'
 require 'contracts'
 require 'cogitate/interfaces'
 
@@ -21,6 +22,10 @@ class Identifier
     strategy_sort = strategy <=> other.strategy
     return strategy_sort if strategy_sort != 0
     identifying_value <=> other.identifying_value
+  end
+
+  def encoded_id
+    Base64.urlsafe_encode64("#{strategy}\t#{identifying_value}")
   end
 
   private

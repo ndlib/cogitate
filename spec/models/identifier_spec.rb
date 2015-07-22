@@ -7,6 +7,8 @@ RSpec.describe Identifier do
     Contract.valid?(subject, Cogitate::Interfaces::IdentifierInterface)
   end
 
+  its(:encoded_id) { should be_a(String) }
+
   context '#strategy coercion' do
     [
       ['orcid', 'orcid'],
