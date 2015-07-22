@@ -1,6 +1,7 @@
 require 'contracts'
 require 'cogitate/interfaces'
 require 'active_support/inflector/methods'
+require 'cogitate/services/identifying_host_extractor/parroting_strategy'
 
 module Cogitate
   module Services
@@ -42,7 +43,6 @@ module Cogitate
       private_class_method :find_hosting_strategy
 
       def self.fallback_hosting_strategy
-        require_relative './parroting_strategy' unless defined?(ParrotingStrategy)
         ParrotingStrategy
       end
       private_class_method :fallback_hosting_strategy

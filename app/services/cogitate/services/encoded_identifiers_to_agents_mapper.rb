@@ -8,6 +8,11 @@ module Cogitate
     #
     # @see #call for contract expectations
     class EncodedIdentifiersToAgentsMapper
+      # @api public
+      def self.call(encoded_identifiers:, **keywords)
+        new(encoded_identifiers: encoded_identifiers, **keywords).call
+      end
+
       include Contracts
       Contract(
         Contracts::KeywordArgs[

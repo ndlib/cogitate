@@ -46,6 +46,7 @@ module Cogitate
         attr_reader :netid
 
         def to_hash
+          return {} unless valid_netid?
           parsed_response
         end
 

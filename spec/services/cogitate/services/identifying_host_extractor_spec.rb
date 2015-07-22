@@ -1,7 +1,6 @@
 require 'spec_fast_helper'
 require 'identifier'
 require 'cogitate/services/identifying_host_extractor'
-require 'cogitate/services/identifying_host_extractor/parroting_strategy'
 
 module Cogitate
   module Services
@@ -19,9 +18,12 @@ module Cogitate
         # Because autoload doesn't like me removing "live" modules
         described_class.send(:remove_const, :MockStrategy)
       end
+      subject { described_class }
       let(:identifier) { Identifier.new(strategy: 'mock', identifying_value: 'hello') }
       let(:host) { double('Host', invite: true) }
       let(:visitor) { double(visit: true) }
+
+      its(:fallback_hosting_strategy) { should respond_to(:call) }
 
       context 'with a defined existing strategy' do
         context '.call' do

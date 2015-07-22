@@ -42,7 +42,16 @@ module Cogitate
           expect(subject.valid_netid?).to eq(false)
         end
 
-        its(:to_hash) { should be_a(Hash) }
+        context '#to_hash' do
+          it 'will be empty if we do an INvalid netid' do
+            expect(subject).to receive(:valid_netid?).and_return(false)
+            expect(subject.to_hash).to be_empty
+          end
+          it 'will NOT be empty if we have a valid netid' do
+            expect(subject).to receive(:valid_netid?).and_return(true)
+            expect(subject.to_hash).to_not be_empty
+          end
+        end
 
         it 'gracefully handles a netid with a space in it' do
           # https://errbit.library.nd.edu/apps/55280e706a6f68a6d2090000/problems/5571ba3b6a6f685aa1141200

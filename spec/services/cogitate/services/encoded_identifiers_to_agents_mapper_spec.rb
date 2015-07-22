@@ -18,7 +18,14 @@ module Cogitate
       its(:default_converter) { should respond_to(:call) }
       its(:default_decoder) { should respond_to(:call) }
 
-      context '.call' do
+      context '.call (class method)' do
+        it 'will instantiate then call the object' do
+          expect_any_instance_of(described_class).to receive(:call)
+          described_class.call(encoded_identifiers: encoded_identifiers)
+        end
+      end
+
+      context '#call (instance method)' do
         it 'will return an array of Agent objects' do
           decoder_response.each do |identifier|
             expect(converter).to receive(:call).with(identifier: identifier).and_return(agent)
