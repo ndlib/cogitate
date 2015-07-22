@@ -17,9 +17,17 @@ class Identifier
       false
     end
 
+    def attribute_keys
+      []
+    end
+
     extend Forwardable
     include Comparable
-    def_delegators :identifier, :strategy, :<=>, :identifying_value
+    def_delegators :identifier, :<=>, :identifying_value
+
+    def strategy
+      "unverified/#{identifier.strategy}"
+    end
 
     private
 
