@@ -10,7 +10,7 @@ RSpec.describe Identifier::Unverified do
   it { should contractually_honor(Cogitate::Interfaces::VerifiableIdentifierInterface) }
   its(:verified?) { should be_falsey }
   its(:attribute_keys) { should be_empty }
-  its(:strategy) { should eq("unverified/#{identifier.strategy}")}
+  its(:strategy) { should eq("unverified/#{identifier.strategy}") }
   it { should delegate_method(:identifying_value).to(:identifier) }
   it { should delegate_method(:<=>).to(:identifier) }
 end
