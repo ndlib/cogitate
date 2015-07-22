@@ -25,14 +25,21 @@ class Identifier
         true
       end
 
+      def attribute_keys
+        ATTRIBUTE_NAMES
+      end
+
       attr_reader(*ATTRIBUTE_NAMES)
 
       extend Forwardable
       include Comparable
-      def_delegators :identifier, :strategy, :<=>
+      # TODO: Consider if :<=> should be a mixin module for comparison? In delegating down to the identifier, I'm ignoring that
+      #   I could be comparing a verified identifier to an unverified identifier and say they are the same.
+      def_delegators :identifier, :identifying_value, :<=>
 
-      # TODO: Should we guard that the identifying_value and the netid are the same?
-      alias_method :identifying_value, :netid
+      def strategy
+        "verified/#{identifier.strategy}"
+      end
 
       private
 
