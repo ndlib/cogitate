@@ -10,9 +10,9 @@ module Cogitate
       end
 
       include Contracts
-      def initialize(identifier:, visitor: default_visitor, identifying_host_extractor: default_identifying_host_extractor)
+      def initialize(identifier:, visitor_builder: default_visitor_builder, identifying_host_extractor: default_identifying_host_extractor)
         self.identifier = identifier
-        self.visitor = visitor
+        self.visitor = visitor_builder.call
         self.identifying_host_extractor = identifying_host_extractor
       end
 
@@ -35,9 +35,9 @@ module Cogitate
         IdentifyingHostExtractor
       end
 
-      def default_visitor
+      def default_visitor_builder
         require 'agent/visitor' unless defined?(Agent::Visitor)
-        Agent::Visitor.new
+        Agent::Visitor.method(:new)
       end
     end
   end

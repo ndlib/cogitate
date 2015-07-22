@@ -12,7 +12,7 @@ module Cogitate
       include Cogitate::RSpecMatchers
 
       its(:default_identifying_host_extractor) { should respond_to(:call) }
-      its(:default_visitor) { should contractually_honor(Cogitate::Interfaces::VisitorV2Interface) }
+      its(:default_visitor_builder) { should respond_to(:call) }
 
       context '.call' do
         it 'is a convenience method and public API endpoint' do
