@@ -8,11 +8,17 @@ module Cogitate
       # @api public
       class ParrotingStrategy
         extend Contracts
+
+        # @api public
         Contract(Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] => Cogitate::Interfaces::HostInterface)
         def self.call(identifier:)
           new(identifier: identifier)
         end
 
+        # @param identifier [Cogitate::Interfaces::IdentifierInterface]
+        # @param identifier_builder [#call(identifier:)] I want make sure that I have an unverified identifier
+        #
+        # @todo What if we already have a Identifier::Unverified
         def initialize(identifier:, identifier_builder: default_identifier_builder)
           self.identifier = identifier_builder.call(identifier: identifier)
         end
