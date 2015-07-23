@@ -16,6 +16,61 @@ Welcome to Cogitate, a federated identity management system for managing:
   * Parroted identities (ask for the identity of a Kroger Card number, you'll get back a Kroger card number)
 * User authentication through various providers
 
+## API
+
+### GET Agents
+
+#### Request
+
+```console
+GET /api/agents/:urlsafe_base64_encoded_identifiers
+Accept application/vnd.api+json
+```
+
+The `:urlsafe_base64_encoded_identifiers` follow the format:
+
+```ruby
+require 'base64'
+identifier = ":strategy\t:identifying_value"
+urlsafe_base64_encoded_identifiers = Base64.urlsafe_encode64(identifier)
+```
+
+* `:strategy` is the identifying type (i.e. Netid, Orcid, Email).
+* `:urlsafe_base64_encoded_identifiers` is the value/string for that identying type.
+
+```ruby
+require 'base64'
+Base64.urlsafe_encode64("orcid\t0000-0002-1191-0873")
+=> "b3JjaWQJMDAwMC0wMDAyLTExOTEtMDg3Mw=="
+```
+
+**Note:** Delimit multiple identifiers with a new line (i.e. `\n`).
+
+#### Response
+
+```json
+{
+  "links": {
+    "self": "http://localhost:3000/api/agents/b3JjaWQJMDAwMC0wMDAyLTExOTEtMDg3Mw=="
+  },
+  "data": [{
+    "type": "agents",
+    "id": "b3JjaWQJMDAwMC0wMDAyLTExOTEtMDg3Mw==",
+    "attributes": {
+      "strategy": "orcid",
+      "identifying_value": "0000-0002-1191-0873"
+    },
+    "relationships": {
+      "identities": [{
+        "type": "unverified/orcid",
+        "id": "0000-0002-1191-0873"
+      }],
+      "verified_identities": []
+    }
+  }]
+}
+```
+
 ## Roadmap
 
 As we looked to break apart our monolith applications, it became clear that we needed a centralized authentication and identity service.
