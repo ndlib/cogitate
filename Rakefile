@@ -12,8 +12,8 @@ Rake::Task["default"].clear
 task(
   default: [
     'commitment:rubocop',
-    'commitment:jshint',
-    'commitment:scss_lint',
+    # 'commitment:jshint',
+    # 'commitment:scss_lint',
     'commitment:configure_test_for_code_coverage',
     'spec',
     'commitment:code_coverage',

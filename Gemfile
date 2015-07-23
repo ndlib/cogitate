@@ -1,13 +1,8 @@
 source 'https://rubygems.org'
 ruby '2.2.2'
 
-gem 'rails', '4.2.3'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
-gem 'jquery-rails'
+gem 'rails-api'
 gem 'jbuilder', '~> 2.0'
-gem 'bootstrap-sass'
 gem 'figaro', '>= 1.0.0.rc1'
 gem 'mysql2'
 gem 'contracts'
@@ -32,11 +27,15 @@ group :development do
   gem 'capistrano-rails-console'
   gem 'capistrano-rvm', '~> 0.1.1'
   gem 'quiet_assets'
-  gem 'rails_layout'
 end
 
 group :documentation do
   gem 'yard'
   gem 'yard-contracts'
   gem 'yard-activerecord'
+end
+
+group :brakeman do
+  # A shim to help brakeman
+  gem 'rails', require: false
 end

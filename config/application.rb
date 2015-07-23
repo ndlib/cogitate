@@ -22,7 +22,9 @@ module Cogitate
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
+
+    # REMOVED FROM RAILS-API
+    # config.active_record.raise_in_transactional_callbacks = true
 
     %w(interfaces repositories services).each do |concept|
       config.autoload_paths << Rails.root.join("app/#{concept}")
