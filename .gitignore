@@ -80,3 +80,4 @@ pickle-email-*.html
 .powenv
 
 tags
+.tags*
