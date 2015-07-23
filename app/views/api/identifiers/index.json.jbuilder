@@ -20,7 +20,7 @@ json.data(@agents) do |agent|
       end
     end
 
-    json.verified_identities(agent.identities) do |identity|
+    json.verified_identities(agent.verified_authentication_vectors) do |identity|
       json.type identity.strategy
       json.id identity.identifying_value
       json.attributes do
