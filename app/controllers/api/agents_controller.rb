@@ -1,6 +1,6 @@
 module Api
   # The controller to handle an identifiers request
-  class IdentifiersController < ApplicationController
+  class AgentsController < ApplicationController
     before_action :force_json_format # This is the quickest mechanism to force API structure
 
     def index

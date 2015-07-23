@@ -3,7 +3,7 @@ require 'base64'
 require 'cogitate/interfaces'
 
 module Api
-  RSpec.describe IdentifiersController, type: :controller do
+  RSpec.describe AgentsController, type: :controller do
     context 'GET :index' do
       let(:encoded_identifiers) { Base64.urlsafe_encode64("ketchup\tsauce") }
 
