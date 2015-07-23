@@ -9,19 +9,24 @@
 
 Welcome to Cogitate, a federated identity management system for managing:
 
-* User authentication through various providers
 * User identities through:
   * Group membership
   * Alternate authentication strategies (ORCID, email, etc.)
   * Non-verifiable identities (Preferred Name, Scopus, etc.)
+  * Parroted identities (ask for the identity of a Kroger Card number, you'll get back a Kroger card number)
+* User authentication through various providers
 
 ## Roadmap
+
+As we looked to break apart our monolith applications, it became clear that we needed a centralized authentication and identity service.
+It was also clear that our institutional service was inadequate due to the nature of scholarly collaboration crossing boundaries of institutions and individuals.
 
 ### Phase 1
 
 * Agent Identifiers
   * ~~Verified Netid~~
   * ~~Unverified Netid~~
+  * ~~Unverified "Parrot" identity (i.e. ask for any identity and you'll at least get it back)~~
   * Verified group
   * Unverified group
 * Authentication
