@@ -15,6 +15,29 @@ Welcome to Cogitate, a federated identity management system for managing:
   * Alternate authentication strategies (ORCID, email, etc.)
   * Non-verifiable identities (Preferred Name, Scopus, etc.)
 
+## Roadmap
+
+### Phase 1
+
+* Agent Identifiers
+  * ~~Verified Netid~~
+  * ~~Unverified Netid~~
+  * Verified group
+  * Unverified group
+* Authentication
+  * Campus Authentication Service (CAS)
+
+### Phase 2
+
+* Agent Identifiers
+  * Verified OAuth2 account (i.e. Orcid)
+  * Unverified OAuth2 account (i.e. Orcid)
+  * Verified email address
+  * Unverified email address
+* Authentication
+  * OAuth2 provider
+  * One-time URL (for emails)
+
 ## Tasks and Automation
 
 * Generating documentation: `$ bundle exec yardoc --plugin contracts`
