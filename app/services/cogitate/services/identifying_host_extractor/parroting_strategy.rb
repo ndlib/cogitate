@@ -13,8 +13,8 @@ module Cogitate
           new(identifier: identifier)
         end
 
-        def initialize(identifier:)
-          self.identifier = identifier
+        def initialize(identifier:, identifier_builder: default_identifier_builder)
+          self.identifier = identifier_builder.call(identifier: identifier)
         end
 
         def invite(guest)
@@ -24,6 +24,11 @@ module Cogitate
         private
 
         attr_accessor :identifier
+
+        def default_identifier_builder
+          require 'identifier/unverified' unless defined?(Identifier::Unverified)
+          Identifier::Unverified.method(:new)
+        end
       end
     end
   end
