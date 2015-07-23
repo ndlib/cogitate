@@ -86,7 +86,7 @@ class Agent
       input
     end
 
-    Contract(Cogitate::Interfaces::VerifiedAuthenticationVectorInterface => Cogitate::Interfaces::VerifiedAuthenticationVectorInterface)
+    Contract(Cogitate::Interfaces::VerifiedIdentifierInterface => Cogitate::Interfaces::VerifiedIdentifierInterface)
     def add_verified_authentication_vector(input)
       agent.verified_authentication_vectors << input
       input

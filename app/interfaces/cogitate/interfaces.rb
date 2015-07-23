@@ -15,7 +15,7 @@ module Cogitate
     AgentCollectorInitializationInterface = KeywordArgs[visitor: VisitorInterface, agent: Optional[AgentInterface]]
 
     # All identifiers must be comparable, otherwise we could spiral into an endless visitation of related identifiers
-    VerifiedAuthenticationVectorInterface = RespondTo[:strategy, :identifying_value, :<=>]
+    VerifiedIdentifierInterface = RespondTo[:strategy, :identifying_value, :<=>]
 
     AuthenticationVectorNetidInterface = And[
       RespondTo[:first_name, :last_name, :netid, :full_name, :ndguid, :strategy, :identifying_value],
