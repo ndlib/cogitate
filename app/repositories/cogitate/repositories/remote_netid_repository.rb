@@ -8,6 +8,8 @@ require 'identifier/unverified'
 
 module Cogitate
   module Repositories
+    # @api private
+    #
     # Container for repository services against the remote netid API
     module RemoteNetidRepository
       extend Contracts
