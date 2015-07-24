@@ -20,7 +20,6 @@ class Agent
   end
 
   # @api public
-  #
   # @return [Enumerable] These are identities that this Agent makes claims to; However the claims have not been confirmed by a third-party.
   attr_reader :identities
 
