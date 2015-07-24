@@ -16,6 +16,37 @@ Welcome to Cogitate, a federated identity management system for managing:
   * Parroted identities (ask for the identity of a Kroger Card number, you'll get back a Kroger card number)
 * User authentication through various providers
 
+## Documentation and Semantic Versioning
+
+A note on documentation and semantic versioning.
+
+### Public API (via Yardoc tags)
+
+A Public API means that we are committing to preserving the method
+signature, return value, and existence of the method. If we want to
+remove this method, we will need to bump to a major version. We should
+also provide a deprecation warning and guidance on what to do.
+
+```ruby
+# @api public
+def method_signature_and_return_value_must_be_preserved
+end
+```
+
+### Private API (via Yardoc tags)
+
+A Private API means that we are not making promises to preserve
+the method signature, return value, or even existence of the
+method.
+
+In other words, beware, this method may not be around for the long-haul.
+
+```ruby
+# @api private
+def method_signature_and_return_value_may_be_changed
+end
+```
+
 ## API
 
 ### GET Agents
