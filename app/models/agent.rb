@@ -24,6 +24,7 @@ class Agent
   attr_reader :verified_authentication_vectors
 
   # @return [Cogitate::Interfaces::IdentifierInterface] What has been assigned as the primary identifier of this agent.
+  Contract(Contracts::None => Cogitate::Interfaces::IdentifierInterface)
   attr_reader :primary_identifier
 
   extend Forwardable
