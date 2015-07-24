@@ -268,7 +268,7 @@ DEPENDENCIES
   pry-rails
   pry-rescue
   quiet_assets
-  rails
+  rails (~> 4.2)
   rails-api
   rspec-its
   rspec-rails

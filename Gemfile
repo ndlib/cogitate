@@ -36,6 +36,7 @@ group :documentation do
 end
 
 group :brakeman do
-  # A shim to help brakeman
-  gem 'rails', require: false
+  # A shim to help brakeman; Without this Brakeman detects that we
+  # are running Rails 3.x and that there are numerous vulnerabilites
+  gem 'rails', '~> 4.2', require: false
 end
