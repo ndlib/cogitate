@@ -22,6 +22,10 @@ AllCops:
     - 'db/migrate/**/*'
   RunRailsCops: true
 
+AbcSize:
+  Exclude:
+    - app/models/repository_service/identifier_relationship.rb
+
 LineLength:
   Description: 'Limit lines to 140 characters.'
   Max: 140

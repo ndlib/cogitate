@@ -5,6 +5,7 @@ module Cogitate
   module Interfaces
     include Contracts
     IdentifierInterface = RespondTo[:strategy, :identifying_value, :<=>]
+    IdentifierCollectionInterface = Contracts::ArrayOf[Cogitate::Interfaces::IdentifierInterface]
 
     AgentInterface = RespondTo[:identities, :verified_authentication_vectors]
     AgentCollectionInterface = Contracts::ArrayOf[Cogitate::Interfaces::AgentInterface]
