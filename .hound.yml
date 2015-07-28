@@ -19,6 +19,7 @@ AllCops:
     - 'tmp/**/*'
     - 'bin/**/*'
     - 'db/schema.rb'
+    - 'db/migrate/**/*'
   RunRailsCops: true
 
 LineLength:
