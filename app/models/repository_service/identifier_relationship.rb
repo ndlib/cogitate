@@ -14,7 +14,8 @@ module RepositoryService
     #
     # @api public
     # @param identifier [Identifier]
-    # @return If a block is given, it will yield each identifier. Otherwise an Enumerator is returned.
+    # @return If a block is given, it will yield each identifier. Otherwise an Enumerator is returned (and you can use #each on
+    #         that Enumerator).
     # @note This method violates Assignment Branch Condition complexity but I feel this is an acceptable compromise given
     #       that the other option is extracting two private methods and passing a lambda into each of those
     def self.each_identifier_related_to(identifier:)
