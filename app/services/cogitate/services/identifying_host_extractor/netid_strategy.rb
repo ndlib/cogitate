@@ -93,7 +93,8 @@ module Cogitate
           end
 
           def default_group_visitation_service
-            -> (**) {}
+            require 'cogitate/services/identifier_visitations/visit_verified_group'
+            IdentifierVisitations::VisitVerifiedGroup
           end
         end
         private_constant :Host
