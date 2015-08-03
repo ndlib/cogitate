@@ -11,10 +11,11 @@ class Identifier
     it { should contractually_honor(Cogitate::Interfaces::AuthenticationVectorNetidInterface) }
     it { should delegate_method(:identifying_value).to(:identifier) }
     it { should delegate_method(:<=>).to(:identifier) }
+    it { should delegate_method(:base_identifying_value).to(:identifier) }
+    it { should delegate_method(:base_strategy).to(:identifier) }
     its(:first_name) { should eq('A First Name') }
     its(:attribute_keys) { should be_a(Array) }
     its(:strategy) { should eq("verified/#{identifier.strategy}") }
-    its(:base_identifier) { should eq(identifier) }
 
     it 'will not obliterate the given identifier if the attributes have an identifier' do
       subject = described_class.new(identifier: identifier, attributes: { identifier: 'something else' })

@@ -23,7 +23,7 @@ class Identifier
 
     extend Forwardable
     include Comparable
-    def_delegators :identifier, :<=>, :identifying_value
+    def_delegators :identifier, :<=>, :identifying_value, :base_strategy, :base_identifying_value
 
     def strategy
       "unverified/#{identifier.strategy}"
@@ -32,7 +32,5 @@ class Identifier
     private
 
     attr_accessor :identifier
-    alias_method :base_identifier, :identifier
-    public :base_identifier
   end
 end
