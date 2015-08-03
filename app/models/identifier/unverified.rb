@@ -32,5 +32,7 @@ class Identifier
     private
 
     attr_accessor :identifier
+    alias_method :base_identifier, :identifier
+    public :base_identifier
   end
 end

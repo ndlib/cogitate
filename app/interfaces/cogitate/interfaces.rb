@@ -4,7 +4,7 @@ module Cogitate
   # Herein lies the Cogitate namespace
   module Interfaces
     include Contracts
-    IdentifierInterface = RespondTo[:strategy, :identifying_value, :<=>]
+    IdentifierInterface = RespondTo[:strategy, :identifying_value, :<=>, :base_identifier]
     IdentifierCollectionInterface = Contracts::ArrayOf[Cogitate::Interfaces::IdentifierInterface]
 
     AgentInterface = RespondTo[:identities, :verified_authentication_vectors]
@@ -16,7 +16,7 @@ module Cogitate
     AgentCollectorInitializationInterface = KeywordArgs[visitor: VisitorInterface, agent: Optional[AgentInterface]]
 
     # All identifiers must be comparable, otherwise we could spiral into an endless visitation of related identifiers
-    VerifiedIdentifierInterface = RespondTo[:strategy, :identifying_value, :<=>]
+    VerifiedIdentifierInterface = IdentifierInterface
 
     AuthenticationVectorNetidInterface = And[
       RespondTo[:first_name, :last_name, :netid, :full_name, :ndguid, :strategy, :identifying_value],

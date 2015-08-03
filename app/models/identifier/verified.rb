@@ -46,6 +46,8 @@ class Identifier
       attr_accessor :identifier
 
       attr_writer(*ATTRIBUTE_NAMES)
+      alias_method :base_identifier, :identifier
+      public :base_identifier
     end
   end
 end

@@ -40,7 +40,7 @@ class Agent
     it { should contractually_honor(Cogitate::Interfaces::IdentityCollectorInterface) }
     it { should contractually_honor(Cogitate::Interfaces::VisitorInterface) }
 
-    let(:identity) { double(strategy: '', identifying_value: '', :<=> => '') }
+    let(:identity) { Identifier.new(strategy: '', identifying_value: '') }
 
     context '#visit' do
       it 'will delegate visit to the visitor' do

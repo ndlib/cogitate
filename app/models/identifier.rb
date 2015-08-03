@@ -24,6 +24,10 @@ class Identifier
   # @return [String]
   attr_reader :identifying_value
 
+  def base_identifier
+    self
+  end
+
   include Comparable
 
   # @api public
