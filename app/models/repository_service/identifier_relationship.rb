@@ -31,6 +31,7 @@ module RepositoryService
         yield(Identifier.new(strategy: relationship.left_strategy, identifying_value: relationship.left_identifying_value))
       end
     end
+    private_class_method :each_left_identifier_related_to
 
     # @api private
     def self.each_right_identifier_related_to(identifier:, strategy: nil)
@@ -39,6 +40,6 @@ module RepositoryService
         yield(Identifier.new(strategy: relationship.right_strategy, identifying_value: relationship.right_identifying_value))
       end
     end
-    private_class_method :each_left_identifier_related_to, :each_right_identifier_related_to
+    private_class_method :each_right_identifier_related_to
   end
 end
