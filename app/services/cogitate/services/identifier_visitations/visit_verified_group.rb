@@ -11,9 +11,6 @@ module Cogitate
           new(group_member_identifier: identifier, guest: visitor, **keywords).call
         end
 
-        # REVIEW: Extract to a more appropriate container?
-        GROUP_STRATEGY = 'group'.freeze
-
         # @api private
         # @see Cogitate::Serivces::IdentifierVisitations::VisitVerifiedGroup.call
         Contract(
@@ -49,16 +46,14 @@ module Cogitate
         end
 
         def initialize_group_identifier_enumerator!
-          @verified_group_identifier_enumerator = repository.each_identifier_related_to(
-            identifier: group_member_identifier, strategy: GROUP_STRATEGY
-          )
+          @verified_group_identifier_enumerator = repository.with_verified_group_identifier_related_to(identifier: group_member_identifier)
         end
 
         attr_reader :verified_group_identifier_enumerator
 
         def default_repository
-          require 'repository_service/identifier_relationship'
-          RepositoryService::IdentifierRelationship
+          require 'cogitate/query_repository'
+          Cogitate::QueryRepository.new
         end
       end
     end

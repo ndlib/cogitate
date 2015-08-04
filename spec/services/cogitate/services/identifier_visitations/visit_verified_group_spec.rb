@@ -9,13 +9,13 @@ module Cogitate
         let(:guest) { double(visit: true) }
         let(:visitor) { double(add_identity: true, add_verified_authentication_vector: true) }
         let(:group_identifier) { Identifier.new(strategy: 'group', identifying_value: 'one') }
-        let(:repository) { double(each_identifier_related_to: [group_identifier]) }
+        let(:repository) { double(with_verified_group_identifier_related_to: [group_identifier]) }
 
         subject { described_class.new(group_member_identifier: identifier, guest: guest, repository: repository) }
 
         before { allow(guest).to receive(:visit).with(group_identifier).and_yield(visitor) }
 
-        its(:default_repository) { should respond_to(:each_identifier_related_to) }
+        its(:default_repository) { should respond_to(:with_verified_group_identifier_related_to) }
 
         context '.call' do
           it 'will call the underlying instantiated object' do
