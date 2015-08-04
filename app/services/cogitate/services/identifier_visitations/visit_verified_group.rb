@@ -31,7 +31,7 @@ module Cogitate
 
         # @api public
         def call
-          group_identifier_enumerator.each do |group_identifier|
+          verified_group_identifier_enumerator.each do |group_identifier|
             guest.visit(group_identifier) do |visitor|
               receive(visitor: visitor, group_identifier: group_identifier)
             end
@@ -49,14 +49,15 @@ module Cogitate
         end
 
         def initialize_group_identifier_enumerator!
-          @group_identifier_enumerator = repository.each_identifier_related_to(
+          @verified_group_identifier_enumerator = repository.each_identifier_related_to(
             identifier: group_member_identifier, strategy: GROUP_STRATEGY
           )
         end
 
-        attr_reader :group_identifier_enumerator
+        attr_reader :verified_group_identifier_enumerator
 
         def default_repository
+          require 'repository_service/identifier_relationship'
           RepositoryService::IdentifierRelationship
         end
       end
