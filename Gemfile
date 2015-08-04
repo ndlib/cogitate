@@ -8,6 +8,7 @@ gem 'mysql2'
 gem 'contracts'
 gem 'omniauth'
 gem 'omniauth-cas'
+gem 'jwt'
 
 group :development, :test do
   gem 'web-console', '~> 2.0'
