@@ -32,10 +32,6 @@ class Identifier
   # @return [String]
   alias_method :base_strategy, :strategy
 
-  def attribute_keys
-    []
-  end
-
   def as_json(*)
     {}
   end

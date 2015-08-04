@@ -11,7 +11,7 @@ class Identifier
     # @return Class
     def self.build_named_strategy(*given_attribute_keys)
       Class.new do
-        class_attribute :attribute_keys
+        class_attribute :attribute_keys, instance_predicate: false, instance_writer: false
         self.attribute_keys = given_attribute_keys.freeze
 
         define_method :initialize do |identifier:, attributes:|

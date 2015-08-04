@@ -17,10 +17,6 @@ class Identifier
       false
     end
 
-    def attribute_keys
-      []
-    end
-
     def as_json(*)
       {}
     end
