@@ -6,6 +6,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'figaro', '~> 1.1'
 gem 'mysql2'
 gem 'contracts'
+gem 'omniauth'
 
 group :development, :test do
   gem 'web-console', '~> 2.0'
