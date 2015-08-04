@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150728172516) do
+ActiveRecord::Schema.define(version: 20150804123029) do
+
+  create_table "groups", id: false, force: :cascade do |t|
+    t.string   "id",          limit: 255
+    t.string   "name",        limit: 255,   null: false
+    t.text     "description", limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "groups", ["id"], name: "index_groups_on_id", unique: true, using: :btree
+  add_index "groups", ["name"], name: "index_groups_on_name", unique: true, using: :btree
 
   create_table "repository_service_identifier_relationships", force: :cascade do |t|
     t.string   "left_strategy",           limit: 255, null: false
