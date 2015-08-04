@@ -113,8 +113,8 @@ It was also clear that our institutional service was inadequate due to the natur
   * ~~Verified Netid~~
   * ~~Unverified Netid~~
   * ~~Unverified "Parrot" identity (i.e. ask for any identity and you'll at least get it back)~~
-  * Verified group
-  * Unverified group
+  * ~~Verified group~~
+  * Unverified group - What does this mean?
 * Authentication
   * Campus Authentication Service (CAS)
 
