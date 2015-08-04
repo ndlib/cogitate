@@ -116,7 +116,8 @@ It was also clear that our institutional service was inadequate due to the natur
   * ~~Verified group~~
   * Unverified group - What does this mean?
 * Authentication
-  * Campus Authentication Service (CAS)
+  * ~~Campus Authentication Service (CAS)~~
+  * Passback a ticket to the primary application
 
 ### Phase 2
 
