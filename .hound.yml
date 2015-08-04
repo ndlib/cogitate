@@ -25,6 +25,11 @@ AllCops:
 AbcSize:
   Exclude:
     - app/models/repository_service/identifier_relationship.rb
+    - app/models/identifier/verified.rb
+
+MethodLength:
+  Exclude:
+    - app/models/identifier/verified.rb
 
 LineLength:
   Description: 'Limit lines to 140 characters.'

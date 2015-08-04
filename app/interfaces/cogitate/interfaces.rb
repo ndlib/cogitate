@@ -33,5 +33,6 @@ module Cogitate
     FindNetidRepositoryInterface = RespondTo[:find]
 
     VerifiableIdentifierInterface = And[IdentifierInterface, RespondTo[:verified?]]
+    VerifiedGroupInterface = And[VerifiableIdentifierInterface, RespondTo[:name, :description]]
   end
 end
