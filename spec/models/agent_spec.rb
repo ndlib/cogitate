@@ -17,6 +17,7 @@ RSpec.describe Agent do
 
   it { should delegate_method(:strategy).to(:primary_identifier) }
   it { should delegate_method(:identifying_value).to(:primary_identifier) }
+  it { should delegate_method(:as_json).to(:serializer) }
 
   its(:type) { should eq(described_class::JSON_API_TYPE) }
 
