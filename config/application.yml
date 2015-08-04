@@ -10,6 +10,7 @@ hesburgh_api_host: https://api.library.nd.edu/
 protocol: 'http'
 airbrake_api_key: 'this-makes-no-sense'
 airbrake_host: 'errbit.library.nd.edu'
+omniauth_cas_url: 'https://cas.library.nd.edu/cas'
 
 development:
   domain_name: "localhost:3000"
