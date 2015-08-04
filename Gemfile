@@ -7,6 +7,7 @@ gem 'figaro', '~> 1.1'
 gem 'mysql2'
 gem 'contracts'
 gem 'omniauth'
+gem 'omniauth-cas'
 
 group :development, :test do
   gem 'web-console', '~> 2.0'
