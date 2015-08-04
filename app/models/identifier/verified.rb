@@ -23,6 +23,13 @@ class Identifier
           self
         end
 
+        define_method :as_json do |*|
+          attribute_keys.each_with_object({}) do |key, mem|
+            mem[key] = send(key)
+            mem
+          end
+        end
+
         define_method(:verified?) { true }
         define_method(:strategy) { "verified/#{identifier.strategy}" }
 

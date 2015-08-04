@@ -21,6 +21,10 @@ class Identifier
       []
     end
 
+    def as_json(*)
+      {}
+    end
+
     extend Forwardable
     include Comparable
     def_delegators :identifier, :<=>, :identifying_value, :base_strategy, :base_identifying_value

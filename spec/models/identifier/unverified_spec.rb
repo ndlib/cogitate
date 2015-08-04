@@ -12,6 +12,7 @@ RSpec.describe Identifier::Unverified do
   its(:verified?) { should be_falsey }
   its(:attribute_keys) { should be_empty }
   its(:strategy) { should eq("unverified/#{identifier.strategy}") }
+  its(:as_json) { should eq({}) }
   it { should delegate_method(:identifying_value).to(:identifier) }
   it { should delegate_method(:<=>).to(:identifier) }
   it { should delegate_method(:base_strategy).to(:identifier) }

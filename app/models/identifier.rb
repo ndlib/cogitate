@@ -36,6 +36,10 @@ class Identifier
     []
   end
 
+  def as_json(*)
+    {}
+  end
+
   include Comparable
 
   # @api public
