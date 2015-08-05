@@ -15,6 +15,7 @@ AllCops:
   Include:
     - Rakefile
   Exclude:
+    - scripts/**/*
     - 'vendor/**/*'
     - 'tmp/**/*'
     - 'bin/**/*'
