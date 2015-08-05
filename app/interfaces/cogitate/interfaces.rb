@@ -24,7 +24,9 @@ module Cogitate
     ]
 
     HostInterface = RespondTo[:invite]
-    HostInitializationInterface = KeywordArgs[invitation_strategy: Symbol, identifier: IdentifierInterface]
+    HostInitializationInterface = KeywordArgs[
+      invitation_strategy: Symbol, identifier: IdentifierInterface, group_visitation_service: RespondTo[:call]
+    ]
     HostBuilderInterface = Func[HostInitializationInterface]
 
     IdentifierInitializationInterface = KeywordArgs[strategy: RespondTo[:to_s], identifying_value: Any]

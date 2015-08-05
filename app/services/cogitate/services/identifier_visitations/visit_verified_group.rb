@@ -15,7 +15,8 @@ module Cogitate
         # @see Cogitate::Serivces::IdentifierVisitations::VisitVerifiedGroup.call
         Contract(
           Contracts::KeywordArgs[
-            group_member_identifier: Cogitate::Interfaces::IdentifierInterface, guest: Cogitate::Interfaces::VisitorInterface
+            group_member_identifier: Cogitate::Interfaces::IdentifierInterface, guest: Cogitate::Interfaces::VisitorInterface,
+            repository: RespondTo[:with_verified_group_identifier_related_to]
           ] => Contracts::RespondTo[:call]
         )
         def initialize(group_member_identifier:, guest:, repository: default_repository)
