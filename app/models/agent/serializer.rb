@@ -35,7 +35,7 @@ class Agent
     end
 
     def verified_identities_as_json
-      agent.verified_authentication_vectors.each_with_object([]) do |identity, mem|
+      agent.verified_identities.each_with_object([]) do |identity, mem|
         mem << { 'type' => identity.strategy, 'id' => identity.identifying_value, 'attributes' => identity.as_json }
       end
     end

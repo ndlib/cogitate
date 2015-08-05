@@ -14,7 +14,7 @@ class Agent
   Contract(Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] => Cogitate::Interfaces::AgentInterface)
   def initialize(identifier:, container: default_container, serializer_builder: default_serializer_builder)
     self.identities = container.new
-    self.verified_authentication_vectors = container.new
+    self.verified_identities = container.new
     self.primary_identifier = identifier
     self.serializer = serializer_builder.call(agent: self)
     self
@@ -25,7 +25,7 @@ class Agent
   attr_reader :identities
 
   # @return [Enumerable] These are identifiers (and associated information) that has been verified
-  attr_reader :verified_authentication_vectors
+  attr_reader :verified_identities
 
   # @return [Cogitate::Interfaces::IdentifierInterface] What has been assigned as the primary identifier of this agent.
   Contract(Contracts::None => Cogitate::Interfaces::IdentifierInterface)
@@ -48,7 +48,7 @@ class Agent
 
   private
 
-  attr_writer :identities, :verified_authentication_vectors
+  attr_writer :identities, :verified_identities
 
   Contract(Cogitate::Interfaces::IdentifierInterface => Contracts::Any)
   attr_writer :primary_identifier

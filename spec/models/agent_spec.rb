@@ -13,7 +13,7 @@ RSpec.describe Agent do
 
   its(:identities) { should be_a(Set) }
   its(:primary_identifier) { should eq(identifier) }
-  its(:verified_authentication_vectors) { should be_a(Set) }
+  its(:verified_identities) { should be_a(Set) }
 
   it { should delegate_method(:strategy).to(:primary_identifier) }
   it { should delegate_method(:identifying_value).to(:primary_identifier) }

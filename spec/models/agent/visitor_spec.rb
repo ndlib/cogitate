@@ -33,7 +33,7 @@ class Agent
   end
 
   RSpec.describe Collector do
-    let(:agent) { double(identities: [], verified_authentication_vectors: []) }
+    let(:agent) { double(identities: [], verified_identities: []) }
     let(:visitor) { double(visit: true) }
     subject { described_class.new(visitor: visitor, agent: agent) }
     include Cogitate::RSpecMatchers
@@ -57,7 +57,7 @@ class Agent
     end
     context '#add_verified_authentication_vector' do
       it 'will update the given agent' do
-        expect { subject.add_verified_authentication_vector(identity) }.to change(agent, :verified_authentication_vectors).to([identity])
+        expect { subject.add_verified_authentication_vector(identity) }.to change(agent, :verified_identities).to([identity])
       end
     end
   end

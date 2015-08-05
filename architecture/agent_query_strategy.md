@@ -58,8 +58,8 @@ In the below example, the response document assumes `:urlsafe_base64_encoded_ide
     "id": "the-given-identifier",
     "attributes": { "preferred_name": "Jeremy Friesen", "preferred_email": "jeremy@friesen.com" },
     "relationships": {
-      "verified_authentication_vectors": [
-        { "type": "verified_authentication_vectors", "id": "1234", "attributes": { "strategy": "netid" } },
+      "verified_identities": [
+        { "type": "verified_identities", "id": "1234", "attributes": { "strategy": "netid" } },
       ],
       "identities": [
         { "type": "authentication_vectors", "id": "1234", "attributes": { "strategy": "netid" } },
