@@ -7,7 +7,7 @@ RSpec.describe SessionsController do
 
     it "will return a 403 (Forbidden) when handling an invalid request" do
       allow_any_instance_of(described_class::NewActionConstraintHandler).to receive(:valid?).and_return(false)
-      get :new, after_authentication_callback_url:  CGI.escape(the_after_authentication_callback_url)
+      get :new, after_authentication_callback_url: CGI.escape(the_after_authentication_callback_url)
       expect(response).to have_http_status(403)
       expect(response.body).to eq(described_class::FORBIDDEN_TEXT_FOR_NEW)
     end

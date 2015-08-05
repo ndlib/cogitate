@@ -3,7 +3,7 @@ require 'identifier'
 # Responsible for negotiating session authentication
 class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  QUERY_KEY_FOR_AFTER_AUTHENTICATION_CALLBACK_URL =  :after_authentication_callback_url
+  QUERY_KEY_FOR_AFTER_AUTHENTICATION_CALLBACK_URL = :after_authentication_callback_url
   FORBIDDEN_TEXT_FOR_NEW = "FORBIDDEN: Expected query parameter 'after_authentication_callback_url' to be a CGI escaped Secure URL".freeze
 
   # @api public
