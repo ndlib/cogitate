@@ -128,7 +128,10 @@ It was also clear that our institutional service was inadequate due to the natur
 * Authentication
   * ~~Campus Authentication Service (CAS)~~
   * ~~Handle a request for Cogitate to broker the authentication~~
-  * Passback a ticket to the primary application
+  * ~~Passback a ticket to the primary application~~
+* Communication Channels
+  * For a given Agent what are their communication vectors (i.e. Email, Phone #, Twitter handle)
+  * What is the primary email address for a given Agent
 
 ### Phase 2
 
