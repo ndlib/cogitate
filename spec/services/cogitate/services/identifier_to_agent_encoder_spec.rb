@@ -1,5 +1,5 @@
 require 'spec_fast_helper'
-require 'cogitate/services/identifier_token_encoder'
+require 'cogitate/services/identifier_to_agent_encoder'
 require 'identifier'
 
 module Cogitate
@@ -23,6 +23,11 @@ module Cogitate
           expect(agent_extractor).to receive(:call).with(identifier: identifier).and_return(agent)
           expect(subject.call).to eq(token)
         end
+      end
+
+      it 'will expose .call as a public convenience method' do
+        expect_any_instance_of(described_class).to receive(:call)
+        described_class.call(identifier: identifier)
       end
     end
   end

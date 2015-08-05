@@ -3,6 +3,11 @@ module Cogitate
     # This class is responsible for:
     # * Convertin an Identifier to a corresponding Agent, then encoding that Agent as a JSON Web Token
     class IdentifierToAgentEncoder
+      # @api public
+      def self.call(identifier:, **keywords)
+        new(identifier: identifier, **keywords).call
+      end
+
       def initialize(identifier:, agent_extractor: default_agent_extractor, agent_tokenizer: default_agent_tokenizer)
         self.identifier = identifier
         self.agent_extractor = agent_extractor
