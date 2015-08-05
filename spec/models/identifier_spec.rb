@@ -9,7 +9,6 @@ RSpec.describe Identifier do
 
   its(:encoded_id) { should be_a(String) }
   its(:base_strategy) { should eq(subject.strategy) }
-  its(:attribute_keys) { should eq([]) }
   its(:base_identifying_value) { should eq(subject.identifying_value) }
 
   context '#strategy coercion' do

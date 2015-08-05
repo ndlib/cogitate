@@ -32,8 +32,8 @@ class Identifier
   # @return [String]
   alias_method :base_strategy, :strategy
 
-  def attribute_keys
-    []
+  def as_json(*)
+    {}
   end
 
   include Comparable

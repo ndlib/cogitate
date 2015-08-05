@@ -17,8 +17,8 @@ class Identifier
       false
     end
 
-    def attribute_keys
-      []
+    def as_json(*)
+      {}
     end
 
     extend Forwardable

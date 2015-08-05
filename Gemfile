@@ -1,11 +1,14 @@
 source 'https://rubygems.org'
 ruby '2.2.2'
 
-gem 'rails-api'
+gem 'rails'
 gem 'jbuilder', '~> 2.0'
 gem 'figaro', '~> 1.1'
 gem 'mysql2'
 gem 'contracts'
+gem 'omniauth'
+gem 'omniauth-cas'
+gem 'jwt'
 
 group :development, :test do
   gem 'web-console', '~> 2.0'
@@ -27,10 +30,4 @@ group :documentation do
   gem 'yard'
   gem 'yard-contracts'
   gem 'yard-activerecord'
-end
-
-group :brakeman do
-  # A shim to help brakeman; Without this Brakeman detects that we
-  # are running Rails 3.x and that there are numerous vulnerabilites
-  gem 'rails', '~> 4.2', require: false
 end

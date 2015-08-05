@@ -5,4 +5,11 @@ Rails.application.routes.draw do
     # It does mean that you need to be mindful of escaping identifiers with / in them
     get 'agents/:urlsafe_base64_encoded_identifiers', to: 'agents#index'
   end
+
+  get '/auth', to: 'sessions#new'
+
+  get '/auth/:provider/callback', to: 'sessions#create'
+  if Rails.env.test? || Rails.env.development?
+    post '/auth/developer/callback', to: 'sessions#create'
+  end
 end

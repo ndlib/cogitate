@@ -16,6 +16,7 @@ class Identifier
       it { should delegate_method(:base_strategy).to(:identifier) }
       its(:first_name) { should eq('A First Name') }
       its(:attribute_keys) { should be_a(Array) }
+      its(:as_json) { should be_a(Hash) }
       its(:strategy) { should eq("verified/#{identifier.strategy}") }
 
       it 'will not obliterate the given identifier if the attributes have an identifier' do

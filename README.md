@@ -49,6 +49,16 @@ end
 
 ## API
 
+### GET /auth?after_authentication_callback_url=<cgi escaped URL>
+
+```console
+GET /auth?after_authentication_callback_url=https%3A%2F%2Fdeposit.library.nd.edu%2Fafter_authenticate
+```
+
+This resource is responsible for brokering the actual authentication service.
+Assuming a valid `after_authentication_callback_url`, it will respond with a 302 response (and redirect) to the CAS authentication service.
+If an invalid `after_authentication_callback_url` is provided, a 403 response will be given as a response.
+
 ### GET Agents
 
 #### Request
@@ -116,7 +126,9 @@ It was also clear that our institutional service was inadequate due to the natur
   * ~~Verified group~~
   * Unverified group - What does this mean?
 * Authentication
-  * Campus Authentication Service (CAS)
+  * ~~Campus Authentication Service (CAS)~~
+  * ~~Handle a request for Cogitate to broker the authentication~~
+  * Passback a ticket to the primary application
 
 ### Phase 2
 
