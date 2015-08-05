@@ -18,6 +18,9 @@ class Identifier
       its(:attribute_keys) { should be_a(Array) }
       its(:as_json) { should be_a(Hash) }
       its(:strategy) { should eq("verified/#{identifier.strategy}") }
+      its(:attribute_keys) { should include('email') }
+      its(:attribute_keys) { should include('netid') }
+      its(:attribute_keys) { should include('full_name') }
 
       it 'will not obliterate the given identifier if the attributes have an identifier' do
         subject = described_class.new(identifier: identifier, attributes: { identifier: 'something else' })
