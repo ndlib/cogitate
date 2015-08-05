@@ -55,9 +55,9 @@ class Agent
         expect { subject.add_identity(identity) }.to change(agent, :identities).to([identity])
       end
     end
-    context '#add_verified_authentication_vector' do
+    context '#add_verified_identifier' do
       it 'will update the given agent' do
-        expect { subject.add_verified_authentication_vector(identity) }.to change(agent, :verified_identities).to([identity])
+        expect { subject.add_verified_identifier(identity) }.to change(agent, :verified_identities).to([identity])
       end
     end
   end

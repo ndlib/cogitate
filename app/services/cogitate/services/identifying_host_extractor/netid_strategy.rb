@@ -88,7 +88,7 @@ module Cogitate
 
           def receive_verified(visitor)
             visitor.add_identity(identifier)
-            visitor.add_verified_authentication_vector(identifier)
+            visitor.add_verified_identifier(identifier)
             group_visitation_service.call(identifier: identifier, visitor: visitor)
           end
 

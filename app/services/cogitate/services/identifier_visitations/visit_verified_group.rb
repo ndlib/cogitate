@@ -43,7 +43,7 @@ module Cogitate
 
         def receive(visitor:, group_identifier:)
           visitor.add_identity(group_identifier)
-          visitor.add_verified_authentication_vector(group_identifier)
+          visitor.add_verified_identifier(group_identifier)
         end
 
         def initialize_group_identifier_enumerator!
