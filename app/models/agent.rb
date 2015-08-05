@@ -24,7 +24,8 @@ class Agent
   # @return [Enumerable] These are identities that this Agent makes claims to; However the claims have not been confirmed by a third-party.
   attr_reader :identities
 
-  # @return [Enumerable] These are identifiers (and associated information) that has been verified
+  # @return [Enumerable] These are identifiers (and associated information) that has been verified. A verified identifier means that it
+  #   can be used for authorization of to act on a resource.
   attr_reader :verified_identities
 
   # @return [Cogitate::Interfaces::IdentifierInterface] What has been assigned as the primary identifier of this agent.
