@@ -1,0 +1,81 @@
+#!/usr/bin/env ruby -wU
+
+#*******************************************************************************
+#
+# CONFIGURATION OPTIONS
+#
+#*******************************************************************************
+
+CONFIG_KEYS = [:REPOSITORY_PATH].freeze
+
+REPOSITORY_PATH = ENV.fetch('REPOSITORY_PATH') { File.expand_path(File.join(File.dirname(__FILE__), '../')) }
+
+#*******************************************************************************
+#
+# HELP OPTIONS
+#
+#*******************************************************************************
+
+if ARGV.grep(/^-+h(elp)?$/i).size > 0
+  $stdout.puts ""
+  $stdout.puts "$ ./#{File.basename(__FILE__)} rails mysql"
+  $stdout.puts ""
+  $stdout.puts "This script will update the given gem dependency and commit the change."
+  $stdout.puts ""
+  $stdout.puts "Current Configuration:"
+  CONFIG_KEYS.each do |key|
+    $stdout.puts "\t#{key}='#{Object.const_get(key)}'"
+  end
+  $stdout.puts ""
+  $stdout.puts "You can override the configuration option by adding the corresponding"
+  $stdout.puts "ENV variable."
+  $stdout.puts ""
+  $stdout.puts "Example:"
+  $stdout.puts "$ REPOSITORY_PATH=/path/to/repository ./scripts/#{File.basename(__FILE__)}"
+  exit(0)
+end
+
+#*******************************************************************************
+#
+# GUARD CONDITIONS
+#
+#*******************************************************************************
+
+GEM_NAMES = ARGV
+
+# Guard that we have a clean working directory
+if `cd #{REPOSITORY_PATH} && git status --porcelain`.strip.size > 0
+  $stderr.puts "Repository @ #{REPOSITORY_PATH} did not have a clean working directory"
+  exit!(2)
+end
+
+GEM_NAMES.each do |gem_name|
+  # Guard that the update can happen
+  unless system("cd #{REPOSITORY_PATH} && bundle update #{gem_name}")
+    $stderr.puts "Unable to update #{gem_name}. See previous output."
+    exit!(3)
+  end
+
+  # Commit the changes
+  `cd #{REPOSITORY_PATH}; git add Gemfile.lock`
+
+  path_to_commit_message = File.expand_path(File.join(REPOSITORY_PATH, '../COMMIT.msg'))
+  begin
+    File.open(path_to_commit_message, 'w+') do |file|
+      file.puts "Updating #{gem_name} dependency"
+      file.puts ""
+
+      message = "$ ./script/#{File.basename(__FILE__)} #{gem_name}"
+      CONFIG_KEYS.each_with_object(message) do |key, mem|
+        if ENV.key?(key.to_s)
+          mem = "#{key}=\"#{ENV[key.to_s].to_s}\" #{mem}"
+        end
+        mem
+      end
+      file.puts message
+    end
+    $stdout.puts `cd #{REPOSITORY_PATH} && git commit -F #{path_to_commit_message}`
+  ensure
+    File.unlink(path_to_commit_message) rescue true
+  end
+end

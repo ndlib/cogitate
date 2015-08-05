@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+git log --reverse --pretty="format:## %s%n%n@%H%n%n%b" master..
