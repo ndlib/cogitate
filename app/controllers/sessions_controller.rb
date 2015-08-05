@@ -25,13 +25,21 @@ class SessionsController < ApplicationController
 
   # @todo All callbacks point to this single action. Is that the correct behavior?
   def create
-    self.current_user = Identifier.new(strategy: strategy, identifying_value: identifying_value)
-    # Generate the Agent token for this identifier
-    # Redirect back to the after_authenticate URL that is stored in the session
-    redirect_to "/api/agents/#{current_user.encoded_id}"
+    set_current_user!
+    after_authentication_callback_url = session[QUERY_KEY_FOR_AFTER_AUTHENTICATION_CALLBACK_URL]
+    if after_authentication_callback_url
+      response.headers['X-Cogitate-Authentication-Token'] = Cogitate::Services::IdentifierToAgentEncoder.call(identifier: current_user)
+      redirect_to after_authentication_callback_url
+    else
+      redirect_to "/api/agents/#{current_user.encoded_id}"
+    end
   end
 
   private
+
+  def set_current_user!
+    self.current_user = Identifier.new(strategy: strategy, identifying_value: identifying_value)
+  end
 
   def identifying_value
     auth_hash.fetch('uid')

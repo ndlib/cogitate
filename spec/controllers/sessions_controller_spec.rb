@@ -20,13 +20,29 @@ RSpec.describe SessionsController do
       expect(controller.session[:after_authentication_callback_url]).to eq(the_after_authentication_callback_url)
     end
   end
+
   context 'GET #create' do
     context 'with valid data' do
       let(:identifier) { Identifier.new(strategy: 'email', identifying_value: 'jfriesen') }
-      it 'will assign the current user' do
-        controller.request.env['omniauth.auth'] = { 'uid' => identifier.base_identifying_value, 'provider' => identifier.base_strategy }
-        get :create
-        expect(controller.send(:current_user)).to eq(identifier)
+      let(:auth_hash) { { 'uid' => identifier.base_identifying_value, 'provider' => identifier.base_strategy } }
+      context 'with after_authentication_callback_url' do
+        before { controller.session[:after_authentication_callback_url] = 'https://hello.com' }
+        it 'will assign the current user, redirect to the after_authentication_callback_url' do
+          controller.request.env['omniauth.auth'] = auth_hash
+          get :create
+          expect(controller.send(:current_user)).to eq(identifier)
+          expect(response).to redirect_to('https://hello.com')
+          expect(response.headers['X-Cogitate-Authentication-Token']).to be_a(String)
+        end
+      end
+      context 'without after_authentication_callback_url' do
+        it 'will assign the current user and redirect to the /api/agents resource' do
+          controller.request.env['omniauth.auth'] = auth_hash
+          get :create
+          expect(controller.send(:current_user)).to eq(identifier)
+          expect(response).to redirect_to("/api/agents/#{identifier.encoded_id}")
+          expect(response.headers.include?('X-Cogitate-Authentication-Token')).to be_falsey
+        end
       end
     end
   end
