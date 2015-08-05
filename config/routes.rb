@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     get 'agents/:urlsafe_base64_encoded_identifiers', to: 'agents#index'
   end
 
+  get '/auth', to: 'sessions#new'
+
   get '/auth/:provider/callback', to: 'sessions#create'
   if Rails.env.test? || Rails.env.development?
     post '/auth/developer/callback', to: 'sessions#create'
