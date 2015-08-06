@@ -7,7 +7,7 @@ class Identifier
   module Verified
     RSpec.describe Netid do
       let(:identifier) { Identifier.new(strategy: 'netid', identifying_value: '12') }
-      subject { described_class.new(identifier: identifier, attributes: { first_name: 'A First Name' }) }
+      subject { described_class.new(identifier: identifier, attributes: { first_name: 'A First Name', netid: 'hello' }) }
       include Cogitate::RSpecMatchers
       it { should contractually_honor(Cogitate::Interfaces::AuthenticationVectorNetidInterface) }
       it { should delegate_method(:identifying_value).to(:identifier) }
@@ -21,6 +21,8 @@ class Identifier
       its(:attribute_keys) { should include('email') }
       its(:attribute_keys) { should include('netid') }
       its(:attribute_keys) { should include('full_name') }
+
+      its(:email) { should eq('hello@nd.edu') }
 
       it 'will not obliterate the given identifier if the attributes have an identifier' do
         subject = described_class.new(identifier: identifier, attributes: { identifier: 'something else' })

@@ -9,7 +9,7 @@ class Identifier
     #
     # @api private This is private for now; I'm seeing how it holds out in usage.
     # @return Class
-    def self.build_named_strategy(*given_attribute_keys)
+    def self.build_named_strategy(*given_attribute_keys, &block)
       Class.new do
         class_attribute :attribute_keys, instance_predicate: false, instance_writer: false
         self.attribute_keys = given_attribute_keys.freeze
@@ -46,6 +46,10 @@ class Identifier
         attr_accessor :identifier
 
         attr_writer(*attribute_keys)
+
+        public
+
+        module_exec(&block) if block_given?
       end
     end
   end
