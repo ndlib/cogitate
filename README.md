@@ -124,7 +124,7 @@ It was also clear that our institutional service was inadequate due to the natur
   * ~~Unverified Netid~~
   * ~~Unverified "Parrot" identity (i.e. ask for any identity and you'll at least get it back)~~
   * ~~Verified group~~
-  * Unverified group - What does this mean?
+  * ~~Unverified group~~ Skip groups associated with unverified identifiers
 * Authentication
   * ~~Campus Authentication Service (CAS)~~
   * ~~Handle a request for Cogitate to broker the authentication~~
@@ -132,6 +132,9 @@ It was also clear that our institutional service was inadequate due to the natur
 * Communication Channels
   * For a given Agent what are their communication vectors (i.e. Email, Phone #, Twitter handle)
   * What is the primary email address for a given Agent
+* Client library
+  * Decode the JSON Web Token (JWT) into a "User" object and related information
+    * Levarage RSA public key for decoding the JWT
 
 ### Phase 2
 
