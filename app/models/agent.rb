@@ -20,23 +20,27 @@ class Agent
     self
   end
 
+  # @api public
   Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
   def add_identifier(identifier)
     identities << identifier
     identifier
   end
 
+  # @api public
+  def with_identifiers
+    return enum_for(:with_identifiers) unless block_given?
+    identities.each { |identifier| yield(identifier) }
+  end
+
+  # @api public
   Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
   def add_verified_identifier(identifier)
     verified_identities << identifier
     identifier
   end
 
-  def with_identifiers
-    return enum_for(:with_identifiers) unless block_given?
-    identities.each { |identifier| yield(identifier) }
-  end
-
+  # @api public
   def with_verified_identifiers
     return enum_for(:with_verified_identifiers) unless block_given?
     verified_identities.each { |identifier| yield(identifier) }
