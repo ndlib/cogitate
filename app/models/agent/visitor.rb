@@ -44,7 +44,7 @@ class Agent
     def visit(host)
       return host if visited_hosts.include?(host)
       visited_hosts << host
-      yield(agent)
+      yield(self)
       host
     end
 
@@ -53,6 +53,9 @@ class Agent
       communication_channels_builder.call(agent: agent)
       agent
     end
+
+    extend Forwardable
+    def_delegators :agent, :add_identifier, :add_identity, :add_verified_identifier
 
     private
 

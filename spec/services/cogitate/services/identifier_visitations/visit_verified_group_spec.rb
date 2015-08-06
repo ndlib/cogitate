@@ -1,5 +1,6 @@
 require 'spec_fast_helper'
 require 'cogitate/services/identifier_visitations/visit_verified_group'
+require 'cogitate/query_repository'
 require 'identifier'
 module Cogitate
   module Services
@@ -16,6 +17,11 @@ module Cogitate
         before { allow(guest).to receive(:visit).with(group_identifier).and_yield(visitor) }
 
         its(:default_repository) { should respond_to(:with_verified_group_identifier_related_to) }
+
+        it 'will initialize without optional keywords' do
+          expect_any_instance_of(Cogitate::QueryRepository).to receive(:with_verified_group_identifier_related_to)
+          expect(described_class.new(group_member_identifier: identifier, guest: guest)).to be_a(described_class)
+        end
 
         context '.call' do
           it 'will call the underlying instantiated object' do

@@ -11,7 +11,6 @@ module Cogitate
       :with_identifiers, :with_verified_identifiers, :add_identifier, :add_verified_identifier, :identities, :verified_identities
     ]
     AgentCollectionInterface = Contracts::ArrayOf[Cogitate::Interfaces::AgentInterface]
-    IdentityCollectorInterface = RespondTo[:add_identity, :add_verified_identifier, :visit]
 
     VisitorInterface = RespondTo[:visit]
     VisitorV2Interface = And[VisitorInterface, RespondTo[:return_from_visitations]]
@@ -27,7 +26,7 @@ module Cogitate
 
     HostInterface = RespondTo[:invite]
     HostInitializationInterface = KeywordArgs[
-      invitation_strategy: Symbol, identifier: IdentifierInterface, group_visitation_service: RespondTo[:call]
+      invitation_strategy: Symbol, identifier: IdentifierInterface, group_visitation_service: Optional[RespondTo[:call]]
     ]
     HostBuilderInterface = Func[HostInitializationInterface]
 

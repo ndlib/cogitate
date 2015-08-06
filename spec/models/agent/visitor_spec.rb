@@ -12,6 +12,10 @@ class Agent
     include Cogitate::RSpecMatchers
     it { should contractually_honor(Cogitate::Interfaces::VisitorInterface) }
 
+    it { should delegate_method(:add_identifier).to(:agent) }
+    it { should delegate_method(:add_identity).to(:agent) }
+    it { should delegate_method(:add_verified_identifier).to(:agent) }
+
     its(:default_communication_channels_builder) { should respond_to(:call) }
 
     it { expect(described_class.build(identifier: identifier)).to contractually_honor(Cogitate::Interfaces::VisitorInterface) }
@@ -21,11 +25,11 @@ class Agent
       let(:node2) { double }
 
       it 'will yield the agent if the node has not yet been visited' do
-        expect { |b| subject.visit(node1, &b) }.to yield_with_args(kind_of(Agent))
+        expect { |b| subject.visit(node1, &b) }.to yield_with_args(subject)
         expect { |b| subject.visit(node1, &b) }.to_not yield_control
 
         # And now we are visiting another node
-        expect { |b| subject.visit(node2, &b) }.to yield_with_args(kind_of(Agent))
+        expect { |b| subject.visit(node2, &b) }.to yield_with_args(subject)
       end
     end
 
