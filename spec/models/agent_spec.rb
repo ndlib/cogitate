@@ -29,12 +29,6 @@ RSpec.describe Agent do
     end
   end
 
-  context '#add_verified_identifier' do
-    it 'will increment the identifiers' do
-      expect { subject.add_verified_identifier(identifier) }.to change { subject.send(:verified_identities).size }.by(1)
-    end
-  end
-
   context '#with_identifiers' do
     it 'will be an Enumerator if no block is given' do
       subject.add_identifier(identifier)
@@ -45,6 +39,12 @@ RSpec.describe Agent do
     it 'will yield the identifiers that were added' do
       subject.add_identifier(identifier)
       expect { |b| subject.with_identifiers(&b) }.to yield_successive_args(identifier)
+    end
+  end
+
+  context '#add_verified_identifier' do
+    it 'will increment the identifiers' do
+      expect { subject.add_verified_identifier(identifier) }.to change { subject.send(:verified_identities).size }.by(1)
     end
   end
 
