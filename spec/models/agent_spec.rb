@@ -17,12 +17,6 @@ RSpec.describe Agent do
   it { should delegate_method(:identifying_value).to(:primary_identifier) }
   it { should delegate_method(:as_json).to(:serializer) }
 
-  its(:type) { should eq(described_class::JSON_API_TYPE) }
-
-  it 'will have a URL Safe Base64 encoded ID' do
-    expect { Base64.urlsafe_decode64(subject.id) }.to_not raise_error
-  end
-
   context '#add_identifier' do
     it 'will increment the identifiers' do
       expect { subject.add_identifier(identifier) }.to change { subject.send(:identities).size }.by(1)

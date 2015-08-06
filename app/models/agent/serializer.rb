@@ -4,8 +4,6 @@ require 'cogitate/interfaces'
 class Agent
   # Responsible for the serialization of an Agent
   class Serializer
-    # include Contracts
-    # Contract(Cogitate::Interfaces::AgentInterface => RespondTo[:to_builder])
     def initialize(agent:)
       self.agent = agent
       self
@@ -19,14 +17,24 @@ class Agent
 
     def as_json(*)
       {
-        'type' => agent.type,
-        'id' => agent.id,
+        'type' => type, 'id' => id,
         'attributes' => { 'strategy' => agent.strategy, 'identifying_value' => agent.identifying_value },
         'relationships' => { 'identities' => identities_as_json, 'verified_identities' => verified_identities_as_json }
       }
     end
 
     private
+
+    def id
+      # Pass this on to the identifier
+      # TODO: This is a property of the identifier
+      Base64.urlsafe_encode64("#{agent.strategy}\t#{agent.identifying_value}")
+    end
+
+    JSON_API_TYPE = 'agents'.freeze
+    def type
+      JSON_API_TYPE
+    end
 
     def identities_as_json
       agent.with_identifiers.each_with_object([]) do |identity, mem|

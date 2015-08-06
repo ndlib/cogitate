@@ -66,17 +66,6 @@ class Agent
   def_delegators :primary_identifier, :strategy, :identifying_value
   def_delegators :serializer, :to_builder, :as_json
 
-  JSON_API_TYPE = 'agents'.freeze
-  def type
-    JSON_API_TYPE
-  end
-
-  def id
-    # Pass this on to the identifier
-    # TODO: This is a property of the identifier
-    Base64.urlsafe_encode64("#{strategy}\t#{identifying_value}")
-  end
-
   private
 
   attr_accessor :identities, :verified_identities, :emails
