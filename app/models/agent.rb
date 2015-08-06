@@ -17,6 +17,7 @@ class Agent
     self.verified_identities = container.new
     self.primary_identifier = identifier
     self.serializer = serializer_builder.call(agent: self)
+    self.emails = container.new
     self
   end
 
@@ -46,6 +47,17 @@ class Agent
     verified_identities.each { |identifier| yield(identifier) }
   end
 
+  # @api private
+  def add_email(input)
+    emails << input
+  end
+
+  # @api public
+  def with_emails
+    return enum_for(:with_emails) unless block_given?
+    emails.each { |emails| yield(emails) }
+  end
+
   # @return [Cogitate::Interfaces::IdentifierInterface] What has been assigned as the primary identifier of this agent.
   Contract(Contracts::None => Cogitate::Interfaces::IdentifierInterface)
   attr_reader :primary_identifier
@@ -67,7 +79,7 @@ class Agent
 
   private
 
-  attr_accessor :identities, :verified_identities
+  attr_accessor :identities, :verified_identities, :emails
 
   Contract(Cogitate::Interfaces::IdentifierInterface => Contracts::Any)
   attr_writer :primary_identifier

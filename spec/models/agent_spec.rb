@@ -42,6 +42,26 @@ RSpec.describe Agent do
     end
   end
 
+  let(:email) { double }
+  context '#add_email' do
+    it 'will increment the emails' do
+      expect { subject.add_email(email) }.to change { subject.send(:emails).size }.by(1)
+    end
+  end
+
+  context '#with_emails' do
+    it 'will be an Enumerator if no block is given' do
+      subject.add_email(email)
+      expect(subject.with_emails).to be_a(Enumerator)
+      expect { |b| subject.with_emails.each(&b) }.to yield_successive_args(email)
+    end
+
+    it 'will yield the emails that were added' do
+      subject.add_email(email)
+      expect { |b| subject.with_emails(&b) }.to yield_successive_args(email)
+    end
+  end
+
   context '#add_verified_identifier' do
     it 'will increment the identifiers' do
       expect { subject.add_verified_identifier(identifier) }.to change { subject.send(:verified_identities).size }.by(1)
