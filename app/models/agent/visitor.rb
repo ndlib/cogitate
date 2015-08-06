@@ -55,7 +55,7 @@ class Agent
     end
 
     extend Forwardable
-    def_delegators :agent, :add_identifier, :add_identity, :add_verified_identifier
+    def_delegators :agent, :add_identifier, :add_identifier, :add_verified_identifier
 
     private
 

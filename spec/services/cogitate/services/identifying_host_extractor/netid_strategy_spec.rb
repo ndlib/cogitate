@@ -50,7 +50,7 @@ module Cogitate
           let(:identifier) { Identifier.new(strategy: 'netid', identifying_value: '123') }
           let(:invitation_strategy) { :none }
           let(:guest) { double(visit: true) }
-          let(:visitor) { double(add_identity: true, add_verified_identifier: true) }
+          let(:visitor) { double(add_identifier: true, add_verified_identifier: true) }
           let(:group_visitation_service) { double(call: true) }
           subject do
             described_class.new(
@@ -62,7 +62,7 @@ module Cogitate
           context ':verified invitation_strategy' do
             let(:invitation_strategy) { :verified }
             it 'will add the identity to the visitor' do
-              expect(visitor).to receive(:add_identity).with(identifier)
+              expect(visitor).to receive(:add_identifier).with(identifier)
               subject.invite(guest)
             end
             it 'will NOT add a verified authentication vector to the visitor' do
@@ -77,7 +77,7 @@ module Cogitate
           context ':unverified invitation_strategy' do
             let(:invitation_strategy) { :unverified }
             it 'will add the identity to the visitor' do
-              expect(visitor).to receive(:add_identity).with(identifier)
+              expect(visitor).to receive(:add_identifier).with(identifier)
               subject.invite(guest)
             end
             it 'will NOT add a verified authentication vector to the visitor' do

@@ -43,7 +43,7 @@ module Cogitate
         attr_accessor :group_member_identifier, :guest, :repository
 
         def receive(visitor:, group_identifier:)
-          visitor.add_identity(group_identifier)
+          visitor.add_identifier(group_identifier)
           visitor.add_verified_identifier(group_identifier)
         end
 

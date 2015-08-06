@@ -11,9 +11,7 @@ RSpec.describe Agent do
   include Cogitate::RSpecMatchers
   it { should contractually_honor(Cogitate::Interfaces::AgentInterface) }
 
-  its(:identities) { should be_a(Set) }
   its(:primary_identifier) { should eq(identifier) }
-  its(:verified_identities) { should be_a(Set) }
 
   it { should delegate_method(:strategy).to(:primary_identifier) }
   it { should delegate_method(:identifying_value).to(:primary_identifier) }

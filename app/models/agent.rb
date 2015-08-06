@@ -25,7 +25,6 @@ class Agent
     identities << identifier
     identifier
   end
-  alias_method :add_identity, :add_identifier
 
   Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
   def add_verified_identifier(identifier)
@@ -42,16 +41,6 @@ class Agent
     return enum_for(:with_verified_identifiers) unless block_given?
     verified_identities.each { |identifier| yield(identifier) }
   end
-
-  # @api public
-  # @deprecated
-  # @return [Enumerable] These are identities that this Agent makes claims to; However the claims have not been confirmed by a third-party.
-  attr_reader :identities
-
-  # @deprecated
-  # @return [Enumerable] These are identifiers (and associated information) that has been verified. A verified identifier means that it
-  #   can be used for authorization of to act on a resource.
-  attr_reader :verified_identities
 
   # @return [Cogitate::Interfaces::IdentifierInterface] What has been assigned as the primary identifier of this agent.
   Contract(Contracts::None => Cogitate::Interfaces::IdentifierInterface)
@@ -74,7 +63,7 @@ class Agent
 
   private
 
-  attr_writer :identities, :verified_identities
+  attr_accessor :identities, :verified_identities
 
   Contract(Cogitate::Interfaces::IdentifierInterface => Contracts::Any)
   attr_writer :primary_identifier
