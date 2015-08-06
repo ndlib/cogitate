@@ -10,7 +10,7 @@ module Cogitate
       RSpec.describe ParrotingStrategy do
         let(:identifier) { Identifier.new(strategy: 'duck', identifying_value: '123') }
         let(:guest) { double(visit: true) }
-        let(:visitor) { double(add_identity: true) }
+        let(:visitor) { double(add_identifier: true) }
         before { allow(guest).to receive(:visit).and_yield(visitor) }
 
         subject { described_class.call(identifier: identifier) }
@@ -24,7 +24,7 @@ module Cogitate
 
         context '#invite' do
           it 'will add the identity' do
-            expect(visitor).to receive(:add_identity).with(kind_of(Identifier::Unverified))
+            expect(visitor).to receive(:add_identifier).with(kind_of(Identifier::Unverified))
             subject.invite(guest)
           end
         end

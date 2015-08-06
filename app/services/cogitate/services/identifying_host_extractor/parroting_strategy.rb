@@ -24,7 +24,7 @@ module Cogitate
         end
 
         def invite(guest)
-          guest.visit(identifier) { |visitor| visitor.add_identity(identifier) }
+          guest.visit(identifier) { |visitor| visitor.add_identifier(identifier) }
         end
 
         private

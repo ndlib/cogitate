@@ -21,12 +21,30 @@ class Agent
   end
 
   # @api public
-  # @return [Enumerable] These are identities that this Agent makes claims to; However the claims have not been confirmed by a third-party.
-  attr_reader :identities
+  Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
+  def add_identifier(identifier)
+    identities << identifier
+    identifier
+  end
 
-  # @return [Enumerable] These are identifiers (and associated information) that has been verified. A verified identifier means that it
-  #   can be used for authorization of to act on a resource.
-  attr_reader :verified_identities
+  # @api public
+  def with_identifiers
+    return enum_for(:with_identifiers) unless block_given?
+    identities.each { |identifier| yield(identifier) }
+  end
+
+  # @api public
+  Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
+  def add_verified_identifier(identifier)
+    verified_identities << identifier
+    identifier
+  end
+
+  # @api public
+  def with_verified_identifiers
+    return enum_for(:with_verified_identifiers) unless block_given?
+    verified_identities.each { |identifier| yield(identifier) }
+  end
 
   # @return [Cogitate::Interfaces::IdentifierInterface] What has been assigned as the primary identifier of this agent.
   Contract(Contracts::None => Cogitate::Interfaces::IdentifierInterface)
@@ -49,7 +67,7 @@ class Agent
 
   private
 
-  attr_writer :identities, :verified_identities
+  attr_accessor :identities, :verified_identities
 
   Contract(Cogitate::Interfaces::IdentifierInterface => Contracts::Any)
   attr_writer :primary_identifier

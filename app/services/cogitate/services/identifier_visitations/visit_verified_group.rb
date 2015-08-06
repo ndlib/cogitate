@@ -15,8 +15,9 @@ module Cogitate
         # @see Cogitate::Serivces::IdentifierVisitations::VisitVerifiedGroup.call
         Contract(
           Contracts::KeywordArgs[
-            group_member_identifier: Cogitate::Interfaces::IdentifierInterface, guest: Cogitate::Interfaces::VisitorInterface,
-            repository: RespondTo[:with_verified_group_identifier_related_to]
+            group_member_identifier: Cogitate::Interfaces::IdentifierInterface,
+            guest: Cogitate::Interfaces::VisitorInterface,
+            repository: Optional[RespondTo[:with_verified_group_identifier_related_to]]
           ] => Contracts::RespondTo[:call]
         )
         def initialize(group_member_identifier:, guest:, repository: default_repository)
@@ -42,7 +43,7 @@ module Cogitate
         attr_accessor :group_member_identifier, :guest, :repository
 
         def receive(visitor:, group_identifier:)
-          visitor.add_identity(group_identifier)
+          visitor.add_identifier(group_identifier)
           visitor.add_verified_identifier(group_identifier)
         end
 
@@ -53,7 +54,7 @@ module Cogitate
         attr_reader :verified_group_identifier_enumerator
 
         def default_repository
-          require 'cogitate/query_repository'
+          require 'cogitate/query_repository' unless defined?(Cogitate::QueryRepository)
           Cogitate::QueryRepository.new
         end
       end

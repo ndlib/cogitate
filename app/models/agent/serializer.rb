@@ -29,13 +29,13 @@ class Agent
     private
 
     def identities_as_json
-      agent.identities.each_with_object([]) do |identity, mem|
+      agent.with_identifiers.each_with_object([]) do |identity, mem|
         mem << { 'type' => identity.strategy, 'id' => identity.identifying_value, 'attributes' => identity.as_json }
       end
     end
 
     def verified_identities_as_json
-      agent.verified_identities.each_with_object([]) do |identity, mem|
+      agent.with_verified_identifiers.each_with_object([]) do |identity, mem|
         mem << { 'type' => identity.strategy, 'id' => identity.identifying_value, 'attributes' => identity.as_json }
       end
     end
