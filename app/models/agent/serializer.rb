@@ -18,7 +18,7 @@ class Agent
     def as_json(*)
       {
         'type' => type, 'id' => id,
-        'attributes' => { 'strategy' => agent.strategy, 'identifying_value' => agent.identifying_value },
+        'attributes' => { 'strategy' => agent.strategy, 'identifying_value' => agent.identifying_value, 'emails' => emails_as_json },
         'relationships' => { 'identities' => identities_as_json, 'verified_identities' => verified_identities_as_json }
       }
     end
@@ -26,14 +26,18 @@ class Agent
     private
 
     def id
-      # Pass this on to the identifier
-      # TODO: This is a property of the identifier
       Base64.urlsafe_encode64("#{agent.strategy}\t#{agent.identifying_value}")
     end
 
     JSON_API_TYPE = 'agents'.freeze
     def type
       JSON_API_TYPE
+    end
+
+    def emails_as_json
+      agent.with_emails.each_with_object([]) do |email, mem|
+        mem << email
+      end
     end
 
     def identities_as_json
