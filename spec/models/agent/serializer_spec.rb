@@ -13,8 +13,8 @@ RSpec.describe Agent::Serializer do
 
   context '#as_json' do
     before do
-      agent.identities << identifier
-      agent.verified_identities << identifier
+      agent.add_identifier(identifier)
+      agent.add_verified_identifier(identifier)
     end
     it 'will build a json document' do
       json = subject.as_json
