@@ -7,7 +7,9 @@ module Cogitate
     IdentifierInterface = RespondTo[:strategy, :identifying_value, :<=>, :base_strategy, :base_identifying_value]
     IdentifierCollectionInterface = Contracts::ArrayOf[Cogitate::Interfaces::IdentifierInterface]
 
-    AgentInterface = RespondTo[:identities, :verified_identities]
+    AgentInterface = RespondTo[
+      :with_identifiers, :with_verified_identifiers, :add_identifier, :add_verified_identifier, :identities, :verified_identities
+    ]
     AgentCollectionInterface = Contracts::ArrayOf[Cogitate::Interfaces::AgentInterface]
     IdentityCollectorInterface = RespondTo[:add_identity, :add_verified_identifier, :visit]
 
