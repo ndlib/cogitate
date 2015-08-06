@@ -7,14 +7,15 @@ class Agent
   # been visited.
   class Visitor
     include Contracts
+    extend Contracts
     Contract(
       Contracts::KeywordArgs[
-        identifier: Cogitate::Interfaces::IdentifierInterface, agent: Contracts::Optional[Cogitate::Interfaces::AgentInterface]
+        identifier: Cogitate::Interfaces::IdentifierInterface, communication_channels_builder: Contracts::Optional[RespondTo[:call]]
       ] => Cogitate::Interfaces::VisitorV2Interface
     )
-    def self.build(identifier:, agent_builder: default_agent_builder)
+    def self.build(identifier:, agent_builder: default_agent_builder, **keywords)
       agent = agent_builder.call(identifier: identifier)
-      new(agent: agent)
+      new(agent: agent, **keywords)
     end
 
     def self.default_agent_builder
@@ -27,12 +28,14 @@ class Agent
     Contract(
       Contracts::KeywordArgs[
         agent: Cogitate::Interfaces::AgentInterface,
-        identity_collector_builder: Contracts::Optional[Contracts::Func[Cogitate::Interfaces::AgentCollectorInitializationInterface]]
+        identity_collector_builder: Contracts::Optional[Contracts::Func[Cogitate::Interfaces::AgentCollectorInitializationInterface]],
+        communication_channels_builder: Contracts::Optional[RespondTo[:call]]
       ] => Cogitate::Interfaces::VisitorV2Interface
     )
-    def initialize(agent:, identity_collector_builder: default_identity_collector_builder)
+    def initialize(agent:, identity_collector_builder: default_identity_collector_builder, **keywords)
       self.visited_hosts = Set.new
       self.collector = identity_collector_builder.call(visitor: self, agent: agent)
+      self.communication_channels_builder = keywords.fetch(:communication_channels_builder) { default_communication_channels_builder }
       self
     end
 
@@ -48,19 +51,29 @@ class Agent
 
     Contract(Contracts::None => Cogitate::Interfaces::AgentInterface)
     def return_from_visitations
+      communication_channels_builder.call(agent: agent)
+      agent
+    end
+
+    private
+
+    def agent
       # Poking into the inner workings of the collector; I could rely on
       # reference to the object, but I'd prefer to be more explicit. Yes
       # this violates encapsulation, but I'm at a loss for other options.
       collector.send(:agent)
     end
 
-    private
-
     attr_accessor :visited_hosts
     attr_accessor :collector
+    attr_accessor :communication_channels_builder
 
     def default_identity_collector_builder
       Agent::Collector.method(:new)
+    end
+
+    def default_communication_channels_builder
+      ->(*) {}
     end
   end
 

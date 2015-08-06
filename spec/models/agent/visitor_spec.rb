@@ -6,13 +6,16 @@ require 'identifier'
 class Agent
   RSpec.describe Visitor do
     let(:identifier) { Identifier.new(strategy: 'orcid', identifying_value: '123') }
-    subject { described_class.build(identifier: identifier) }
+    let(:communication_channels_builder) { double('Communication Channels Builder', call: true) }
+    subject { described_class.build(identifier: identifier, communication_channels_builder: communication_channels_builder) }
 
     include Cogitate::RSpecMatchers
     it { should contractually_honor(Cogitate::Interfaces::VisitorInterface) }
     its(:default_identity_collector_builder) do
       should contractually_honor(Contracts::Func[Cogitate::Interfaces::AgentCollectorInitializationInterface])
     end
+
+    its(:default_communication_channels_builder) { should respond_to(:call) }
 
     it { expect(described_class.build(identifier: identifier)).to contractually_honor(Cogitate::Interfaces::VisitorInterface) }
 
@@ -27,8 +30,16 @@ class Agent
         # And now we are visiting another node
         expect { |b| subject.visit(node2, &b) }.to yield_with_args(kind_of(Agent::Collector))
       end
+    end
 
-      its(:return_from_visitations) { should contractually_honor(Cogitate::Interfaces::AgentInterface) }
+    context '#return_from_visitations' do
+      it 'should return an Agent' do
+        expect(subject.return_from_visitations).to contractually_honor(Cogitate::Interfaces::AgentInterface)
+      end
+      it 'will finalize the communication channels for the agent' do
+        expect(communication_channels_builder).to receive(:call).with(agent: kind_of(Agent))
+        subject.return_from_visitations
+      end
     end
   end
 
