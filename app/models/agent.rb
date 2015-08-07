@@ -63,8 +63,8 @@ class Agent
   attr_reader :primary_identifier
 
   extend Forwardable
-  def_delegators :primary_identifier, :strategy, :identifying_value
-  def_delegators :serializer, :to_builder, :as_json
+  def_delegators :primary_identifier, :strategy, :identifying_value, :encoded_id
+  def_delegators :serializer, :as_json
 
   private
 

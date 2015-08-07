@@ -16,6 +16,7 @@ RSpec.describe Agent do
   it { should delegate_method(:strategy).to(:primary_identifier) }
   it { should delegate_method(:identifying_value).to(:primary_identifier) }
   it { should delegate_method(:as_json).to(:serializer) }
+  it { should delegate_method(:encoded_id).to(:primary_identifier) }
 
   context '#add_identifier' do
     it 'will increment the identifiers' do
