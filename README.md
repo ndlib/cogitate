@@ -59,6 +59,11 @@ This resource is responsible for brokering the actual authentication service.
 Assuming a valid `after_authentication_callback_url`, it will respond with a 302 response (and redirect) to the CAS authentication service.
 If an invalid `after_authentication_callback_url` is provided, a 403 response will be given as a response.
 
+Once you have authenticated via an authentication strategy (i.e. CAS),
+Cogitate will redirect to the URL specified in the `GET /auth` request's `after_authentication_callback_url` query parameter.
+The payload will be a JSON Web Token.
+That token should contain enough information for your application to adjudicate authorization questions.
+
 ### GET Agents
 
 #### Request
