@@ -1,3 +1,4 @@
+require 'figaro'
 require 'jbuilder'
 require 'cogitate/interfaces'
 
@@ -18,6 +19,7 @@ class Agent
     def as_json(*)
       {
         'type' => type, 'id' => id,
+        'links' => { 'self' => "#{url_for_self}" },
         'attributes' => { 'strategy' => agent.strategy, 'identifying_value' => agent.identifying_value, 'emails' => emails_as_json },
         'relationships' => { 'identities' => identities_as_json, 'verified_identities' => verified_identities_as_json }
       }
@@ -50,6 +52,10 @@ class Agent
       agent.with_verified_identifiers.each_with_object([]) do |identity, mem|
         mem << { 'type' => identity.strategy, 'id' => identity.identifying_value, 'attributes' => identity.as_json }
       end
+    end
+
+    def url_for_self
+      "#{Figaro.env.protocol}://#{Figaro.env.domain_name}/api/agents/#{id}"
     end
   end
 end

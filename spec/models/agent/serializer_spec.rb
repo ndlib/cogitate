@@ -21,6 +21,7 @@ RSpec.describe Agent::Serializer do
       json = subject.as_json
       expect(json.fetch('type')).to eq(subject.send(:type))
       expect(json.fetch('id')).to eq(subject.send(:id))
+      expect(json.fetch('links').fetch('self')).to match(%r{/api/agents/#{subject.send(:id)}})
       expect(json.fetch('attributes')).to eq(
         'strategy' => identifier.strategy, 'identifying_value' => identifier.identifying_value, 'emails' => ['hello@world.com']
       )
