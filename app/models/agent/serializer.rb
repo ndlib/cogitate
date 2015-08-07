@@ -5,9 +5,9 @@ require 'cogitate/interfaces'
 class Agent
   # Responsible for the serialization of an Agent
   class Serializer
+    # @api public
     def initialize(agent:)
       self.agent = agent
-      self
     end
 
     private
@@ -18,18 +18,14 @@ class Agent
 
     def as_json(*)
       {
-        'type' => type, 'id' => id,
-        'links' => { 'self' => "#{url_for_self}" },
+        'type' => JSON_API_TYPE, 'id' => agent.encoded_id,
+        'links' => { 'self' => "#{url_for_identifier(agent.encoded_id)}" },
         'attributes' => { 'strategy' => agent.strategy, 'identifying_value' => agent.identifying_value, 'emails' => emails_as_json },
         'relationships' => { 'identities' => identities_as_json, 'verified_identities' => verified_identities_as_json }
       }
     end
 
     private
-
-    def id
-      Base64.urlsafe_encode64("#{agent.strategy}\t#{agent.identifying_value}")
-    end
 
     JSON_API_TYPE = 'agents'.freeze
     def type
@@ -54,8 +50,8 @@ class Agent
       end
     end
 
-    def url_for_self
-      "#{Figaro.env.protocol}://#{Figaro.env.domain_name}/api/agents/#{id}"
+    def url_for_identifier(encoded_identifier)
+      "#{Figaro.env.protocol}://#{Figaro.env.domain_name}/api/agents/#{encoded_identifier}"
     end
   end
 end
