@@ -130,8 +130,7 @@ It was also clear that our institutional service was inadequate due to the natur
   * ~~Handle a request for Cogitate to broker the authentication~~
   * ~~Passback a ticket to the primary application~~
 * Communication Channels
-  * For a given Agent what are their communication vectors (i.e. Email, Phone #, Twitter handle)
-  * What is the primary email address for a given Agent
+  * ~~Extract email from NetID identifier~~
 * Client library
   * Decode the JSON Web Token (JWT) into a "User" object and related information
     * Levarage RSA public key for decoding the JWT
@@ -146,6 +145,8 @@ It was also clear that our institutional service was inadequate due to the natur
 * Authentication
   * OAuth2 provider
   * One-time URL (for emails)
+* Communication Channels
+  * For a given Agent what are their communication vectors (i.e. Email, Phone #, Twitter handle)
 
 ## Tasks and Automation
 
