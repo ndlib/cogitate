@@ -14,6 +14,7 @@ class Identifier
       it { should delegate_method(:<=>).to(:identifier) }
       it { should delegate_method(:base_identifying_value).to(:identifier) }
       it { should delegate_method(:base_strategy).to(:identifier) }
+      it { should delegate_method(:encoded_id).to(:identifier) }
       its(:first_name) { should eq('A First Name') }
       its(:attribute_keys) { should be_a(Array) }
       its(:as_json) { should be_a(Hash) }

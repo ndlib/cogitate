@@ -25,8 +25,9 @@ RSpec.describe Agent::Serializer do
       expect(json.fetch('attributes')).to eq(
         'strategy' => identifier.strategy, 'identifying_value' => identifier.identifying_value, 'emails' => ['hello@world.com']
       )
-      expect(json.fetch('relationships').fetch('identities')).to eq([{ "type" => "netid", "id" => "hello", 'attributes' => {} }])
-      expect(json.fetch('relationships').fetch('verified_identities')).to eq([{ "type" => "netid", "id" => "hello", 'attributes' => {} }])
+      expect(json.fetch('included')).to eq([{ "type" => "identifiers", "id" => identifier.encoded_id, "attributes" => identifier.as_json }])
+      expect(json.fetch('relationships').fetch('identities')).to eq([{ "type" => "identifiers", "id" => identifier.encoded_id }])
+      expect(json.fetch('relationships').fetch('verified_identities')).to eq([{ "type" => "identifiers", "id" => identifier.encoded_id }])
     end
   end
 end
