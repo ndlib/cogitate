@@ -27,10 +27,12 @@ AbcSize:
   Exclude:
     - app/models/repository_service/identifier_relationship.rb
     - app/models/identifier/verified.rb
+    - app/models/agent/serializer.rb
 
 MethodLength:
   Exclude:
     - app/models/identifier/verified.rb
+    - app/models/agent/serializer.rb
 
 LineLength:
   Description: 'Limit lines to 140 characters.'
