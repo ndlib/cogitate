@@ -2,7 +2,6 @@ require 'spec_fast_helper'
 require 'agent/visitor'
 require 'shoulda/matchers'
 require 'identifier'
-require 'agent/communication_channels_builder'
 
 class Agent
   RSpec.describe Visitor do
@@ -12,7 +11,7 @@ class Agent
 
     include Cogitate::RSpecMatchers
     it { should contractually_honor(Cogitate::Interfaces::VisitorInterface) }
-    its(:default_communication_channels_builder) { should eq(Agent::CommunicationChannelsBuilder) }
+    its(:default_communication_channels_builder) { should respond_to(:call) }
 
     it { should delegate_method(:add_identifier).to(:agent) }
     it { should delegate_method(:add_identifier).to(:agent) }

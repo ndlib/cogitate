@@ -64,8 +64,8 @@ class Agent
     attr_accessor :communication_channels_builder
 
     def default_communication_channels_builder
-      require 'agent/communication_channels_builder' unless defined?(Agent::CommunicationChannelsBuilder)
-      Agent::CommunicationChannelsBuilder
+      require 'cogitate/models/agent/communication_channels_builder' unless defined?(Cogitate::Models::Agent::CommunicationChannelsBuilder)
+      Cogitate::Models::Agent::CommunicationChannelsBuilder
     end
   end
 end
