@@ -20,7 +20,7 @@ RSpec.describe Agent do
 
   context '#add_identifier' do
     it 'will increment the identifiers' do
-      expect { subject.add_identifier(identifier) }.to change { subject.send(:identities).size }.by(1)
+      expect { subject.add_identifier(identifier) }.to change { subject.with_identifiers.to_a.size }.by(1)
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe Agent do
   let(:email) { double }
   context '#add_email' do
     it 'will increment the emails' do
-      expect { subject.add_email(email) }.to change { subject.send(:emails).size }.by(1)
+      expect { subject.add_email(email) }.to change { subject.with_emails.to_a.size }.by(1)
     end
   end
 
@@ -59,7 +59,7 @@ RSpec.describe Agent do
 
   context '#add_verified_identifier' do
     it 'will increment the identifiers' do
-      expect { subject.add_verified_identifier(identifier) }.to change { subject.send(:verified_identities).size }.by(1)
+      expect { subject.add_verified_identifier(identifier) }.to change { subject.with_verified_identifiers.to_a.size }.by(1)
     end
   end
 

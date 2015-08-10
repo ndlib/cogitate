@@ -13,8 +13,8 @@ class Agent
   #       process that builds the Agent, I may encounter a more applicable primary_identifier.
   Contract(Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] => Cogitate::Interfaces::AgentInterface)
   def initialize(identifier:, container: default_container, serializer_builder: default_serializer_builder)
-    self.identities = container.new
-    self.verified_identities = container.new
+    self.identifiers = container.new
+    self.verified_identifiers = container.new
     self.primary_identifier = identifier
     self.serializer = serializer_builder.call(agent: self)
     self.emails = container.new
@@ -24,27 +24,27 @@ class Agent
   # @api public
   Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
   def add_identifier(identifier)
-    identities << identifier
+    identifiers << identifier
     identifier
   end
 
   # @api public
   def with_identifiers
     return enum_for(:with_identifiers) unless block_given?
-    identities.each { |identifier| yield(identifier) }
+    identifiers.each { |identifier| yield(identifier) }
   end
 
   # @api public
   Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
   def add_verified_identifier(identifier)
-    verified_identities << identifier
+    verified_identifiers << identifier
     identifier
   end
 
   # @api public
   def with_verified_identifiers
     return enum_for(:with_verified_identifiers) unless block_given?
-    verified_identities.each { |identifier| yield(identifier) }
+    verified_identifiers.each { |identifier| yield(identifier) }
   end
 
   # @api private
@@ -68,7 +68,7 @@ class Agent
 
   private
 
-  attr_accessor :identities, :verified_identities, :emails
+  attr_accessor :identifiers, :verified_identifiers, :emails
 
   Contract(Cogitate::Interfaces::IdentifierInterface => Contracts::Any)
   attr_writer :primary_identifier

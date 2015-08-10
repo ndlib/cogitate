@@ -22,7 +22,7 @@ class Agent
         'type' => JSON_API_TYPE, 'id' => agent.encoded_id,
         'links' => { 'self' => "#{url_for_identifier(agent.encoded_id)}" },
         'attributes' => { 'strategy' => agent.strategy, 'identifying_value' => agent.identifying_value, 'emails' => emails_as_json },
-        'relationships' => { 'identities' => identities_as_json, 'verified_identities' => verified_identities_as_json },
+        'relationships' => { 'identifiers' => identities_as_json, 'verified_identifiers' => verified_identities_as_json },
         'included' => included_objects_as_json
       }
     end

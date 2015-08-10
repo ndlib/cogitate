@@ -34,11 +34,11 @@ RSpec.describe Agent::Serializer do
         { "type" => "identifiers", "id" => unverified_identifier.encoded_id, "attributes" => unverified_identifier.as_json },
         { "type" => "identifiers", "id" => verified_identifier.encoded_id, "attributes" => verified_identifier.as_json }
       ])
-      expect(json.fetch('relationships').fetch('identities')).to eq([
+      expect(json.fetch('relationships').fetch('identifiers')).to eq([
         { "type" => "identifiers", "id" => identifier.encoded_id },
         { "type" => "identifiers", "id" => unverified_identifier.encoded_id }
       ])
-      expect(json.fetch('relationships').fetch('verified_identities')).to eq([
+      expect(json.fetch('relationships').fetch('verified_identifiers')).to eq([
         { "type" => "identifiers", "id" => identifier.encoded_id },
         { "type" => "identifiers", "id" => verified_identifier.encoded_id }
       ])
