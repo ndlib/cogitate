@@ -27,7 +27,8 @@ class Identifier
       its(:first_name) { should eq('A First Name') }
       its(:attribute_keys) { should eq(['first_name', 'last_name']) }
       its(:foo) { should eq('bar') }
-      its(:as_json) do should eq(
+      its(:as_json) do
+        should eq(
           'identifying_value' => identifier.identifying_value, 'strategy' => identifier.strategy,
           'first_name' => "A First Name", 'last_name' => nil
         )

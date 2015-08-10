@@ -18,7 +18,7 @@ class Identifier
     end
 
     def as_json(*)
-      {}
+      { 'identifying_value' => identifying_value, 'strategy' => strategy }
     end
 
     extend Forwardable

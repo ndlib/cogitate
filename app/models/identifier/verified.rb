@@ -24,7 +24,7 @@ class Identifier
         end
 
         define_method :as_json do |*|
-          attribute_keys.each_with_object({}) do |key, mem|
+          attribute_keys.each_with_object('identifying_value' => identifying_value, 'strategy' => strategy) do |key, mem|
             mem[key] = send(key)
             mem
           end
