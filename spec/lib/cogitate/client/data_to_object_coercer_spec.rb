@@ -7,10 +7,10 @@ module Cogitate
       subject { described_class }
       its(:default_type_to_builder_map) { should have_key('agent') }
       its(:default_type_to_builder_map) { should have_key('agents') }
-      let(:builder) { double(build: true) }
+      let(:builder) { double('Builder', call: true) }
 
       it 'will map a type: "agents" to an Agent' do
-        expect(builder).to receive(:build).and_return(:built)
+        expect(builder).to receive(:call).and_return(:built)
         expect(described_class.call(data, type_to_builder_map: { 'agents' => builder })).to eq(:built)
       end
 

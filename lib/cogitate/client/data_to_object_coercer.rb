@@ -13,10 +13,13 @@ module Cogitate
       private_constant :TYPE_TO_BUILDER_MAP
 
       # @api public
+      #
+      # @param data [Hash] with string keys
+      # @param type_to_builder_map [Hash] a lookup table of key to constant
       def call(data, type_to_builder_map: default_type_to_builder_map)
-        type = data.fetch('type') { data.fetch(:type) }
+        type = data.fetch('type')
         builder = type_to_builder_map.fetch(type.to_s)
-        builder.build(data)
+        builder.call(data)
       end
 
       # @api private
