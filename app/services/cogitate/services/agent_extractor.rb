@@ -36,8 +36,8 @@ module Cogitate
       end
 
       def default_visitor_builder
-        require 'agent/visitor' unless defined?(Agent::Visitor)
-        Agent::Visitor.method(:build)
+        require 'cogitate/models/agent/visitor' unless defined?(Models::Agent::Visitor)
+        Models::Agent::Visitor.method(:build)
       end
     end
   end
