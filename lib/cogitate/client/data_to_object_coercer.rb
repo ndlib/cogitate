@@ -16,6 +16,8 @@ module Cogitate
       #
       # @param data [Hash] with string keys
       # @param type_to_builder_map [Hash] a lookup table of key to constant
+      #
+      # @return the result of building the object as per the :type_to_builder_map
       def call(data, type_to_builder_map: default_type_to_builder_map)
         type = data.fetch('type')
         builder = type_to_builder_map.fetch(type.to_s)

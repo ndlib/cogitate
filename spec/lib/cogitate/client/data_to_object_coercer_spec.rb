@@ -14,7 +14,13 @@ module Cogitate
         expect(described_class.call(data, type_to_builder_map: { 'agents' => builder })).to eq(:built)
       end
 
-      let(:data) { { "type": "agents", "id": "bmV0aWQJaHdvcmxk" } }
+      let(:data) { { "type" => "agents", "id" => "bmV0aWQJaHdvcmxk" } }
+
+      context '.default_type_to_builder_map' do
+        it 'will have all elements that respond_to :call' do
+          expect(described_class.send(:default_type_to_builder_map).all? {|(key, builder)| builder.respond_to?(:call) }).to be_truthy
+        end
+      end
     end
   end
 end
