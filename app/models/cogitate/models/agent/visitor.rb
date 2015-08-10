@@ -1,6 +1,6 @@
 require 'set'
 require 'cogitate/interfaces'
-require 'agent'
+require 'cogitate/models/agent'
 
 module Cogitate
   module Models
@@ -21,7 +21,7 @@ module Cogitate
         end
 
         def self.default_agent_builder
-          ::Agent.method(:new)
+          Agent.method(:new)
         end
 
         private_class_method :default_agent_builder

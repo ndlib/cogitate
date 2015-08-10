@@ -7,7 +7,7 @@ RSpec.describe Cogitate::Models::Agent::Serializer do
   let(:identifier) { Identifier.new(strategy: 'netid', identifying_value: 'hello') }
   let(:verified_identifier) { Identifier.new(strategy: 'netid', identifying_value: 'verified') }
   let(:unverified_identifier) { Identifier.new(strategy: 'netid', identifying_value: 'not_verified') }
-  let(:agent) { Agent.new(identifier: identifier) }
+  let(:agent) { Cogitate::Models::Agent.new(identifier: identifier) }
   subject { described_class.new(agent: agent) }
 
   its(:to_json) { should be_a(String) }

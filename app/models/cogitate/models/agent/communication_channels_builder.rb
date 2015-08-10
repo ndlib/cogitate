@@ -1,4 +1,4 @@
-require 'agent'
+require 'cogitate/models/agent'
 module Cogitate
   module Models
     class Agent

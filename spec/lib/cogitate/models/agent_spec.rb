@@ -1,12 +1,11 @@
 require 'spec_fast_helper'
-require 'agent'
+require 'cogitate/models/agent'
 require 'identifier'
 require 'shoulda/matchers'
-require 'base64'
 
-RSpec.describe Agent do
+RSpec.describe Cogitate::Models::Agent do
   let(:identifier) { Identifier.new(strategy: 'orcid', identifying_value: '123') }
-  subject { Agent.new(identifier: identifier) }
+  subject { described_class.new(identifier: identifier) }
 
   include Cogitate::RSpecMatchers
   it { should contractually_honor(Cogitate::Interfaces::AgentInterface) }

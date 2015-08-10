@@ -38,7 +38,7 @@ RSpec.describe Cogitate::Models::Agent::Visitor do
       expect(subject.return_from_visitations).to contractually_honor(Cogitate::Interfaces::AgentInterface)
     end
     it 'will finalize the communication channels for the agent' do
-      expect(communication_channels_builder).to receive(:call).with(agent: kind_of(::Agent))
+      expect(communication_channels_builder).to receive(:call).with(agent: kind_of(Cogitate::Models::Agent))
       subject.return_from_visitations
     end
   end

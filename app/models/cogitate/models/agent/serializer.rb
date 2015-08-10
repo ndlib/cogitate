@@ -1,7 +1,6 @@
-require 'agent'
 require 'figaro'
-require 'cogitate/interfaces'
 require 'set'
+require 'cogitate/models/agent'
 
 module Cogitate
   module Models
