@@ -18,7 +18,7 @@ module Cogitate
 
       context '.default_type_to_builder_map' do
         it 'will have all elements that respond_to :call' do
-          expect(described_class.send(:default_type_to_builder_map).all? {|(key, builder)| builder.respond_to?(:call) }).to be_truthy
+          expect(described_class.send(:default_type_to_builder_map).all? { |(_, builder)| builder.respond_to?(:call) }).to be_truthy
         end
       end
     end

@@ -8,6 +8,7 @@ RSpec.describe Cogitate::Models::Identifier do
   end
 
   its(:encoded_id) { should be_a(String) }
+  its(:as_json) { should eq('identifying_value' => subject.identifying_value, 'strategy' => subject.strategy) }
 
   context '#strategy coercion' do
     [

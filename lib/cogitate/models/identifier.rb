@@ -27,7 +27,7 @@ module Cogitate
       attr_reader :identifying_value
 
       def as_json(*)
-        {}
+        { 'identifying_value' => identifying_value, 'strategy' => strategy }
       end
 
       include Comparable
