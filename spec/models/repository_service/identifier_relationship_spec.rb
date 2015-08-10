@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'identifier'
+require "cogitate/models/identifier"
 require 'repository_service/identifier_relationship'
 
 module RepositoryService
@@ -18,13 +18,15 @@ module RepositoryService
           enumerator = described_class.each_identifier_related_to(identifier: given_identifer)
           expect(enumerator).to be_a(Enumerator)
           expect { |b| enumerator.each(&b) }.to yield_successive_args(
-            Identifier.new(strategy: 'b', identifying_value: '2'), Identifier.new(strategy: 'c', identifying_value: '3')
+            Cogitate::Models::Identifier.new(strategy: 'b', identifying_value: '2'),
+            Cogitate::Models::Identifier.new(strategy: 'c', identifying_value: '3')
           )
         end
 
         it 'will yield each Identifier if a block is given' do
           expect { |b| described_class.each_identifier_related_to(identifier: given_identifer, &b) }.to yield_successive_args(
-            Identifier.new(strategy: 'b', identifying_value: '2'), Identifier.new(strategy: 'c', identifying_value: '3')
+            Cogitate::Models::Identifier.new(strategy: 'b', identifying_value: '2'),
+            Cogitate::Models::Identifier.new(strategy: 'c', identifying_value: '3')
           )
         end
       end
@@ -33,13 +35,15 @@ module RepositoryService
         it 'will return an Enumerator if no block is given' do
           enumerator = described_class.each_identifier_related_to(identifier: given_identifer, strategy: 'b')
           expect(enumerator).to be_a(Enumerator)
-          expect { |b| enumerator.each(&b) }.to yield_successive_args(Identifier.new(strategy: 'b', identifying_value: '2'))
+          expect { |b| enumerator.each(&b) }.to yield_successive_args(
+            Cogitate::Models::Identifier.new(strategy: 'b', identifying_value: '2')
+          )
         end
 
         it 'will yield each Identifier if a block is given' do
           expect do |b|
             described_class.each_identifier_related_to(identifier: given_identifer, strategy: 'b', &b)
-          end.to yield_successive_args(Identifier.new(strategy: 'b', identifying_value: '2'))
+          end.to yield_successive_args(Cogitate::Models::Identifier.new(strategy: 'b', identifying_value: '2'))
         end
       end
     end

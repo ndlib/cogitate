@@ -1,11 +1,11 @@
 require 'spec_fast_helper'
 require 'cogitate/services/agent_extractor'
-require 'identifier'
+require "cogitate/models/identifier"
 
 module Cogitate
   module Services
     RSpec.describe AgentExtractor do
-      let(:identifier) { Identifier.new(strategy: 'netid', identifying_value: 'a_netid') }
+      let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'a_netid') }
       let(:identifying_host_extractor) { double(call: true) }
       subject { described_class.new(identifier: identifier, identifying_host_extractor: identifying_host_extractor) }
 

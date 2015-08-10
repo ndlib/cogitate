@@ -1,6 +1,6 @@
 require 'rails_helper'
 require 'cogitate/query_repository'
-require 'identifier'
+require "cogitate/models/identifier"
 require 'identifier/verified/group'
 require 'group'
 
@@ -9,12 +9,12 @@ module Cogitate
     subject { described_class.new }
     let(:identifier_relationship_repository) { double(each_identifier_related_to: true) }
     its(:default_identifier_relationship_repository) { should respond_to(:each_identifier_related_to) }
-    let(:group_identifier) { Identifier.new(strategy: described_class::GROUP_STRATEGY, identifying_value: 'a-group') }
+    let(:group_identifier) { Cogitate::Models::Identifier.new(strategy: described_class::GROUP_STRATEGY, identifying_value: 'a-group') }
     let(:verified_group) { double('A verified group') }
 
     context '#with_verified_group_identifier_related_to' do
       subject { described_class.new(identifier_relationship_repository: identifier_relationship_repository) }
-      let(:given_identifier) { Identifier.new(strategy: 'netid', identifying_value: 'hello') }
+      let(:given_identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hello') }
       before do
         allow(identifier_relationship_repository).to receive(:each_identifier_related_to).and_yield(group_identifier)
         allow(subject).to receive(:with_verified_existing_group_for).with(identifier: group_identifier).and_yield(verified_group)

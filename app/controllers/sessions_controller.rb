@@ -1,4 +1,4 @@
-require 'identifier'
+require "cogitate/models/identifier"
 
 # Responsible for negotiating session authentication
 class SessionsController < ApplicationController
@@ -38,7 +38,7 @@ class SessionsController < ApplicationController
   private
 
   def set_current_user!
-    self.current_user = Identifier.new(strategy: strategy, identifying_value: identifying_value)
+    self.current_user = Cogitate::Models::Identifier.new(strategy: strategy, identifying_value: identifying_value)
   end
 
   def identifying_value

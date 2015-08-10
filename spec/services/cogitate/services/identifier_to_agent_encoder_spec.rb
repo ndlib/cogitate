@@ -1,11 +1,11 @@
 require 'spec_fast_helper'
 require 'cogitate/services/identifier_to_agent_encoder'
-require 'identifier'
+require "cogitate/models/identifier"
 
 module Cogitate
   module Services
     RSpec.describe IdentifierToAgentEncoder do
-      let(:identifier) { Identifier.new(strategy: 'netid', identifying_value: 'hello-world') }
+      let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hello-world') }
       let(:agent_extractor) { double('Extractor', call: true) }
       let(:agent_tokenizer) { double('Tokenizer', call: true) }
       subject { described_class.new(identifier: identifier, agent_extractor: agent_extractor, agent_tokenizer: agent_tokenizer) }

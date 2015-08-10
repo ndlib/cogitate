@@ -1,12 +1,12 @@
 require 'spec_fast_helper'
-require 'identifier'
+require "cogitate/models/identifier"
 require 'shoulda/matchers'
 require 'identifier/verified/group'
 
 class Identifier
   module Verified
     RSpec.describe Group do
-      let(:identifier) { Identifier.new(strategy: 'group', identifying_value: '12') }
+      let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'group', identifying_value: '12') }
       subject { described_class.new(identifier: identifier, attributes: { name: 'A Group Name' }) }
       include Cogitate::RSpecMatchers
       it { should contractually_honor(Cogitate::Interfaces::VerifiedGroupInterface) }

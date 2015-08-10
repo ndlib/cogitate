@@ -1,10 +1,10 @@
 require 'spec_fast_helper'
 require 'cogitate/models/agent'
-require 'identifier'
+require "cogitate/models/identifier"
 require 'shoulda/matchers'
 
 RSpec.describe Cogitate::Models::Agent do
-  let(:identifier) { Identifier.new(strategy: 'orcid', identifying_value: '123') }
+  let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'orcid', identifying_value: '123') }
   subject { described_class.new(identifier: identifier) }
 
   include Cogitate::RSpecMatchers

@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||=
     if session.key?(:user_identifying_value) && session.key?(:user_strategy)
-      Identifier.new(strategy: session.fetch(:user_strategy), identifying_value: session.fetch(:user_identifying_value))
+      Cogitate::Models::Identifier.new(strategy: session.fetch(:user_strategy), identifying_value: session.fetch(:user_identifying_value))
     else
       false
     end

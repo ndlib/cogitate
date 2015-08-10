@@ -1,5 +1,5 @@
 require 'spec_fast_helper'
-require 'identifier'
+require "cogitate/models/identifier"
 require 'shoulda/matchers'
 require 'identifier/verified'
 
@@ -18,7 +18,7 @@ class Identifier
         Verified.send(:remove_const, :Example)
       end
 
-      let(:identifier) { Identifier.new(strategy: 'netid', identifying_value: '12') }
+      let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: '12') }
       subject { Example.new(identifier: identifier, attributes: { first_name: 'A First Name' }) }
       it { should delegate_method(:identifying_value).to(:identifier) }
 

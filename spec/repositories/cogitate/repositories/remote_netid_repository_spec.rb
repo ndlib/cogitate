@@ -1,11 +1,11 @@
 require 'rails_helper'
 require 'cogitate/repositories/remote_netid_repository'
-require 'identifier'
+require "cogitate/models/identifier"
 
 module Cogitate
   module Repositories
     RSpec.describe RemoteNetidRepository do
-      let(:identifier) { Identifier.new(strategy: 'netid', identifying_value: 'hello') }
+      let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hello') }
       let(:query_service) { double(call: response) }
       subject { described_class }
       its(:default_query_service) { should respond_to(:call) }

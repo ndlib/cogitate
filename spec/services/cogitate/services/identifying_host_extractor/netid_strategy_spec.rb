@@ -1,13 +1,13 @@
 require 'spec_fast_helper'
 require 'cogitate/services/identifying_host_extractor/netid_strategy'
 require 'cogitate/interfaces'
-require 'identifier'
+require "cogitate/models/identifier"
 
 module Cogitate
   module Services
     module IdentifyingHostExtractor
       RSpec.describe NetidStrategy do
-        let(:identifier) { Identifier.new(strategy: 'netid', identifying_value: 'hello') }
+        let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hello') }
         let(:repository) { double(find: true) }
         let(:host_builder) { ->(**_keywords) { host } }
         let(:host) { double(invite: true) }
@@ -47,7 +47,7 @@ module Cogitate
 
       class NetidStrategy
         RSpec.describe Host do
-          let(:identifier) { Identifier.new(strategy: 'netid', identifying_value: '123') }
+          let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: '123') }
           let(:invitation_strategy) { :none }
           let(:guest) { double(visit: true) }
           let(:visitor) { double(add_identifier: true, add_verified_identifier: true) }

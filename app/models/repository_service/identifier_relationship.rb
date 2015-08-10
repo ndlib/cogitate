@@ -1,6 +1,6 @@
 require 'active_record'
 require 'cogitate/interfaces'
-require 'identifier'
+require "cogitate/models/identifier"
 
 module RepositoryService
   # The connection between two Identifiers. This class leverages
@@ -30,7 +30,7 @@ module RepositoryService
       scope.where(
         right_strategy: identifier.strategy, right_identifying_value: identifier.identifying_value
       ).find_each do |relationship|
-        yield(Identifier.new(strategy: relationship.left_strategy, identifying_value: relationship.left_identifying_value))
+        yield(build_identifier(strategy: relationship.left_strategy, identifying_value: relationship.left_identifying_value))
       end
     end
     private_class_method :each_left_identifier_related_to
@@ -41,9 +41,14 @@ module RepositoryService
       scope.where(
         left_strategy: identifier.strategy, left_identifying_value: identifier.identifying_value
       ).find_each do |relationship|
-        yield(Identifier.new(strategy: relationship.right_strategy, identifying_value: relationship.right_identifying_value))
+        yield(build_identifier(strategy: relationship.right_strategy, identifying_value: relationship.right_identifying_value))
       end
     end
     private_class_method :each_right_identifier_related_to
+
+    def self.build_identifier(**keywords)
+      Cogitate::Models::Identifier.new(**keywords)
+    end
+    private_class_method :build_identifier
   end
 end

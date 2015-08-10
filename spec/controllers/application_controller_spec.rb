@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationController do
-  let(:identifier) { Identifier.new(strategy: 'email', identifying_value: 'hello@world.com') }
+  let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'email', identifying_value: 'hello@world.com') }
   context '#current_user=' do
     it 'will set the session based on the input' do
       expect { controller.send(:current_user=, identifier) }.to(

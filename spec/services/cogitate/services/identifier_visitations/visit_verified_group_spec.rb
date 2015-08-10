@@ -1,15 +1,15 @@
 require 'spec_fast_helper'
 require 'cogitate/services/identifier_visitations/visit_verified_group'
 require 'cogitate/query_repository'
-require 'identifier'
+require "cogitate/models/identifier"
 module Cogitate
   module Services
     module IdentifierVisitations
       RSpec.describe VisitVerifiedGroup do
-        let(:identifier) { Identifier.new(strategy: 'netid', identifying_value: 'hello') }
+        let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hello') }
         let(:guest) { double(visit: true) }
         let(:visitor) { double(add_identifier: true, add_verified_identifier: true) }
-        let(:group_identifier) { Identifier.new(strategy: 'group', identifying_value: 'one') }
+        let(:group_identifier) { Cogitate::Models::Identifier.new(strategy: 'group', identifying_value: 'one') }
         let(:repository) { double(with_verified_group_identifier_related_to: [group_identifier]) }
 
         subject { described_class.new(group_member_identifier: identifier, guest: guest, repository: repository) }

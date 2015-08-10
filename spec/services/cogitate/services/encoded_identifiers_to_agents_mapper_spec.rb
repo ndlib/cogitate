@@ -1,13 +1,13 @@
 require 'spec_fast_helper'
 require 'cogitate/services/encoded_identifiers_to_agents_mapper'
-require 'identifier'
+require "cogitate/models/identifier"
 require 'cogitate/models/agent'
 
 module Cogitate
   module Services
     RSpec.describe EncodedIdentifiersToAgentsMapper do
       let(:encoded_identifiers) { "this-is-encoded" }
-      let(:decoder_response) { [Identifier.new(strategy: 'netid', identifying_value: 'a netid')] }
+      let(:decoder_response) { [Models::Identifier.new(strategy: 'netid', identifying_value: 'a netid')] }
       let(:decoder) { double(call: decoder_response) }
       let(:converter) { double(call: true) }
       let(:agent) { Models::Agent.new(identifier: decoder_response.first) }

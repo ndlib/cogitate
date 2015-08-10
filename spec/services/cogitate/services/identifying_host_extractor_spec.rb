@@ -1,5 +1,5 @@
 require 'spec_fast_helper'
-require 'identifier'
+require "cogitate/models/identifier"
 require 'cogitate/services/identifying_host_extractor'
 
 module Cogitate
@@ -19,7 +19,7 @@ module Cogitate
         described_class.send(:remove_const, :MockStrategy)
       end
       subject { described_class }
-      let(:identifier) { Identifier.new(strategy: 'mock', identifying_value: 'hello') }
+      let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'mock', identifying_value: 'hello') }
       let(:host) { double('Host', invite: true) }
       let(:visitor) { double(visit: true) }
 
@@ -43,7 +43,7 @@ module Cogitate
       end
 
       context 'with a missing strategy' do
-        let(:identifier) { Identifier.new(strategy: 'like_this_totally_does_not_exist', identifying_value: 'hello') }
+        let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'like_this_totally_does_not_exist', identifying_value: 'hello') }
 
         context '.call' do
           it 'will find the correct host the invite the visitor and return the visitor' do

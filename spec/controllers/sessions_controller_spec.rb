@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'identifier'
+require "cogitate/models/identifier"
 
 RSpec.describe SessionsController do
   context 'GET #new' do
@@ -23,7 +23,7 @@ RSpec.describe SessionsController do
 
   context 'GET #create' do
     context 'with valid data' do
-      let(:identifier) { Identifier.new(strategy: 'email', identifying_value: 'jfriesen') }
+      let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'email', identifying_value: 'jfriesen') }
       let(:auth_hash) { { 'uid' => identifier.identifying_value, 'provider' => identifier.strategy } }
       context 'with after_authentication_callback_url' do
         before { controller.session[:after_authentication_callback_url] = 'https://hello.com' }

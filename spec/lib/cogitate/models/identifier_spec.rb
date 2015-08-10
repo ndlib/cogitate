@@ -1,7 +1,7 @@
 require 'spec_fast_helper'
-require 'identifier'
+require 'cogitate/models/identifier'
 
-RSpec.describe Identifier do
+RSpec.describe Cogitate::Models::Identifier do
   subject { described_class.new(strategy: 'orcid', identifying_value: '1234') }
   it 'will implement Cogitate::Interfaces::IdentifierInterface' do
     Contract.valid?(subject, Cogitate::Interfaces::IdentifierInterface)

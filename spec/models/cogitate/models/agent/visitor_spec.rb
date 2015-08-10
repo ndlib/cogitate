@@ -1,10 +1,10 @@
 require 'spec_fast_helper'
 require 'cogitate/models/agent/visitor'
 require 'shoulda/matchers'
-require 'identifier'
+require "cogitate/models/identifier"
 
 RSpec.describe Cogitate::Models::Agent::Visitor do
-  let(:identifier) { Identifier.new(strategy: 'orcid', identifying_value: '123') }
+  let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'orcid', identifying_value: '123') }
   let(:communication_channels_builder) { double('Communication Channels Builder', call: true) }
   subject { described_class.build(identifier: identifier, communication_channels_builder: communication_channels_builder) }
 

@@ -1,12 +1,12 @@
 require 'spec_fast_helper'
-require 'identifier'
+require "cogitate/models/identifier"
 require 'shoulda/matchers'
 require 'identifier/verified/netid'
 
 class Identifier
   module Verified
     RSpec.describe Netid do
-      let(:identifier) { Identifier.new(strategy: 'netid', identifying_value: '12') }
+      let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: '12') }
       subject { described_class.new(identifier: identifier, attributes: { first_name: 'A First Name', netid: 'hello' }) }
       include Cogitate::RSpecMatchers
       it { should contractually_honor(Cogitate::Interfaces::AuthenticationVectorNetidInterface) }

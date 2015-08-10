@@ -1,12 +1,12 @@
 require 'spec_fast_helper'
-require 'identifier'
+require "cogitate/models/identifier"
 require 'cogitate/models/agent/serializer'
 require 'json'
 
 RSpec.describe Cogitate::Models::Agent::Serializer do
-  let(:identifier) { Identifier.new(strategy: 'netid', identifying_value: 'hello') }
-  let(:verified_identifier) { Identifier.new(strategy: 'netid', identifying_value: 'verified') }
-  let(:unverified_identifier) { Identifier.new(strategy: 'netid', identifying_value: 'not_verified') }
+  let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hello') }
+  let(:verified_identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'verified') }
+  let(:unverified_identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'not_verified') }
   let(:agent) { Cogitate::Models::Agent.new(identifier: identifier) }
   subject { described_class.new(agent: agent) }
 
