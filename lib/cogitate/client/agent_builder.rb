@@ -5,10 +5,18 @@ module Cogitate
     # Responsible for transforming a Hash into an Agent and its constituent parts.
     module AgentBuilder
       module_function
+
       def call(data, identifier_decoder: default_identifier_decoder)
         identifier = identifier_decoder.call(data.fetch('id'))
         Models::Agent.new(identifier: identifier) do |agent|
           data.fetch('attributes').fetch('emails').each { |email| agent.add_email(email) }
+          # TODO: Add any included information
+          data.fetch('relationships').fetch('identifiers').each do |stub|
+            agent.add_identifier(identifier_decoder.call(stub.fetch('id')))
+          end
+          data.fetch('relationships').fetch('verified_identifiers').each do |stub|
+            agent.add_verified_identifier(identifier_decoder.call(stub.fetch('id')))
+          end
         end
       end
 

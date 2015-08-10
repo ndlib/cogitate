@@ -8,6 +8,8 @@ module Cogitate
         agent = described_class.call(data)
         expect(agent.encoded_id).to eq(data.fetch('id'))
         expect(agent.with_emails.to_a).to eq(['hworld@nd.edu'])
+        expect(agent.with_identifiers.to_a.map(&:encoded_id)).to eq(['bmV0aWQJaHdvcmxk'])
+        expect(agent.with_verified_identifiers.to_a.map(&:encoded_id)).to eq(['bmV0aWQJaHdvcmxk'])
       end
 
       let(:data) do

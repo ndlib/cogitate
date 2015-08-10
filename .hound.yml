@@ -28,6 +28,7 @@ AbcSize:
     - app/models/repository_service/identifier_relationship.rb
     - app/models/identifier/verified.rb
     - app/models/cogitate/models/agent/serializer.rb
+    - lib/cogitate/client/agent_builder.rb
 
 MethodLength:
   Exclude:
@@ -63,4 +64,4 @@ Style/WordArray:
 
 Style/BracesAroundHashParameters:
   Exclude:
-    - app/services/cogitate/services/identifiers_decoder.rb
+    - lib/cogitate/services/identifiers_decoder.rb
