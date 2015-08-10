@@ -22,7 +22,7 @@ class Agent
         'links' => { 'self' => "#{url_for_identifier(agent.encoded_id)}" },
         'attributes' => { 'strategy' => agent.strategy, 'identifying_value' => agent.identifying_value, 'emails' => emails_as_json },
         'relationships' => { 'identities' => identities_as_json, 'verified_identities' => verified_identities_as_json },
-        'included' => included_objecs_as_json
+        'included' => included_objects_as_json
       }
     end
 
@@ -39,7 +39,7 @@ class Agent
       end
     end
 
-    def included_objecs_as_json
+    def included_objects_as_json
       returning_value = Set.new
       collector = lambda do |identity|
         returning_value << {
