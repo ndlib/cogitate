@@ -74,7 +74,7 @@ GEM
     coderay (1.1.0)
     colorize (0.7.7)
     columnize (0.9.0)
-    commitment (0.1.3)
+    commitment (0.1.4)
       brakeman
       codeclimate-test-reporter
       jshintrb
@@ -93,7 +93,7 @@ GEM
       thor (~> 0.14)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
-    haml (4.0.6)
+    haml (4.0.7)
       tilt
     hashie (3.4.2)
     highline (1.6.21)
