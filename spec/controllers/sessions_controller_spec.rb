@@ -24,7 +24,7 @@ RSpec.describe SessionsController do
   context 'GET #create' do
     context 'with valid data' do
       let(:identifier) { Identifier.new(strategy: 'email', identifying_value: 'jfriesen') }
-      let(:auth_hash) { { 'uid' => identifier.base_identifying_value, 'provider' => identifier.base_strategy } }
+      let(:auth_hash) { { 'uid' => identifier.identifying_value, 'provider' => identifier.strategy } }
       context 'with after_authentication_callback_url' do
         before { controller.session[:after_authentication_callback_url] = 'https://hello.com' }
         it 'will assign the current user, redirect to the after_authentication_callback_url' do

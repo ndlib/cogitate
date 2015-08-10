@@ -24,8 +24,8 @@ class ApplicationController < ActionController::Base
   def current_user=(identifier)
     @current_user = identifier
     # The session does not allow nested hashes, so I'm breaking it apart
-    session[:user_strategy] = identifier.base_strategy
-    session[:user_identifying_value] = identifier.base_identifying_value
+    session[:user_strategy] = identifier.strategy
+    session[:user_identifying_value] = identifier.identifying_value
     @current_user
   end
 

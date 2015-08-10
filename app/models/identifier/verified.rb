@@ -38,7 +38,7 @@ class Identifier
         include Comparable
         # TODO: Consider if :<=> should be a mixin module for comparison? In delegating down to the identifier, I'm ignoring that
         #   I could be comparing a verified identifier to an unverified identifier and say they are the same.
-        def_delegators :identifier, :identifying_value, :<=>, :base_identifying_value, :base_strategy, :encoded_id, :strategy
+        def_delegators :identifier, :identifying_value, :<=>, :encoded_id, :strategy
 
         private
 

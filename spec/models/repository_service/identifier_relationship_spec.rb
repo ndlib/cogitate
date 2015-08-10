@@ -11,7 +11,7 @@ module RepositoryService
         described_class.create!(left_strategy: 'c', left_identifying_value: '3', right_strategy: 'b', right_identifying_value: '2')
         described_class.create!(left_strategy: 'd', left_identifying_value: '4', right_strategy: 'b', right_identifying_value: '2')
       end
-      let(:given_identifer) { double(base_strategy: 'a', base_identifying_value: '1') }
+      let(:given_identifer) { double(strategy: 'a', identifying_value: '1') }
 
       context 'without a given strategy' do
         it 'will return an Enumerator if no block is given' do

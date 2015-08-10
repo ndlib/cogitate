@@ -11,8 +11,6 @@ class Identifier
     it { should contractually_honor(Cogitate::Interfaces::AuthenticationVectorNetidInterface) }
     it { should delegate_method(:identifying_value).to(:identifier) }
     it { should delegate_method(:<=>).to(:identifier) }
-    it { should delegate_method(:base_identifying_value).to(:identifier) }
-    it { should delegate_method(:base_strategy).to(:identifier) }
     it { should delegate_method(:strategy).to(:identifier) }
     its(:first_name) { should eq('A First Name') }
 

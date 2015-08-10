@@ -24,14 +24,6 @@ class Identifier
   # @return [String]
   attr_reader :identifying_value
 
-  # @api public
-  # @return [String]
-  alias_method :base_identifying_value, :identifying_value
-
-  # @api public
-  # @return [String]
-  alias_method :base_strategy, :strategy
-
   def as_json(*)
     {}
   end

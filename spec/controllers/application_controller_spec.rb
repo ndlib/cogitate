@@ -18,8 +18,8 @@ RSpec.describe ApplicationController do
 
   context '#current_user' do
     it 'will reconstitute an identifier from the session' do
-      controller.session[:user_strategy] = identifier.base_strategy
-      controller.session[:user_identifying_value] = identifier.base_identifying_value
+      controller.session[:user_strategy] = identifier.strategy
+      controller.session[:user_identifying_value] = identifier.identifying_value
       expect(controller.send(:current_user)).to eq(identifier)
     end
 
