@@ -26,7 +26,7 @@ module Cogitate
     # REMOVED FROM RAILS-API
     # config.active_record.raise_in_transactional_callbacks = true
 
-    %w(interfaces repositories services).each do |concept|
+    %w(repositories services).each do |concept|
       config.autoload_paths << Rails.root.join("app/#{concept}")
     end
 
