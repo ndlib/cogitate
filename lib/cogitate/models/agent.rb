@@ -13,13 +13,17 @@ module Cogitate
       include Contracts
       # @note I'm choosing the :identifier as the input and :primary_identifier as the attribute. I believe it is possible that during the
       #       process that builds the Agent, I may encounter a more applicable primary_identifier.
-      Contract(Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] => Cogitate::Interfaces::AgentInterface)
+      Contract(
+        Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface], Contracts::Any =>
+        Cogitate::Interfaces::AgentInterface
+      )
       def initialize(identifier:, container: default_container, serializer_builder: default_serializer_builder)
         self.identifiers = container.new
         self.verified_identifiers = container.new
         self.primary_identifier = identifier
         self.serializer = serializer_builder.call(agent: self)
         self.emails = container.new
+        yield(self) if block_given?
         self
       end
 

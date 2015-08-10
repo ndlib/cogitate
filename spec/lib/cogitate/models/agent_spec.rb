@@ -7,6 +7,10 @@ RSpec.describe Cogitate::Models::Agent do
   let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'orcid', identifying_value: '123') }
   subject { described_class.new(identifier: identifier) }
 
+  it 'will yield an agent if a block is given on initialization' do
+    expect { |b| described_class.new(identifier: identifier, &b) }.to yield_successive_args(kind_of(described_class))
+  end
+
   include Cogitate::RSpecMatchers
   it { should contractually_honor(Cogitate::Interfaces::AgentInterface) }
 
