@@ -54,6 +54,7 @@ module Cogitate
       end
 
       # @api private
+      # I am not yet set on this method being part of the public API.
       def add_email(input)
         emails << input
       end
