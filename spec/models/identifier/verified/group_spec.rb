@@ -14,9 +14,9 @@ class Identifier
       it { should delegate_method(:<=>).to(:identifier) }
       it { should delegate_method(:base_identifying_value).to(:identifier) }
       it { should delegate_method(:base_strategy).to(:identifier) }
+      it { should delegate_method(:strategy).to(:identifier) }
       its(:name) { should eq('A Group Name') }
       its(:as_json) { should eq('name' => 'A Group Name', 'description' => nil) }
-      its(:strategy) { should eq("verified/#{identifier.strategy}") }
 
       it 'will not obliterate the given identifier if the attributes have an identifier' do
         subject = described_class.new(identifier: identifier, attributes: { identifier: 'something else' })
