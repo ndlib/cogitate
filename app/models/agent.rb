@@ -55,7 +55,7 @@ class Agent
   # @api public
   def with_emails
     return enum_for(:with_emails) unless block_given?
-    emails.each { |emails| yield(emails) }
+    emails.each { |email| yield(email) }
   end
 
   # @return [Cogitate::Interfaces::IdentifierInterface] What has been assigned as the primary identifier of this agent.
