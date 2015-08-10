@@ -2,10 +2,16 @@ require 'cogitate/models/agent'
 
 module Cogitate
   module Client
-    # Responsible for transforming a Hash into an Agent and its constituent parts.
+    # Responsible for transforming a well formed Hash into an Agent and its constituent parts.
+    #
+    # @see Cogitate::Models::Agent
     module AgentBuilder
       module_function
 
+      # @param data [Hash] with string keys
+      # @param identifier_decoder [#call] converts the 'id' into an Cogitate::Models::Identifier
+      #
+      # @return Cogitate::Models::Agent
       def call(data, identifier_decoder: default_identifier_decoder)
         identifier = identifier_decoder.call(data.fetch('id'))
         Models::Agent.new(identifier: identifier) do |agent|
