@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{A client library for the Cogitate service.}
   spec.homepage      = "https://github.com/ndlib/cogitate"
 
-  spec.files         = ['README.md', 'LICENSE']
+  spec.files         = ['README.md', 'LICENSE', 'lib/cogitate.rb']
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]

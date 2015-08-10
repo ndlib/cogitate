@@ -15,6 +15,9 @@
 /vendor/bundle/
 /vendor/ruby/
 
+# For when I bundle cogitate as a gem
+/pkg/
+
 # minimal Rails specific artifacts
 db/*.sqlite3
 /db/*.sqlite3-journal
