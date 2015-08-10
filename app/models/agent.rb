@@ -80,7 +80,7 @@ class Agent
 
   attr_accessor :serializer
   def default_serializer_builder
-    require 'agent/serializer' unless defined?(Agent::Serializer)
-    Agent::Serializer.method(:new)
+    require 'cogitate/models/agent/serializer' unless defined?(Cogitate::Models::Agent::Serializer)
+    Cogitate::Models::Agent::Serializer.method(:new)
   end
 end
