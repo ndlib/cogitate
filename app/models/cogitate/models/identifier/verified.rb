@@ -8,7 +8,8 @@ module Cogitate
     class Identifier
       # Identifier's that have been verified can be used for authorization.
       module Verified
-        # Responsible for building a verified identifier
+        # Responsible for building a verified identifier with additional attributes.
+        # If you need additional methods on the data structure, you can pass a block.
         #
         # @api private This is private for now; I'm seeing how it holds out in usage.
         # @return Class

@@ -28,6 +28,11 @@ module Cogitate
       end
 
       # @api public
+      #
+      # Add an identifier to the agent.
+      #
+      # @param identifier [Cogitate::Interfaces::IdentifierInterface]
+      # @return [Cogitate::Interfaces::IdentifierInterface]
       Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
       def add_identifier(identifier)
         identifiers << identifier
@@ -35,12 +40,19 @@ module Cogitate
       end
 
       # @api public
+      # @return [Enumerator, nil] nil if a block is given else an Enumerator
       def with_identifiers
         return enum_for(:with_identifiers) unless block_given?
         identifiers.each { |identifier| yield(identifier) }
+        nil
       end
 
       # @api public
+      #
+      # Add a verified identifier to the agent.
+      #
+      # @param identifier [Cogitate::Interfaces::IdentifierInterface]
+      # @return [Cogitate::Interfaces::IdentifierInterface]
       Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
       def add_verified_identifier(identifier)
         verified_identifiers << identifier
@@ -48,9 +60,11 @@ module Cogitate
       end
 
       # @api public
+      # @return [Enumerator, nil] nil if a block is given else an Enumerator
       def with_verified_identifiers
         return enum_for(:with_verified_identifiers) unless block_given?
         verified_identifiers.each { |identifier| yield(identifier) }
+        nil
       end
 
       # @api private
@@ -60,9 +74,11 @@ module Cogitate
       end
 
       # @api public
+      # @return [Enumerator, nil] nil if a block is given else an Enumerator
       def with_emails
         return enum_for(:with_emails) unless block_given?
         emails.each { |email| yield(email) }
+        nil
       end
 
       # @return [Cogitate::Interfaces::IdentifierInterface] What has been assigned as the primary identifier of this agent.
@@ -74,7 +90,9 @@ module Cogitate
 
       private
 
-      attr_accessor :identifiers, :verified_identifiers, :emails
+      attr_accessor :identifiers
+      attr_accessor :verified_identifiers
+      attr_accessor :emails
 
       Contract(Cogitate::Interfaces::IdentifierInterface => Contracts::Any)
       attr_writer :primary_identifier
