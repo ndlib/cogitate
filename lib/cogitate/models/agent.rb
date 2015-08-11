@@ -66,7 +66,6 @@ module Cogitate
       end
 
       # @return [Cogitate::Interfaces::IdentifierInterface] What has been assigned as the primary identifier of this agent.
-      Contract(Contracts::None => Cogitate::Interfaces::IdentifierInterface)
       attr_reader :primary_identifier
 
       extend Forwardable
@@ -86,7 +85,7 @@ module Cogitate
       end
 
       attr_accessor :serializer
-      # @todo This is something that needs greater consideration. Is it applicable for both client and server.
+      # @todo This is something that needs greater consideration. Is it applicable for both client and server?
       def default_serializer_builder
         require 'cogitate/models/agent/serializer' unless defined?(Cogitate::Models::Agent::Serializer)
         Cogitate::Models::Agent::Serializer.method(:new)
