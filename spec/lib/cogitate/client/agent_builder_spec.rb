@@ -4,6 +4,9 @@ require 'cogitate/client/agent_builder'
 module Cogitate
   module Client
     RSpec.describe AgentBuilder do
+      it 'will raise a KeyError if the data is not well formed' do
+        expect { described_class.call({}) }.to raise_error(KeyError)
+      end
       it 'will convert the data into an Agent' do
         agent = described_class.call(data)
         expect(agent.encoded_id).to eq(data.fetch('id'))
