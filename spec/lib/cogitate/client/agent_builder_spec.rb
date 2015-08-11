@@ -4,11 +4,16 @@ require 'cogitate/client/agent_builder'
 module Cogitate
   module Client
     RSpec.describe AgentBuilder do
+      subject { described_class.new(data) }
+      it 'will expose .call as the public api' do
+        expect_any_instance_of(described_class).to receive(:call)
+        described_class.call(data)
+      end
       it 'will raise a KeyError if the data is not well formed' do
         expect { described_class.call({}) }.to raise_error(KeyError)
       end
       it 'will convert the data into an Agent' do
-        agent = described_class.call(data)
+        agent = subject.call
         expect(agent.encoded_id).to eq(data.fetch('id'))
         expect(agent.with_emails.to_a).to eq(['hworld@nd.edu'])
         expect(agent.with_identifiers.to_a.map(&:encoded_id)).to eq(['bmV0aWQJaHdvcmxk'])
