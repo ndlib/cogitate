@@ -49,7 +49,7 @@ module Cogitate
 
       def assign_verified_identifiers_to_agent
         data.fetch('relationships').fetch('verified_identifiers').each do |stub|
-          identifier = identifier_builder.call(encoded_identifier: stub.fetch('id'), included: data.fetch('included', {}))
+          identifier = identifier_builder.call(encoded_identifier: stub.fetch('id'), included: data.fetch('included', []))
           agent.add_verified_identifier(identifier)
         end
       end
@@ -65,8 +65,8 @@ module Cogitate
       # @api private
       # Because the identifiers decoder returns an array; However I want a single object.
       def default_identifier_builder
-        require 'cogitate/services/identifiers_decoder' unless defined? Services::IdentifiersDecoder
-        ->(encoded_identifier:, **keywords) { Services::IdentifiersDecoder.call(encoded_identifier).first }
+        require 'cogitate/client/identifier_builder' unless defined? Services::IdentifierBuilder
+        Client::IdentifierBuilder
       end
     end
   end

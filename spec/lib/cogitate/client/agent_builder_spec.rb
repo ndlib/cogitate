@@ -24,8 +24,9 @@ module Cogitate
         let(:agent) { subject.call }
         before do
           allow(identifier_builder).to receive(:call).with(encoded_identifier: "bmV0aWQJaHdvcmxk").and_return(agent_identifier)
-          allow(identifier_builder).to receive(:call).with(encoded_identifier: "bmV0aWQJaHdvcmxk", included: data.fetch('included')).
-            and_return(agent_identifier)
+          allow(identifier_builder).to receive(:call).with(
+            encoded_identifier: "bmV0aWQJaHdvcmxk", included: data.fetch('included')
+          ).and_return(agent_identifier)
         end
         it 'will extract and assign emails to the agent' do
           expect(agent.with_emails.to_a).to eq(['hworld@nd.edu'])
@@ -37,6 +38,23 @@ module Cogitate
           expect(agent.with_verified_identifiers.to_a).to eq([agent_identifier])
         end
         its(:call) { should be_a(Cogitate::Models::Agent) }
+      end
+
+      context '#call result (without dependency injection)' do
+        subject { described_class.new(data).call }
+        its(:strategy) { should eq('netid') }
+        its(:identifying_value) { should eq('hworld') }
+        context '#with_emails' do
+          it 'will be an Enumerator with one email' do
+            expect(subject.with_emails.to_a).to eq(['hworld@nd.edu'])
+          end
+        end
+
+        context '#with_identifiers' do
+          it 'will have attributes' do
+            expect(subject.with_identifiers.to_a.first.attributes).to eq(data.fetch('included').first.fetch('attributes'))
+          end
+        end
       end
 
       let(:data) do
