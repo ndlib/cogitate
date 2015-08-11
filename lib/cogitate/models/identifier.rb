@@ -23,9 +23,21 @@ module Cogitate
       attr_reader :strategy
 
       # @api public
+      #
+      # For the given `strategy` what is the (hopefully) unique value that can be used for identification?
+      #
+      # @example
+      #   Given a `strategy` of "email", examples of identifying values are:
+      #   * hello@world.com
+      #   * test@test.com
+      #
+      #   It is also possible that someone might say 'taco' is an identifying value for the email strategy.
+      #   And that is fine.
+      #
       # @return [String]
       attr_reader :identifying_value
 
+      # @return [Hash]
       def as_json(*)
         { 'identifying_value' => identifying_value, 'strategy' => strategy }
       end
