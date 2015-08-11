@@ -6,6 +6,11 @@ module Cogitate
   module Services
     # A service module for extracting identifiers from an encoded payload.
     #
+    # @example
+    #
+    #   encoded_string = Base64.urlsafe_encode64("netid\tmynetid")
+    #
+    #
     # @see Cogitate::Services::IdentifieresDecoder.call
     module IdentifiersDecoder
       # When the thing we are trying to decode is improperly encoded, this exception is to provide clarity
