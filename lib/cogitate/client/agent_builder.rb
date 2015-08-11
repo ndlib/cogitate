@@ -41,7 +41,6 @@ module Cogitate
       end
 
       def assign_identifiers_to_agent
-        # TODO: Add any included information
         data.fetch('relationships').fetch('identifiers').each do |stub|
           identifier = identifier_decoder.call(stub.fetch('id'))
           agent.add_identifier(identifier)
