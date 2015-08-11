@@ -23,8 +23,8 @@ module Cogitate
         subject { described_class.new(data, identifier_builder: identifier_builder) }
         let(:agent) { subject.call }
         before do
-          allow(identifier_builder).to receive(:call).with(id: "bmV0aWQJaHdvcmxk").and_return(agent_identifier)
-          allow(identifier_builder).to receive(:call).with(id: "bmV0aWQJaHdvcmxk", included: data.fetch('included')).
+          allow(identifier_builder).to receive(:call).with(encoded_identifier: "bmV0aWQJaHdvcmxk").and_return(agent_identifier)
+          allow(identifier_builder).to receive(:call).with(encoded_identifier: "bmV0aWQJaHdvcmxk", included: data.fetch('included')).
             and_return(agent_identifier)
         end
         it 'will extract and assign emails to the agent' do
