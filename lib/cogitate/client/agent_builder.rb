@@ -20,9 +20,9 @@ module Cogitate
       end
 
       # @api private
-      def initialize(data, identifier_decoder: default_identifier_decoder)
+      def initialize(data, identifier_builder: default_identifier_builder)
         self.data = data
-        self.identifier_decoder = identifier_decoder
+        self.identifier_builder = identifier_builder
         set_agent!
       end
 
@@ -42,31 +42,31 @@ module Cogitate
 
       def assign_identifiers_to_agent
         data.fetch('relationships').fetch('identifiers').each do |stub|
-          identifier = identifier_decoder.call(stub.fetch('id'))
+          identifier = identifier_builder.call(id: stub.fetch('id'), included: data.fetch('included', {}))
           agent.add_identifier(identifier)
         end
       end
 
       def assign_verified_identifiers_to_agent
         data.fetch('relationships').fetch('verified_identifiers').each do |stub|
-          identifier = identifier_decoder.call(stub.fetch('id'))
+          identifier = identifier_builder.call(id: stub.fetch('id'), included: data.fetch('included', {}))
           agent.add_verified_identifier(identifier)
         end
       end
 
-      attr_accessor :data, :identifier_decoder
+      attr_accessor :data, :identifier_builder
       attr_reader :agent
 
       def set_agent!
-        identifier = identifier_decoder.call(data.fetch('id'))
+        identifier = identifier_builder.call(id: data.fetch('id'))
         @agent = Models::Agent.new(identifier: identifier)
       end
 
       # @api private
       # Because the identifiers decoder returns an array; However I want a single object.
-      def default_identifier_decoder
+      def default_identifier_builder
         require 'cogitate/services/identifiers_decoder' unless defined? Services::IdentifiersDecoder
-        ->(encoded_id) { Services::IdentifiersDecoder.call(encoded_id).first }
+        ->(id:, **keywords) { Services::IdentifiersDecoder.call(id).first }
       end
     end
   end
