@@ -11,6 +11,8 @@ module Cogitate
       include Contracts
 
       # @api public
+      #
+      # Initialize a value object for identification
       Contract(Cogitate::Interfaces::IdentifierInitializationInterface => Cogitate::Interfaces::IdentifierInterface)
       def initialize(strategy:, identifying_value:)
         self.strategy = strategy
@@ -19,7 +21,11 @@ module Cogitate
       end
 
       # @api public
-      # @return [String]
+      #
+      # Provides context for the `identifying_value`
+      #
+      # @return [String] one of the contexts for identity of this object
+      # @see #<=>
       attr_reader :strategy
 
       # @api public
@@ -34,9 +40,12 @@ module Cogitate
       #   It is also possible that someone might say 'taco' is an identifying value for the email strategy.
       #   And that is fine.
       #
-      # @return [String]
+      # @return [String] one of the contexts for identity of this object
+      # @see #<=>
       attr_reader :identifying_value
 
+      # The JSON representation of this object
+      #
       # @return [Hash]
       def as_json(*)
         { 'identifying_value' => identifying_value, 'strategy' => strategy }
@@ -45,6 +54,10 @@ module Cogitate
       include Comparable
 
       # @api public
+      #
+      # Provide a means of sorting.
+      #
+      # @return [Integer] -1, 0, 1 as per `Comparable#<=>` interface
       Contract(Cogitate::Interfaces::IdentifierInterface => Num)
       def <=>(other)
         strategy_sort = strategy <=> other.strategy
@@ -53,7 +66,10 @@ module Cogitate
       end
 
       # @api public
-      # @return [String]
+      #
+      # A URL safe encoding of this object's `strategy` and `identifying_value`
+      #
+      # @return [String] a URL safe encoding of the object's identifying attributes
       def encoded_id
         Base64.urlsafe_encode64("#{strategy}\t#{identifying_value}")
       end
