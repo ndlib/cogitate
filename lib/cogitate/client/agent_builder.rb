@@ -28,18 +28,30 @@ module Cogitate
 
       # @api private
       def call
-        data.fetch('attributes').fetch('emails').each { |email| agent.add_email(email) }
-        # TODO: Add any included information
-        data.fetch('relationships').fetch('identifiers').each do |stub|
-          agent.add_identifier(identifier_decoder.call(stub.fetch('id')))
-        end
-        data.fetch('relationships').fetch('verified_identifiers').each do |stub|
-          agent.add_verified_identifier(identifier_decoder.call(stub.fetch('id')))
-        end
+        assign_emails_to_agent
+        assign_identifiers_to_agent
+        assign_verified_identifiers_to_agent
         agent
       end
 
       private
+
+      def assign_emails_to_agent
+        data.fetch('attributes').fetch('emails').each { |email| agent.add_email(email) }
+      end
+
+      def assign_identifiers_to_agent
+        # TODO: Add any included information
+        data.fetch('relationships').fetch('identifiers').each do |stub|
+          agent.add_identifier(identifier_decoder.call(stub.fetch('id')))
+        end
+      end
+
+      def assign_verified_identifiers_to_agent
+        data.fetch('relationships').fetch('verified_identifiers').each do |stub|
+          agent.add_verified_identifier(identifier_decoder.call(stub.fetch('id')))
+        end
+      end
 
       attr_accessor :data, :identifier_decoder
       attr_reader :agent
