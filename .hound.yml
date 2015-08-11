@@ -26,13 +26,13 @@ AllCops:
 AbcSize:
   Exclude:
     - app/models/repository_service/identifier_relationship.rb
-    - app/models/identifier/verified.rb
+    - app/models/cogitate/models/identifier/verified.rb
     - app/models/cogitate/models/agent/serializer.rb
     - lib/cogitate/client/agent_builder.rb
 
 MethodLength:
   Exclude:
-    - app/models/identifier/verified.rb
+    - app/models/cogitate/models/identifier/verified.rb
     - app/models/cogitate/models/agent/serializer.rb
 
 LineLength:

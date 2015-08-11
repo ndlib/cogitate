@@ -1,4 +1,4 @@
-require 'identifier/verified/group'
+require 'cogitate/models/identifier/verified/group'
 
 module Cogitate
   # A class that is responsible for querying persistence layers and returning a business object.
@@ -25,7 +25,9 @@ module Cogitate
       return enum_for(:with_verified_existing_group_for, identifier: identifier) unless block_given?
       group = Group.find_by(id: identifier.identifying_value)
       return if group.nil?
-      yield(Identifier::Verified::Group.new(identifier: identifier, attributes: { name: group.name, description: group.description }))
+      yield(
+        Models::Identifier::Verified::Group.new(identifier: identifier, attributes: { name: group.name, description: group.description })
+      )
     end
 
     private
@@ -33,7 +35,7 @@ module Cogitate
     attr_accessor :identifier_relationship_repository
 
     def default_identifier_relationship_repository
-      require 'repository_service/identifier_relationship'
+      require 'repository_service/identifier_relationship' unless defined?(RepositoryService::IdentifierRelationship)
       RepositoryService::IdentifierRelationship
     end
   end

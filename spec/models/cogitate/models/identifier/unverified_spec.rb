@@ -1,9 +1,9 @@
 require 'spec_fast_helper'
 require "cogitate/models/identifier"
 require 'shoulda/matchers'
-require 'identifier/unverified'
+require 'cogitate/models/identifier/unverified'
 
-RSpec.describe Identifier::Unverified do
+RSpec.describe Cogitate::Models::Identifier::Unverified do
   let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: '123') }
   subject { described_class.new(identifier: identifier) }
 

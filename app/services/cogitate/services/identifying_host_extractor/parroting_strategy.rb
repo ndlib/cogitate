@@ -35,8 +35,8 @@ module Cogitate
         attr_accessor :identifier
 
         def default_identifier_builder
-          require 'identifier/unverified' unless defined?(Identifier::Unverified)
-          Identifier::Unverified.method(:new)
+          require 'cogitate/models/identifier/unverified' unless defined?(Models::Identifier::Unverified)
+          Models::Identifier::Unverified.method(:new)
         end
       end
     end
