@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'spec_fast_helper'
 require 'cogitate/client/data_to_object_coercer'
 
 module Cogitate
