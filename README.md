@@ -16,6 +16,19 @@ Welcome to Cogitate, a federated identity management system for managing:
   * Parroted identities (ask for the identity of a Kroger Card number, you'll get back a Kroger card number)
 * User authentication through various providers
 
+## Heads Up
+
+Mixed within this repository are two concerns:
+
+* Cogitate Rails application, the core of which is in `app/` though it leverages `lib/` files
+* Cogitate client gem, which is contained within `lib/`
+
+For now these are kept together for ease of application development.
+The cogitate gem can be published via this repository (see cogitate.gemspec) for additional information.
+
+In keeping these together, it is important to understand that files in `lib/` should not reference files in `app/`.
+That is a general best practice, however it is a requirement of the cogitate gem.
+
 ## Documentation and Semantic Versioning
 
 A note on documentation and semantic versioning.
