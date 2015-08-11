@@ -14,6 +14,10 @@ module Cogitate
         expect(described_class.call(data, type_to_builder_map: { 'agents' => builder })).to eq(:built)
       end
 
+      it "will fail with a KeyError if the data's type does not exist in the map" do
+        expect { described_class.call(data, type_to_builder_map: { 'shoe' => builder }) }.to raise_error(KeyError)
+      end
+
       let(:data) { { "type" => "agents", "id" => "bmV0aWQJaHdvcmxk" } }
 
       context '.default_type_to_builder_map' do
