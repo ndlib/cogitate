@@ -6,6 +6,6 @@
 #     * Parroted identities (ask for the identity of a Kroger Card number, you'll get back a Kroger card number)
 #   * User authentication through various providers
 module Cogitate
-  # Used as a namespace grab
+  # This version reflects the gem version for release
   VERSION = '0.0.1'.freeze
 end
