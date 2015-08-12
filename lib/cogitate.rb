@@ -1,3 +1,5 @@
+require 'cogitate/configuration'
+
 # Cogitate is a federated identity management system for managing:
 #   * User identities through:
 #     * Group membership
@@ -8,4 +10,18 @@
 module Cogitate
   # This version reflects the gem version for release
   VERSION = '0.0.1'.freeze
+
+  def self.configure
+    yield(configuration)
+  end
+
+  def self.configuration=(input)
+    @configuration = input
+  end
+
+  def self.configuration
+    @configuration ||= Cogitate::Configuration.new
+  end
 end
+
+require 'cogitate/railtie' if defined?(Rails)

@@ -32,10 +32,8 @@ module Cogitate
         new(**keywords).to_token(data: data)
       end
 
-      def initialize(encryption_type: default_encryption_type, password: default_password, issuer_claim: default_issuer_claim)
-        self.encryption_type = encryption_type
-        self.password = password
-        self.issuer_claim = issuer_claim
+      def initialize(configuration: default_configuration)
+        self.configuration = configuration
       end
 
       def to_token(data:)
@@ -48,7 +46,7 @@ module Cogitate
 
       private
 
-      attr_accessor :encryption_type, :password, :issuer_claim
+      attr_accessor :configuration
 
       # I need to coerce the password into the correct format.
       def coerced_password
@@ -60,19 +58,22 @@ module Cogitate
         end
       end
 
+      def default_configuration
+        require 'cogitate'
+        Cogitate.configuration
+      end
+
       # Perhaps a bit non-committal but I want to allow for different ENV variables
-      def default_password
-        Figaro.env.cogitate_services_tokenizer_private_password ||
-          Figaro.env.cogitate_services_tokenizer_public_password ||
-          Figaro.env.cogitate_services_tokenizer_password!
+      def password
+        configuration.tokenizer_password
       end
 
-      def default_encryption_type
-        Figaro.env.cogitate_services_tokenizer_encryption_type!
+      def encryption_type
+        configuration.tokenizer_encryption_type
       end
 
-      def default_issuer_claim
-        Figaro.env.cogitate_services_tokenizer_issuer_claim!
+      def issuer_claim
+        configuration.tokenizer_issuer_claim
       end
     end
   end

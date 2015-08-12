@@ -1,17 +1,17 @@
 require 'rails_helper'
 require 'cogitate/services/tokenizer'
+require 'cogitate/configuration'
 
 RSpec.describe Cogitate::Services::Tokenizer do
-  its(:default_encryption_type) { should eq(Figaro.env.cogitate_services_tokenizer_encryption_type) }
-  its(:default_password) { should eq(Figaro.env.cogitate_services_tokenizer_password) }
-  its(:default_issuer_claim) { should eq(Figaro.env.cogitate_services_tokenizer_issuer_claim) }
-
-  let(:data) { { identifier: 'hello' } }
+  let(:data) { { 'identifier' => 'hello' } }
   let(:password) { nil }
   let(:encryption_type) { false }
   let(:issuer_claim) { "The Man" }
+  let(:configuration) do
+    Cogitate::Configuration.new(tokenizer_password: nil, tokenizer_encryption_type: 'none', tokenizer_issuer_claim: issuer_claim)
+  end
 
-  subject { described_class.new(password: nil, encryption_type: 'none', issuer_claim: issuer_claim) }
+  subject { described_class.new(configuration: configuration) }
 
   context '#to_token' do
     it 'will transform the agent to JSON then encode that JSON via JWT encoding' do
@@ -33,14 +33,24 @@ RSpec.describe Cogitate::Services::Tokenizer do
 
   context 'to token then from token' do
     it 'will transform the agent to JSON then encode that JSON via JWT encoding' do
-      token = described_class.to_token(data: data, password: Figaro.env.cogitate_services_tokenizer_private_password!)
-      expect(
-        described_class.from_token(token: token, password: Figaro.env.cogitate_services_tokenizer_public_password!).fetch('identifier')
-      ).to eq(data.fetch(:identifier))
+      from_token_config = Cogitate::Configuration.new(
+        tokenizer_password: Figaro.env.cogitate_services_tokenizer_public_password!,
+        tokenizer_encryption_type: Figaro.env.cogitate_services_tokenizer_encryption_type!,
+        tokenizer_issuer_claim: Figaro.env.cogitate_services_tokenizer_issuer_claim!
+      )
+      from_data_config = Cogitate::Configuration.new(
+        tokenizer_password: Figaro.env.cogitate_services_tokenizer_private_password!,
+        tokenizer_encryption_type: Figaro.env.cogitate_services_tokenizer_encryption_type!,
+        tokenizer_issuer_claim: Figaro.env.cogitate_services_tokenizer_issuer_claim!
+      )
+      token = described_class.to_token(data: data, configuration: from_data_config)
+      expect(described_class.from_token(token: token, configuration: from_token_config)).to eq(data)
     end
     it 'will raise an issuer error if issuer does not match' do
-      token = described_class.to_token(data: data, issuer_claim: 'The Woman')
-      expect { described_class.from_token(token: token, issuer_claim: 'The Man') }.to raise_error(JWT::InvalidIssuerError)
+      token_config = Cogitate::Configuration.new(tokenizer_password: nil, tokenizer_encryption_type: 'none', tokenizer_issuer_claim: 'A')
+      data_config = Cogitate::Configuration.new(tokenizer_password: nil, tokenizer_encryption_type: 'none', tokenizer_issuer_claim: 'B')
+      token = described_class.to_token(data: data, configuration: data_config)
+      expect { described_class.from_token(token: token, configuration: token_config) }.to raise_error(JWT::InvalidIssuerError)
     end
   end
 
