@@ -99,8 +99,8 @@ urlsafe_base64_encoded_identifiers = Base64.urlsafe_encode64(identifier)
 
 ```ruby
 require 'base64'
-Base64.urlsafe_encode64("orcid\t0000-0002-1191-0873")
-=> "b3JjaWQJMDAwMC0wMDAyLTExOTEtMDg3Mw=="
+Base64.urlsafe_encode64("netid\thworld")
+=> "bmV0aWQJaHdvcmxk"
 ```
 
 **Note:** Delimit multiple identifiers with a new line (i.e. `\n`).
@@ -110,22 +110,43 @@ Base64.urlsafe_encode64("orcid\t0000-0002-1191-0873")
 ```json
 {
   "links": {
-    "self": "http://localhost:3000/api/agents/b3JjaWQJMDAwMC0wMDAyLTExOTEtMDg3Mw=="
+    "self": "http://localhost:3000/api/agents/bmV0aWQJaHdvcmxk"
   },
   "data": [{
     "type": "agents",
-    "id": "b3JjaWQJMDAwMC0wMDAyLTExOTEtMDg3Mw==",
+    "id": "bmV0aWQJaHdvcmxk",
+    "links": {
+      "self": "http://localhost:3000/api/agents/bmV0aWQJaHdvcmxk"
+    },
     "attributes": {
-      "strategy": "orcid",
-      "identifying_value": "0000-0002-1191-0873"
+      "strategy": "netid",
+      "identifying_value": "hworld",
+      "emails": ["hworld@nd.edu"]
     },
     "relationships": {
-      "identities": [{
-        "type": "unverified/orcid",
-        "id": "0000-0002-1191-0873"
+      "identifiers": [{
+        "type": "identifiers",
+        "id": "bmV0aWQJaHdvcmxk"
       }],
-      "verified_identities": []
-    }
+      "verified_identifiers": [{
+        "type": "identifiers",
+        "id": "bmV0aWQJaHdvcmxk"
+      }]
+    },
+    "included": [{
+      "type": "identifiers",
+      "id": "bmV0aWQJaHdvcmxk",
+      "attributes": {
+        "identifying_value": "hworld",
+        "strategy": "netid",
+        "first_name": "Hello",
+        "last_name": "World",
+        "netid": "hworld",
+        "full_name": "Hello World",
+        "ndguid": "nd.edu.hworld",
+        "email": "hworld@nd.edu"
+      }
+    }]
   }]
 }
 ```
@@ -150,8 +171,8 @@ It was also clear that our institutional service was inadequate due to the natur
 * Communication Channels
   * ~~Extract email from NetID identifier~~
 * Client library
-  * Decode the JSON Web Token (JWT) into a "User" object and related information
-    * Levarage RSA public key for decoding the JWT
+  * ~~Decode the JSON Web Token (JWT) into a "User" object and related information~~
+    * ~~Levarage RSA public key for decoding the JWT~~
 
 ### Phase 2
 
