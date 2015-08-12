@@ -63,7 +63,7 @@ module Cogitate
         Cogitate.configuration
       end
 
-      # Perhaps a bit non-committal but I want to allow for different ENV variables
+      # @note In the case of a Cogitate client this should be a public key; In the case of the Cogitate server this should be a private key.
       def password
         configuration.tokenizer_password
       end
