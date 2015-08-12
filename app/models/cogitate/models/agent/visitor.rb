@@ -59,6 +59,12 @@ module Cogitate
           host
         end
 
+        # @api public
+        #
+        # Performs the final steps of a visitation sequence
+        #
+        # @return agent [Cogitate::Interfaces::AgentInterface]
+        # @todo Should I freeze the visited_hosts?
         Contract(Contracts::None => Cogitate::Interfaces::AgentInterface)
         def return_from_visitations
           communication_channels_builder.call(agent: agent)
