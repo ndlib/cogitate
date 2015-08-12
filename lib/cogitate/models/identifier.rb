@@ -10,10 +10,10 @@ module Cogitate
     class Identifier
       include Contracts
 
+      Contract(Cogitate::Interfaces::IdentifierInitializationInterface => Cogitate::Interfaces::IdentifierInterface)
       # @api public
       #
       # Initialize a value object for identification
-      Contract(Cogitate::Interfaces::IdentifierInitializationInterface => Cogitate::Interfaces::IdentifierInterface)
       def initialize(strategy:, identifying_value:)
         self.strategy = strategy
         self.identifying_value = identifying_value
@@ -53,12 +53,12 @@ module Cogitate
 
       include Comparable
 
+      Contract(Cogitate::Interfaces::IdentifierInterface => Contracts::Num)
       # @api public
       #
       # Provide a means of sorting.
       #
       # @return [Integer] -1, 0, 1 as per `Comparable#<=>` interface
-      Contract(Cogitate::Interfaces::IdentifierInterface => Num)
       def <=>(other)
         strategy_sort = strategy <=> other.strategy
         return strategy_sort if strategy_sort != 0

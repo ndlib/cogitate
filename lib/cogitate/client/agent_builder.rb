@@ -12,8 +12,9 @@ module Cogitate
       # Responsible for transforming a well formed Hash into an Agent and its constituent parts.
       #
       # @param data [Hash] with string keys
-      # @param identifier_decoder [#call] converts the 'id' into an Cogitate::Models::Identifier
-      # @return Cogitate::Models::Agent
+      # @param [Hash] keywords
+      # @option keywords [#call] :identifier_builder converts the 'id' into an Cogitate::Models::Identifier
+      # @return [Cogitate::Models::Agent]
       # @raise KeyError if the input data is not well formed
       def self.call(data, **keywords)
         new(data, **keywords).call

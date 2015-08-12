@@ -11,12 +11,12 @@ module Cogitate
     # * a Service - an application that "does stuff" to data
     class Agent
       include Contracts
-      # @note I'm choosing the :identifier as the input and :primary_identifier as the attribute. I believe it is possible that during the
-      #       process that builds the Agent, I may encounter a more applicable primary_identifier.
       Contract(
         Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface], Contracts::Any =>
         Cogitate::Interfaces::AgentInterface
       )
+      # @note I'm choosing the :identifier as the input and :primary_identifier as the attribute. I believe it is possible that during the
+      #       process that builds the Agent, I may encounter a more applicable primary_identifier.
       def initialize(identifier:, container: default_container, serializer_builder: default_serializer_builder)
         self.identifiers = container.new
         self.verified_identifiers = container.new
@@ -27,13 +27,13 @@ module Cogitate
         self
       end
 
+      Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
       # @api public
       #
       # Add an identifier to the agent.
       #
       # @param identifier [Cogitate::Interfaces::IdentifierInterface]
       # @return [Cogitate::Interfaces::IdentifierInterface]
-      Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
       def add_identifier(identifier)
         identifiers << identifier
         identifier
@@ -47,13 +47,13 @@ module Cogitate
         nil
       end
 
+      Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
       # @api public
       #
       # Add a verified identifier to the agent.
       #
       # @param identifier [Cogitate::Interfaces::IdentifierInterface]
       # @return [Cogitate::Interfaces::IdentifierInterface]
-      Contract(Cogitate::Interfaces::IdentifierInterface => Cogitate::Interfaces::IdentifierInterface)
       def add_verified_identifier(identifier)
         verified_identifiers << identifier
         identifier

@@ -17,7 +17,9 @@ module Cogitate
       end
     end
 
-    attr_writer(*CONFIG_ATTRIBUTE_NAMES)
+    attr_writer :tokenizer_password
+    attr_writer :tokenizer_encryption_type
+    attr_writer :tokenizer_issuer_claim
 
     def tokenizer_password
       @tokenizer_password || fail(ConfigurationError, :tokenizer_password)
