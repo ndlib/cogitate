@@ -40,6 +40,15 @@ module Cogitate
           self
         end
 
+        # @api public
+        #
+        # Responsible for coordinating the visit with a given `host`; As per the implementation
+        # only visit each host once.
+        #
+        # @param host [Object] Some thing that can "host" a visit.
+        # @yieldparam visitor [Cogitate::Models::Agent::Visitor] If the host has already been visited, yield the visitor
+        # @return host
+        #
         # @note We don't want to visit a host more than once. Consider the scenario where we start by finding a Netid. From the Netid, we
         #   see that there is an associated ORCID. Now, from the ORCID we want to make sure we have other related identifiers. And we see
         #   that there is a Netid. If we don't track visitation of that Netid, we may well spiral into infinity.
