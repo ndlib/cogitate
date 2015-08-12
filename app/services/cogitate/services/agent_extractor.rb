@@ -31,7 +31,7 @@ module Cogitate
       attr_writer :visitor
 
       def default_identifying_host_extractor
-        require_relative './identifying_host_extractor' unless defined?(IdentifyingHostExtractor)
+        require 'cogitate/services/identifying_host_extractor' unless defined?(IdentifyingHostExtractor)
         IdentifyingHostExtractor
       end
 

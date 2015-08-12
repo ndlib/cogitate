@@ -48,12 +48,12 @@ module Cogitate
       end
 
       def default_decoder
-        require_relative './identifiers_decoder' unless defined?(IdentifiersDecoder)
+        require 'cogitate/services/identifiers_decoder' unless defined?(IdentifiersDecoder)
         IdentifiersDecoder
       end
 
       def default_converter
-        require_relative './agent_extractor' unless defined?(AgentExtractor)
+        require 'cogitate/services/agent_extractor' unless defined?(AgentExtractor)
         AgentExtractor
       end
     end
