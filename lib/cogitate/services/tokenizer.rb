@@ -4,12 +4,30 @@ require 'jwt'
 module Cogitate
   module Services
     # Responsible for decoding a token and encoding a token.
+    #
+    # @note This is a slight deviation from some of the class architecture in that there are two primary functions .from_token and
+    #    .to_token. There is an underlying parameter object (i.e. password, issuer claim, and encryption type) that can be teased apart
+    #    and thus create 1 data structure and 2 isolated functions instead of the bundled 1 object.
+    # @see https://github.com/jwt/ruby-jwt
     class Tokenizer
+      # @api public
+      #
+      # Responsible for decoding a signed and encoded token and returning the `:data` portion of the JWT (JSON Web Token).
+      #
+      # @param token [String] An encoded token (as encoded via .to_token)
       # @return the :data from the given token
+      # @see Cogitate::Services::Tokenizer.to_token
       def self.from_token(token:, **keywords)
         new(**keywords).from_token(token: token)
       end
 
+      # @api public
+      #
+      # Responsible for encoding and signing a token who's `:data` payload is the input data.
+      #
+      # @param data [#as_json] An object that can be converted to a Hash as per #as_json
+      # @return [String] an encoded and signed token
+      # @see Cogitate::Services::Tokenizer.from_token
       def self.to_token(data:, **keywords)
         new(**keywords).to_token(data: data)
       end
