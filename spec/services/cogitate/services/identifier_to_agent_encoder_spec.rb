@@ -19,7 +19,7 @@ module Cogitate
         it 'will extract the agent then tokenize it' do
           agent = double('Agent')
           token = double('Token')
-          expect(agent_tokenizer).to receive(:call).with(agent: agent).and_return(token)
+          expect(agent_tokenizer).to receive(:call).with(data: agent).and_return(token)
           expect(agent_extractor).to receive(:call).with(identifier: identifier).and_return(agent)
           expect(subject.call).to eq(token)
         end

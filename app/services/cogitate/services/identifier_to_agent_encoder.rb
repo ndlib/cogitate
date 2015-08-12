@@ -16,7 +16,7 @@ module Cogitate
 
       def call
         agent = agent_extractor.call(identifier: identifier)
-        agent_tokenizer.call(agent: agent)
+        agent_tokenizer.call(data: agent)
       end
 
       private
@@ -29,8 +29,8 @@ module Cogitate
       end
 
       def default_agent_tokenizer
-        require 'cogitate/services/agent_tokenizer' unless defined?(Cogitate::Services::AgentTokenizer)
-        Cogitate::Services::AgentTokenizer
+        require 'cogitate/services/tokenizer' unless defined?(Cogitate::Services::Tokenizer)
+        Cogitate::Services::Tokenizer.method(:to_token)
       end
     end
   end
