@@ -1,11 +1,15 @@
 Cogitate.configure do |config|
   <% if defined?(Figaro) %>
   config.tokenizer_password = Figaro.env.cogitate_services_tokenizer_password!
+  config.remote_server_base_url = Figaro.env.cogitate_services_remote_server_base_url!
   config.tokenizer_encryption_type = Figaro.env.cogitate_services_tokenizer_encryption_type!
   config.tokenizer_issuer_claim = Figaro.env.cogitate_services_tokenizer_issuer_claim!
   <% else %>
+  # The public key for the RSA key
   config.tokenizer_password = 'You need to provide this'
   config.tokenizer_encryption_type = 'RS256'
-  config.tokenizer_issuer_claim = 'Cogitate Client'
+  config.tokenizer_issuer_claim = 'CHANGE THIS: Cogitate Client'
+  # Change this
+  config.remote_server_base_url = "http://localhost:3001"
   <% end %>
 end
