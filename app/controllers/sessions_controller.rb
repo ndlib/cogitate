@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
     after_authentication_callback_url = session[QUERY_KEY_FOR_AFTER_AUTHENTICATION_CALLBACK_URL]
     if after_authentication_callback_url
       response.headers['X-Cogitate-Authentication-Token'] = Cogitate::Services::IdentifierToAgentEncoder.call(identifier: current_user)
-      redirect_to after_authentication_callback_url
+      redirect_to "#{after_authentication_callback_url}?cogitate_authentication_token=#{response.headers['X-Cogitate-Authentication-Token']}"
     else
       redirect_to "/api/agents/#{current_user.encoded_id}"
     end
@@ -47,7 +47,8 @@ class SessionsController < ApplicationController
 
   PROVIDER_TO_STRATEGY = { 'cas' => 'netid', 'developer' => 'email' }.freeze
   def strategy
-    provider = auth_hash.fetch('provider')
+    # Because the provider may be a symbol
+    provider = auth_hash.fetch('provider').to_s
     PROVIDER_TO_STRATEGY.fetch(provider, provider)
   end
 
