@@ -11,6 +11,7 @@ RSpec.describe Cogitate::Services::Tokenizer do
     Cogitate::Configuration.new(tokenizer_password: nil, tokenizer_encryption_type: 'none', tokenizer_issuer_claim: issuer_claim)
   end
 
+  its(:default_configuration) { should be_a(Cogitate::Configuration) }
   subject { described_class.new(configuration: configuration) }
 
   context '#to_token' do
