@@ -9,12 +9,37 @@ module Cogitate
     end
 
     CONFIG_ATTRIBUTE_NAMES = [
+      # !@attribute [rw] after_authentication_callback_url
+      #   Where should the Cogitate server redirect to after a successful authentication?
+      :after_authentication_callback_url,
+      # !@attribute [rw] remote_server_base_url
+      #   @return [String] What is the URL of the Cogitate server you want to connect to?
       :remote_server_base_url,
+      # !@attribute [rw] tokenizer_password
+      #   What is the tokenizer password you are going to be using to:
+      #   * create a token (i.e. a private RSA key)
+      #   * decode a token (i.e. a public RSA key)
+      #
+      #   If you are implemnting a Cogitate client, you'll want to use the public key
+      #   @return [String]
+      #   @see Cogitate::Services::Tokenizer
       :tokenizer_password,
+      # !@attribute [rw] tokenizer_encryption_type
+      #   What is the encryption type for the tokenizer. You will need to ensure that
+      #   the Cogitate server and client are using the same encryption mechanism.
+      #   @return [String]
+      #   @example `configuration.tokenizer_encryption_type = 'RS256'`
+      #   @see Cogitate::Services::Tokenizer
       :tokenizer_encryption_type,
+      # !@attribute [rw] tokenizer_issuer_claim
+      #   As per JSON Web Token specification, what is the Issuer Claim
+      #   the Cogitate server and client are using the same encryption mechanism.
+      #   @return [String]
+      #   @example `configuration.tokenizer_issuer_claim = 'https://library.nd.edu'`
+      #   @see https://tools.ietf.org/html/rfc7519#section-4.1.1
+      #   @see https://github.com/jwt/ruby-jwt#issuer-claim
       :tokenizer_issuer_claim
     ].freeze
-    private_constant :CONFIG_ATTRIBUTE_NAMES
 
     def initialize(**keywords)
       CONFIG_ATTRIBUTE_NAMES.each do |name|
@@ -28,29 +53,5 @@ module Cogitate
         instance_variable_get("@#{method_name}") || fail(ConfigurationError, method_name)
       end
     end
-
-    # !@attribute [rw] remote_server_base_url
-    #   @return [String] What is the URL of the Cogitate server you want to connect to?
-    # !@attribute [rw] tokenizer_password
-    #   What is the tokenizer password you are going to be using to:
-    #   * create a token (i.e. a private RSA key)
-    #   * decode a token (i.e. a public RSA key)
-    #
-    #   If you are implemnting a Cogitate client, you'll want to use the public key
-    #   @return [String]
-    #   @see Cogitate::Services::Tokenizer
-    # !@attribute [rw] tokenizer_encryption_type
-    #   What is the encryption type for the tokenizer. You will need to ensure that
-    #   the Cogitate server and client are using the same encryption mechanism.
-    #   @return [String]
-    #   @example `configuration.tokenizer_encryption_type = 'RS256'`
-    #   @see Cogitate::Services::Tokenizer
-    # !@attribute [rw] tokenizer_issuer_claim
-    #   As per JSON Web Token specification, what is the Issuer Claim
-    #   the Cogitate server and client are using the same encryption mechanism.
-    #   @return [String]
-    #   @example `configuration.tokenizer_issuer_claim = 'https://library.nd.edu'`
-    #   @see https://tools.ietf.org/html/rfc7519#section-4.1.1
-    #   @see https://github.com/jwt/ruby-jwt#issuer-claim
   end
 end
