@@ -7,7 +7,7 @@ module Cogitate
     class IdentifierTicket < ActiveRecord::Base
       self.table_name = 'cogitate_models_identifier_tickets'
 
-      def self.create_ticket_from_identifier(identifier:, ticket:, expires_at: 10.minutes.from_now)
+      def self.create_ticket_from_identifier(identifier:, ticket:, expires_at: 2.minutes.from_now)
         self.create!(encoded_id: identifier.encoded_id, ticket: ticket, expires_at: expires_at)
       end
 
