@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 ruby '2.2.2'
 
 gem 'rails'
-gem 'jbuilder', '~> 2.0'
-gem 'figaro', '~> 1.1'
+gem 'jbuilder'
+gem 'figaro'
 gem 'mysql2'
 gem 'contracts'
 gem 'omniauth'
@@ -11,7 +11,7 @@ gem 'omniauth-cas'
 gem 'jwt'
 
 group :development, :test do
-  gem 'web-console', '~> 2.0'
+  gem 'web-console'
   gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'commitment', require: false
@@ -20,10 +20,10 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano', '~> 3.0.1'
+  gem 'capistrano'
   gem 'capistrano-bundler'
-  gem 'capistrano-rails', '~> 1.1.0'
-  gem 'capistrano-rvm', '~> 0.1.1'
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
 end
 
 group :documentation do
