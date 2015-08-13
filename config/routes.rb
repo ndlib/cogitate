@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   end
 
   get '/auth', to: 'sessions#new'
+  get '/claim', to: 'sessions#show'
 
   get '/auth/:provider/callback', to: 'sessions#create'
   if Rails.env.test? || Rails.env.development?

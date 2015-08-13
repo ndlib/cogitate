@@ -1,5 +1,6 @@
 require "cogitate/models/identifier"
 require 'cogitate/services/uri_safe_ticket_for_identifier_creator'
+require 'cogitate/services/ticket_to_token_coercer'
 
 # Responsible for negotiating session authentication
 class SessionsController < ApplicationController
@@ -30,18 +31,19 @@ class SessionsController < ApplicationController
     set_current_user!
     after_authentication_callback_url = session[QUERY_KEY_FOR_AFTER_AUTHENTICATION_CALLBACK_URL]
     if after_authentication_callback_url
-      ticket = ticket_maker.call(identifier: current_user)
+      ticket = Cogitate::Services::UriSafeTicketForIdentifierCreator.call(identifier: current_user)
       redirect_to "#{after_authentication_callback_url}?ticket=#{ticket}"
     else
       redirect_to "/api/agents/#{current_user.encoded_id}"
     end
   end
 
-  private
-
-  def ticket_maker
-    Cogitate::Services::UriSafeTicketForIdentifierCreator
+  def show
+    token = Cogitate::Services::TicketToTokenCoercer.call(ticket: params.fetch(:ticket))
+    render text: token, format: 'text/plain'
   end
+
+  private
 
   def set_current_user!
     self.current_user = Cogitate::Models::Identifier.new(strategy: strategy, identifying_value: identifying_value)

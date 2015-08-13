@@ -47,6 +47,18 @@ RSpec.describe SessionsController do
       end
     end
   end
+
+  context 'GET #show' do
+    let(:ticket) { '123-456' }
+    let(:body) { 'response_body' }
+    context 'with an existing ticket' do
+      it 'will retrieve the associated tokenized Agent' do
+        expect(Cogitate::Services::TicketToTokenCoercer).to receive(:call).with(ticket: ticket).and_return(body)
+        get :show, ticket: ticket
+        expect(response.body).to eq(body)
+      end
+    end
+  end
 end
 
 class SessionsController
