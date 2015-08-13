@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150804123029) do
+ActiveRecord::Schema.define(version: 20150813181332) do
+
+  create_table "cogitate_models_identifier_tickets", force: :cascade do |t|
+    t.string   "encoded_id", limit: 255, null: false
+    t.string   "ticket",     limit: 255, null: false
+    t.datetime "expires_at",             null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "cogitate_models_identifier_tickets", ["encoded_id"], name: "index_cogitate_models_identifier_tickets_on_encoded_id", using: :btree
+  add_index "cogitate_models_identifier_tickets", ["ticket", "expires_at"], name: "idx_cogitate_models_identifier_ticket_expiry", using: :btree
+  add_index "cogitate_models_identifier_tickets", ["ticket"], name: "index_cogitate_models_identifier_tickets_on_ticket", unique: true, using: :btree
 
   create_table "groups", id: false, force: :cascade do |t|
     t.string   "id",          limit: 255
