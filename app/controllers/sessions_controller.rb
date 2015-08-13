@@ -1,10 +1,12 @@
 require "cogitate/models/identifier"
+require 'cogitate/services/uri_safe_ticket_for_identifier_creator'
 
 # Responsible for negotiating session authentication
 class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
   QUERY_KEY_FOR_AFTER_AUTHENTICATION_CALLBACK_URL = :after_authentication_callback_url
   FORBIDDEN_TEXT_FOR_NEW = "FORBIDDEN: Expected query parameter 'after_authentication_callback_url' to be a CGI escaped Secure URL".freeze
+  REGEXP_VALIDATOR_OF_AFTER_AUTHENTICATION_CALLBACK_URL = %r{^https://}.freeze
 
   # @api public
   #
@@ -28,14 +30,18 @@ class SessionsController < ApplicationController
     set_current_user!
     after_authentication_callback_url = session[QUERY_KEY_FOR_AFTER_AUTHENTICATION_CALLBACK_URL]
     if after_authentication_callback_url
-      response.headers['X-Cogitate-Authentication-Token'] = Cogitate::Services::IdentifierToAgentEncoder.call(identifier: current_user)
-      redirect_to "#{after_authentication_callback_url}?cogitate_authentication_token=#{response.headers['X-Cogitate-Authentication-Token']}"
+      ticket = ticket_maker.call(identifier: current_user)
+      redirect_to "#{after_authentication_callback_url}?ticket=#{ticket}"
     else
       redirect_to "/api/agents/#{current_user.encoded_id}"
     end
   end
 
   private
+
+  def ticket_maker
+    Cogitate::Services::UriSafeTicketForIdentifierCreator
+  end
 
   def set_current_user!
     self.current_user = Cogitate::Models::Identifier.new(strategy: strategy, identifying_value: identifying_value)
@@ -66,7 +72,7 @@ class SessionsController < ApplicationController
 
     def valid?
       return false if @after_authentication_callback_url.blank?
-      return false if @after_authentication_callback_url !~ %r{^https://}
+      return false if @after_authentication_callback_url !~ REGEXP_VALIDATOR_OF_AFTER_AUTHENTICATION_CALLBACK_URL
       true
     end
 

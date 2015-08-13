@@ -25,23 +25,24 @@ RSpec.describe SessionsController do
     context 'with valid data' do
       let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'email', identifying_value: 'jfriesen') }
       let(:auth_hash) { { 'uid' => identifier.identifying_value, 'provider' => identifier.strategy } }
+      let(:ticket) { '123-456' }
       context 'with after_authentication_callback_url' do
         before { controller.session[:after_authentication_callback_url] = 'https://hello.com' }
         it 'will assign the current user, redirect to the after_authentication_callback_url' do
           controller.request.env['omniauth.auth'] = auth_hash
+          expect(Cogitate::Services::UriSafeTicketForIdentifierCreator).to receive(:call).with(identifier: identifier).and_return(ticket)
           get :create
           expect(controller.send(:current_user)).to eq(identifier)
-          expect(response).to redirect_to('https://hello.com')
-          expect(response.headers['X-Cogitate-Authentication-Token']).to be_a(String)
+          expect(response).to redirect_to("https://hello.com?ticket=#{ticket}")
         end
       end
       context 'without after_authentication_callback_url' do
         it 'will assign the current user and redirect to the /api/agents resource' do
           controller.request.env['omniauth.auth'] = auth_hash
+          expect(Cogitate::Services::UriSafeTicketForIdentifierCreator).to_not receive(:call)
           get :create
           expect(controller.send(:current_user)).to eq(identifier)
           expect(response).to redirect_to("/api/agents/#{identifier.encoded_id}")
-          expect(response.headers.include?('X-Cogitate-Authentication-Token')).to be_falsey
         end
       end
     end
