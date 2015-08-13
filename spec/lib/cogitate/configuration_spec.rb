@@ -13,4 +13,15 @@ RSpec.describe Cogitate::Configuration do
       end
     end
   end
+
+  context '#url_for_authentication' do
+    subject do
+      described_class.new(
+        remote_server_base_url: 'http://google.com', after_authentication_callback_url: 'https://somewhere.com/after_authentication'
+      )
+    end
+    its(:url_for_authentication) do
+      should eq("http://google.com/auth?after_authentication_callback_url=#{CGI.escape(subject.after_authentication_callback_url)}")
+    end
+  end
 end

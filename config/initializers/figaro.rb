@@ -5,5 +5,7 @@ Figaro.require_keys(
   'agent_tokenizer_issuer_claim',
   'hesburgh_api_auth_token',
   'hesburgh_api_host',
-  'omniauth_cas_url'
+  'omniauth_cas_url',
+  'url_host',
+  'cogitate_services_remote_server_base_url'
 )
