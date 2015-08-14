@@ -9,6 +9,8 @@ module Cogitate
     #
     # * a Person - the human clacking away at the keyboard requesting things
     # * a Service - an application that "does stuff" to data
+    #
+    # @todo Consider adding #to_token so that an Agent can fulfill the AgentWithToken interface
     class Agent
       include Contracts
       Contract(
