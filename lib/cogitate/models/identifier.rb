@@ -14,6 +14,9 @@ module Cogitate
       # @api public
       #
       # Initialize a value object for identification
+      #
+      # @param strategy [String] What is the scope of this identifier (i.e. a Netid, email)
+      # @param identifying_value [String] What is the value of this identifier (i.e. hello@test.com)
       def initialize(strategy:, identifying_value:)
         self.strategy = strategy
         self.identifying_value = identifying_value
@@ -23,6 +26,8 @@ module Cogitate
       # @api public
       #
       # Provides context for the `identifying_value`
+      #
+      # @example 'netid', 'orcid', 'email', 'twitter' are all potential strategies
       #
       # @return [String] one of the contexts for identity of this object
       # @see #<=>
