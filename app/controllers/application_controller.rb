@@ -11,6 +11,8 @@ class ApplicationController < ActionController::Base
 
   include Contracts
   Contract(None => Or[Cogitate::Interfaces::IdentifierInterface, Eq[false]])
+  # @api public
+  # @todo Is there a concept of a NullIdentifier instead of a `false` value
   def current_user
     @current_user ||=
     if session.key?(:user_identifying_value) && session.key?(:user_strategy)
@@ -21,6 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
   Contract(Cogitate::Interfaces::IdentifierInterface => Any)
+  # @api public
   def current_user=(identifier)
     @current_user = identifier
     # The session does not allow nested hashes, so I'm breaking it apart
