@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec-its", "~> 1.2"
   spec.add_dependency "contracts", '~> 0.1'
   spec.add_dependency "jwt", '~> 1.5'
+  spec.add_dependency "rest-client", '~> 1.8'
 end
