@@ -60,12 +60,24 @@ def method_signature_and_return_value_may_be_changed
 end
 ```
 
+## Authentication
+
+Authentication through Cogitate is a multi-step affair:
+
+1. Client application requests `/authenticate?after_authentication_callback_url=<after_authentication_callback_url>` from Cogitate
+1. Cogitate prompts user to choose authentication mechanism; **At present Cogitate makes the decision and redirects to CAS**
+1. Authentication Service (i.e. CAS, OAuth2 Provider, etc.) handles authentication and reports back to Cogitate
+1. Cogitate issues a ticket to the requesting Client via the given `:after_authentication_callback_url`
+1. The Client application claims the ticket from Cogitate via `/claim?ticket=<ticket>`
+1. Cogitate processes the claim and responds with a token
+1. The Client application parses the token into an Agent
+
 ## API
 
-### GET /auth?after_authentication_callback_url=<cgi escaped URL>
+### GET /authenticate?after_authentication_callback_url=<cgi escaped URL>
 
 ```console
-GET /auth?after_authentication_callback_url=https%3A%2F%2Fdeposit.library.nd.edu%2Fafter_authenticate
+GET /authenticate?after_authentication_callback_url=https%3A%2F%2Fdeposit.library.nd.edu%2Fafter_authenticate
 ```
 
 This resource is responsible for brokering the actual authentication service.
@@ -76,6 +88,14 @@ Once you have authenticated via an authentication strategy (i.e. CAS),
 Cogitate will redirect to the URL specified in the `GET /auth` request's `after_authentication_callback_url` query parameter.
 The payload will be a JSON Web Token.
 That token should contain enough information for your application to adjudicate authorization questions.
+
+### GET /claim?ticket=<cgi escaped TICKET>
+
+```console
+GET /claim?ticket=123456789
+```
+
+This resource is responsible for transforming a ticket into a token.
 
 ### GET Agents
 
