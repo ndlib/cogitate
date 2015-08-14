@@ -23,5 +23,7 @@ RSpec.describe Cogitate::Configuration do
     its(:url_for_authentication) do
       should eq("http://google.com/auth?after_authentication_callback_url=#{CGI.escape(subject.after_authentication_callback_url)}")
     end
+
+    its(:url_for_claiming_a_ticket) { should eq("http://google.com/claim") }
   end
 end

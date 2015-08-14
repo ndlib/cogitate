@@ -17,6 +17,7 @@ group :development, :test do
   gem 'commitment', require: false
   gem 'rspec-its'
   gem 'shoulda-matchers'
+  gem 'rest-client'
 end
 
 group :development do
