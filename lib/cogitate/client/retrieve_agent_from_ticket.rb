@@ -27,10 +27,13 @@ module Cogitate
 
       def default_ticket_coercer
         # Responsible for issuing a request back to the Cogitate Server and reading the body
+        require 'cogitate/client/ticket_to_token_coercer' unless defined?(TicketToTokenCoercer)
+        TicketToTokenCoercer
       end
 
       def default_token_coercer
-        # Responsible for taking a token and coercing it into an agent
+        require 'cogitate/client/token_to_object_coercer' unless defined?(TokenToObjectCoercer)
+        TokenToObjectCoercer
       end
     end
   end

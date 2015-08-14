@@ -4,8 +4,8 @@ require 'cogitate/models/agent'
 require 'cogitate/models/identifier'
 
 RSpec.describe Cogitate::Client::RetrieveAgentFromTicket do
-  # its(:default_token_coercer) { should respond_to(:call) }
-  # its(:default_ticket_coercer) { should respond_to(:call) }
+  its(:default_token_coercer) { should respond_to(:call) }
+  its(:default_ticket_coercer) { should respond_to(:call) }
 
   let(:token_coercer) { double('TokenCoercer', call: agent) }
   let(:ticket_coercer) { double('TicketCoercer', call: token) }
