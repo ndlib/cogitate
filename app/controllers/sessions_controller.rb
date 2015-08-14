@@ -7,7 +7,6 @@ class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
   QUERY_KEY_FOR_AFTER_AUTHENTICATION_CALLBACK_URL = :after_authentication_callback_url
   FORBIDDEN_TEXT_FOR_NEW = "FORBIDDEN: Expected query parameter 'after_authentication_callback_url' to be a CGI escaped Secure URL".freeze
-  REGEXP_VALIDATOR_OF_AFTER_AUTHENTICATION_CALLBACK_URL = %r{^https://}.freeze
 
   # @api public
   #
@@ -66,6 +65,8 @@ class SessionsController < ApplicationController
 
   # @api private
   class NewActionConstraintHandler
+    REGEXP_VALIDATOR_OF_AFTER_AUTHENTICATION_CALLBACK_URL = %r{^https://}.freeze
+
     def initialize(controller:, query_key: SessionsController::QUERY_KEY_FOR_AFTER_AUTHENTICATION_CALLBACK_URL)
       self.controller = controller
       self.query_key = query_key
