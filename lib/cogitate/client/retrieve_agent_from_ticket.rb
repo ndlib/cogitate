@@ -1,4 +1,6 @@
 require 'cogitate/interfaces'
+require 'cogitate/models/agent/with_token'
+
 module Cogitate
   module Client
     # Responsible for converting a ticket into an agent
@@ -15,10 +17,11 @@ module Cogitate
       end
 
       include Contracts
-      Contract(Contracts::None => Cogitate::Interfaces::AgentInterface)
+      Contract(Contracts::None => Cogitate::Interfaces::AgentWithTokenInterface)
       def call
         token = ticket_coercer.call(ticket: ticket)
-        token_coercer.call(token: token)
+        agent = token_coercer.call(token: token)
+        Cogitate::Models::Agent::WithToken.new(token: token, agent: agent)
       end
 
       private

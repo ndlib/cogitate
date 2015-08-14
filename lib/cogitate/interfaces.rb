@@ -11,6 +11,7 @@ module Cogitate
       :with_identifiers, :with_verified_identifiers, :with_emails, :add_identifier, :add_verified_identifier, :add_email
     ]
     AgentCollectionInterface = Contracts::ArrayOf[Cogitate::Interfaces::AgentInterface]
+    AgentWithTokenInterface = And[AgentInterface, RespondTo[:to_token]]
 
     VisitorInterface = RespondTo[:visit]
     VisitorV2Interface = And[VisitorInterface, RespondTo[:return_from_visitations]]

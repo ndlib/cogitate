@@ -1,6 +1,7 @@
 require 'spec_fast_helper'
 require 'cogitate/client/retrieve_agent_from_ticket'
 require 'cogitate/models/agent'
+require 'cogitate/models/agent/with_token'
 require 'cogitate/models/identifier'
 
 RSpec.describe Cogitate::Client::RetrieveAgentFromTicket do
@@ -11,7 +12,7 @@ RSpec.describe Cogitate::Client::RetrieveAgentFromTicket do
   let(:ticket_coercer) { double('TicketCoercer', call: token) }
   let(:agent) { Cogitate::Models::Agent.new(identifier: identifier) }
   let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hworld') }
-  let(:token) { double('Token') }
+  let(:token) { 'this-is-a-token' }
   let(:ticket) { double('Ticket') }
   subject { described_class.new(ticket: ticket, token_coercer: token_coercer, ticket_coercer: ticket_coercer) }
 
@@ -21,9 +22,6 @@ RSpec.describe Cogitate::Client::RetrieveAgentFromTicket do
   end
 
   context '#call' do
-    it 'will return an Agent' do
-      expect(subject.call).to eq(agent)
-    end
     it 'will leverage the token coercer to coerce the token to an agent' do
       subject.call
       expect(token_coercer).to have_received(:call).with(token: token)
