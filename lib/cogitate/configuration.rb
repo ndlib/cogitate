@@ -63,7 +63,8 @@ module Cogitate
     # What is the authentication URL of the client's configured Cogitate server
     # @note Cogitate::Client configuration (and not Cogitate::Server)
     def url_for_authentication
-      File.join(remote_server_base_url, '/auth') << "?after_authentication_callback_url=#{CGI.escape(after_authentication_callback_url)}"
+      query_params = "?after_authentication_callback_url=#{CGI.escape(after_authentication_callback_url)}"
+      File.join(remote_server_base_url, '/authenticate') << query_params
     end
 
     # What is the URL for claiming a ticket

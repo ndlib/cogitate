@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     get 'agents/:urlsafe_base64_encoded_identifiers', to: 'agents#index'
   end
 
-  get '/auth', to: 'sessions#new'
+  get '/authenticate', to: 'sessions#new'
   get '/claim', to: 'sessions#show'
 
   get '/auth/:provider/callback', to: 'sessions#create'
