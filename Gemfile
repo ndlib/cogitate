@@ -9,6 +9,7 @@ gem 'contracts'
 gem 'omniauth'
 gem 'omniauth-cas'
 gem 'jwt'
+gem 'data_migrator', github: 'jeremyf/data-migrator'
 
 group :development, :test do
   gem 'web-console'
