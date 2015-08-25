@@ -1,4 +1,5 @@
 require 'cogitate/interfaces'
+require 'cogitate/models/identifier'
 require 'base64'
 
 module Cogitate
@@ -12,6 +13,13 @@ module Cogitate
     #
     # @todo Consider adding #to_token so that an Agent can fulfill the AgentWithToken interface
     class Agent
+
+      # @api public
+      def self.build_with_identifying_information(strategy:, identifying_value:, **keywords, &block)
+        identifier = Identifier.new(strategy: strategy, identifying_value: identifying_value)
+        new(identifier: identifier, **keywords, &block)
+      end
+
       include Contracts
       Contract(
         Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface], Contracts::Any =>
