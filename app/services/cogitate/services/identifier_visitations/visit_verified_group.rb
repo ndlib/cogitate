@@ -24,13 +24,13 @@ module Cogitate
           self.group_member_identifier = group_member_identifier
           self.guest = guest
           self.repository = repository
-          initialize_group_identifier_enumerator!
+          initialize_related_verified_group_identifiers!
           self
         end
 
         # @api public
         def call
-          verified_group_identifier_enumerator.each do |group_identifier|
+          related_verified_group_identifiers.each do |group_identifier|
             guest.visit(group_identifier) do |visitor|
               receive(visitor: visitor, group_identifier: group_identifier)
             end
@@ -47,11 +47,11 @@ module Cogitate
           visitor.add_verified_identifier(group_identifier)
         end
 
-        def initialize_group_identifier_enumerator!
-          @verified_group_identifier_enumerator = repository.with_verified_group_identifier_related_to(identifier: group_member_identifier)
+        def initialize_related_verified_group_identifiers!
+          @related_verified_group_identifiers = repository.with_verified_group_identifier_related_to(identifier: group_member_identifier)
         end
 
-        attr_reader :verified_group_identifier_enumerator
+        attr_reader :related_verified_group_identifiers
 
         def default_repository
           require 'cogitate/query_repository' unless defined?(Cogitate::QueryRepository)
