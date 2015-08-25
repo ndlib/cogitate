@@ -22,7 +22,7 @@ module Cogitate
 
         extend Forwardable
         include Comparable
-        def_delegators :identifier, :identifying_value, :<=>, :encoded_id, :strategy
+        def_delegators :identifier, :identifying_value, :<=>, :encoded_id, :id, :strategy
 
         attr_reader :attributes
 

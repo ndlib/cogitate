@@ -79,6 +79,8 @@ module Cogitate
         Base64.urlsafe_encode64("#{strategy}\t#{identifying_value}")
       end
 
+      alias_method :id, :encoded_id
+
       private
 
       # @api private

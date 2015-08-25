@@ -26,6 +26,8 @@ module Cogitate
 
           it { should delegate_method(:<=>).to(:identifier) }
           it { should delegate_method(:strategy).to(:identifier) }
+          it { should delegate_method(:id).to(:identifier) }
+          it { should delegate_method(:encoded_id).to(:identifier) }
           its(:first_name) { should eq('A First Name') }
           its(:attribute_keys) { should eq(['first_name', 'last_name']) }
           its(:foo) { should eq('bar') }

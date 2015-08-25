@@ -11,6 +11,7 @@ RSpec.describe Cogitate::Models::Identifier::WithAttributeHash do
   it { should delegate_method(:<=>).to(:identifier) }
   it { should delegate_method(:identifying_value).to(:identifier) }
   it { should delegate_method(:strategy).to(:identifier) }
+  it { should delegate_method(:id).to(:identifier) }
 
   its(:attributes) { should eq('first_name' => 'A First Name') }
   its(:first_name) { should eq('A First Name') }

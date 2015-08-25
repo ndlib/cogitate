@@ -15,4 +15,5 @@ RSpec.describe Cogitate::Models::Identifier::Unverified do
   it { should delegate_method(:<=>).to(:identifier) }
   it { should delegate_method(:strategy).to(:identifier) }
   it { should delegate_method(:encoded_id).to(:identifier) }
+  it { should delegate_method(:id).to(:identifier) }
 end
