@@ -30,15 +30,19 @@ module Cogitate
 
         # @api public
         def call
+          visit_explicitly_related_verified_group_identifiers
+          nil
+        end
+
+        private
+
+        def visit_explicitly_related_verified_group_identifiers
           related_verified_group_identifiers.each do |group_identifier|
             guest.visit(group_identifier) do |visitor|
               receive(visitor: visitor, group_identifier: group_identifier)
             end
           end
-          nil
         end
-
-        private
 
         attr_accessor :group_member_identifier, :guest, :repository
 
