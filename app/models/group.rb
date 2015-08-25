@@ -4,6 +4,7 @@ require 'active_record/base'
 # nor responsibility that those people fill. It is an alias for a collection
 # of people.
 class Group < ActiveRecord::Base
+  ALL_VERIFIED_NETID_USERS = 'All Verified "netid" Users'.freeze
   self.primary_key = :id
   delegate :to_s, to: :name
 end
