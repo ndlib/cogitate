@@ -1,4 +1,5 @@
 require 'cogitate/interfaces'
+require 'cogitate/models/identifier'
 module Cogitate
   module Services
     module IdentifierVisitations
@@ -31,6 +32,7 @@ module Cogitate
         # @api public
         def call
           visit_explicitly_related_verified_group_identifiers
+          visit_implicitly_related_verified_group_identifiers
           nil
         end
 
@@ -38,17 +40,25 @@ module Cogitate
 
         def visit_explicitly_related_verified_group_identifiers
           related_verified_group_identifiers.each do |group_identifier|
-            guest.visit(group_identifier) do |visitor|
-              receive(visitor: visitor, group_identifier: group_identifier)
-            end
+            receive(group_identifier: group_identifier)
           end
+        end
+
+        def visit_implicitly_related_verified_group_identifiers
+          receive(group_identifier: implicit_group_identifier)
+        end
+
+        def implicit_group_identifier
+          Cogitate::Models::Identifier.new_for_implicit_verified_group_by_strategy(strategy: group_member_identifier.strategy)
         end
 
         attr_accessor :group_member_identifier, :guest, :repository
 
-        def receive(visitor:, group_identifier:)
-          visitor.add_identifier(group_identifier)
-          visitor.add_verified_identifier(group_identifier)
+        def receive(group_identifier:)
+          guest.visit(group_identifier) do |visitor|
+            visitor.add_identifier(group_identifier)
+            visitor.add_verified_identifier(group_identifier)
+          end
         end
 
         def initialize_related_verified_group_identifiers!

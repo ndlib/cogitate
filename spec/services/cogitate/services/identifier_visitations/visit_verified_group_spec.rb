@@ -10,11 +10,15 @@ module Cogitate
         let(:guest) { double(visit: true) }
         let(:visitor) { double(add_identifier: true, add_verified_identifier: true) }
         let(:group_identifier) { Cogitate::Models::Identifier.new(strategy: 'group', identifying_value: 'one') }
+        let(:implicit_group_identifier) { Cogitate::Models::Identifier.new_for_implicit_verified_group_by_strategy(strategy: 'netid') }
         let(:repository) { double(with_verified_group_identifier_related_to: [group_identifier]) }
 
         subject { described_class.new(group_member_identifier: identifier, guest: guest, repository: repository) }
 
-        before { allow(guest).to receive(:visit).with(group_identifier).and_yield(visitor) }
+        before do
+          allow(guest).to receive(:visit).with(group_identifier).and_yield(visitor)
+          allow(guest).to receive(:visit).with(implicit_group_identifier).and_yield(visitor)
+        end
 
         its(:default_repository) { should respond_to(:with_verified_group_identifier_related_to) }
 
@@ -25,8 +29,7 @@ module Cogitate
 
         context '.call' do
           it 'will call the underlying instantiated object' do
-            expect(visitor).to receive(:add_identifier).with(group_identifier)
-            expect(visitor).to receive(:add_verified_identifier).with(group_identifier)
+            expect_any_instance_of(described_class).to receive(:call)
             described_class.call(identifier: identifier, visitor: guest, repository: repository)
           end
         end
@@ -35,6 +38,8 @@ module Cogitate
           it 'will receive the visitor adding the group identifiers to the identities of the visitor' do
             expect(visitor).to receive(:add_identifier).with(group_identifier)
             expect(visitor).to receive(:add_verified_identifier).with(group_identifier)
+            expect(visitor).to receive(:add_identifier).with(implicit_group_identifier)
+            expect(visitor).to receive(:add_verified_identifier).with(implicit_group_identifier)
             subject.call
           end
         end
