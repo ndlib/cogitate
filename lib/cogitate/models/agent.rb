@@ -90,6 +90,20 @@ module Cogitate
       def_delegators :primary_identifier, :strategy, :identifying_value, :encoded_id, :id
       def_delegators :serializer, :as_json
 
+      # Consider the scenario in which a student assigns a faculty member (via an email address) as a collaborating
+      # researcher. That faculty member should have permission to collaborate on the student's work. The permissions
+      # are stored as the Faculty's email. Then the Faculty authenticates with a NetID (a canonical identifier for the
+      # institution that stood up this Cogitate instance) and associates the NetID with their email address.
+      #
+      # At that point we want to allow objects associated with both the NetID and connected email to be available to
+      # the faculty.
+      #
+      # @api public
+      # @return [Array] of ids for each of the verified identifiers
+      def ids
+        [id] + with_verified_identifiers.map(&:id)
+      end
+
       private
 
       attr_accessor :identifiers

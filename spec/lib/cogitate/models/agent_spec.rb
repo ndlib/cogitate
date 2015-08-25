@@ -79,4 +79,14 @@ RSpec.describe Cogitate::Models::Agent do
       expect { |b| subject.with_verified_identifiers(&b) }.to yield_successive_args(identifier)
     end
   end
+
+  context '#ids' do
+    let(:verified_identifier) { Cogitate::Models::Identifier.new(strategy: 'verified', identifying_value: '1') }
+    let(:unverified_identifier) { Cogitate::Models::Identifier.new(strategy: 'unverified', identifying_value: '2') }
+    it 'will included the #id of each verified identifier' do
+      subject.add_verified_identifier(verified_identifier)
+      subject.add_identifier(unverified_identifier)
+      expect(subject.ids.sort).to eq([subject.id, verified_identifier.id])
+    end
+  end
 end
