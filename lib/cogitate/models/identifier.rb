@@ -8,7 +8,15 @@ module Cogitate
     #
     # A parameter object that defines how we go from decoding identifiers to extracting an identity.
     class Identifier
+      GROUP_STRATEGY_NAME = 'group'.freeze
       include Contracts
+
+      # @api public
+      #
+      # There are implicit groups that exist and are associated with a given strategy.
+      def self.new_for_implicit_verified_group_by_strategy(strategy:)
+        new(strategy: GROUP_STRATEGY_NAME, identifying_value: %(All Verified "#{strategy.to_s.downcase}" Users))
+      end
 
       Contract(Cogitate::Interfaces::IdentifierInitializationInterface => Cogitate::Interfaces::IdentifierInterface)
       # @api public

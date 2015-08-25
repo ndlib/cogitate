@@ -11,6 +11,13 @@ RSpec.describe Cogitate::Models::Identifier do
   its(:as_json) { should eq('identifying_value' => subject.identifying_value, 'strategy' => subject.strategy) }
   its(:id) { should eq(subject.encoded_id) }
 
+  context '.new_for_implicit_verified_group_by_strategy' do
+    let(:strategy) { 'NETID' }
+    subject { described_class.new_for_implicit_verified_group_by_strategy(strategy: strategy) }
+    its(:strategy) { should eq(described_class::GROUP_STRATEGY_NAME) }
+    its(:identifying_value) { should match(/"#{strategy.to_s.downcase}"/) }
+  end
+
   context '#strategy coercion' do
     [
       ['orcid', 'orcid'],

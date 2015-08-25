@@ -13,7 +13,6 @@ module Cogitate
     #
     # @todo Consider adding #to_token so that an Agent can fulfill the AgentWithToken interface
     class Agent
-
       # @api public
       def self.build_with_identifying_information(strategy:, identifying_value:, **keywords, &block)
         identifier = Identifier.new(strategy: strategy, identifying_value: identifying_value)

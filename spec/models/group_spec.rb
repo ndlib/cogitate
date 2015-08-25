@@ -4,12 +4,6 @@ RSpec.describe Group, type: :model do
   context 'class configuration' do
     subject { described_class }
     its(:primary_key) { should eq('id') }
-    it 'exposes ALL_VERIFIED_NETID_USERS' do
-      expect(described_class::ALL_VERIFIED_NETID_USERS).to eq('All Verified "netid" Users')
-    end
-    it 'exposes IDENTIFIER_STRATEGY_NAME' do
-      expect(described_class::IDENTIFIER_STRATEGY_NAME).to eq('group')
-    end
   end
 
   context '.create' do
