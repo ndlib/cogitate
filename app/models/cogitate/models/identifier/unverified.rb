@@ -26,7 +26,7 @@ module Cogitate
 
         extend Forwardable
         include Comparable
-        def_delegators :identifier, :<=>, :identifying_value, :encoded_id, :id, :strategy
+        def_delegators :identifier, *Cogitate::Models::Identifier.interface_method_names
 
         private
 

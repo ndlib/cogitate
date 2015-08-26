@@ -94,7 +94,7 @@ module Cogitate
       attr_reader :primary_identifier
 
       extend Forwardable
-      def_delegators :primary_identifier, :strategy, :identifying_value, :encoded_id, :id
+      def_delegators :primary_identifier, *Cogitate::Models::Identifier.interface_method_names
       def_delegators :serializer, :as_json
 
       # Consider the scenario in which a student assigns a faculty member (via an email address) as a collaborating

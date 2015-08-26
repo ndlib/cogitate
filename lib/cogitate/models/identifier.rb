@@ -8,6 +8,11 @@ module Cogitate
     #
     # A parameter object that defines how we go from decoding identifiers to extracting an identity.
     class Identifier
+      INTERFACE_METHOD_NAMES = [:identifying_value, :<=>, :encoded_id, :id, :strategy, :name].freeze
+      def self.interface_method_names
+        INTERFACE_METHOD_NAMES
+      end
+
       GROUP_STRATEGY_NAME = 'group'.freeze
       include Contracts
 
@@ -56,6 +61,8 @@ module Cogitate
       # @return [String] one of the contexts for identity of this object
       # @see #<=>
       attr_reader :identifying_value
+
+      alias_method :name, :identifying_value
 
       # The JSON representation of this object
       #

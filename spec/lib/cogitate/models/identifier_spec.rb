@@ -10,6 +10,11 @@ RSpec.describe Cogitate::Models::Identifier do
   its(:encoded_id) { should be_a(String) }
   its(:as_json) { should eq('identifying_value' => subject.identifying_value, 'strategy' => subject.strategy) }
   its(:id) { should eq(subject.encoded_id) }
+  its(:name) { should eq(subject.identifying_value) }
+
+  described_class.interface_method_names.each do |method_name|
+    it { should respond_to(method_name) }
+  end
 
   context '.new_for_implicit_verified_group_by_strategy' do
     let(:strategy) { 'NETID' }

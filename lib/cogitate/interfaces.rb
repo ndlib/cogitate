@@ -4,7 +4,7 @@ module Cogitate
   # Herein lies the Cogitate namespace
   module Interfaces
     include Contracts
-    IdentifierInterface = RespondTo[:strategy, :identifying_value, :<=>]
+    IdentifierInterface = RespondTo[:strategy, :identifying_value, :<=>, :name, :id, :encoded_id]
     IdentifierCollectionInterface = Contracts::ArrayOf[Cogitate::Interfaces::IdentifierInterface]
 
     AgentInterface = RespondTo[

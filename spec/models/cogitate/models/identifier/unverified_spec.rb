@@ -11,9 +11,7 @@ RSpec.describe Cogitate::Models::Identifier::Unverified do
   it { should contractually_honor(Cogitate::Interfaces::VerifiableIdentifierInterface) }
   its(:verified?) { should be_falsey }
   its(:as_json) { should eq('identifying_value' => identifier.identifying_value, 'strategy' => identifier.strategy) }
-  it { should delegate_method(:identifying_value).to(:identifier) }
-  it { should delegate_method(:<=>).to(:identifier) }
-  it { should delegate_method(:strategy).to(:identifier) }
-  it { should delegate_method(:encoded_id).to(:identifier) }
-  it { should delegate_method(:id).to(:identifier) }
+  Cogitate::Models::Identifier.interface_method_names.each do |method_name|
+    it { should delegate_method(method_name).to(:identifier) }
+  end
 end

@@ -20,11 +20,10 @@ RSpec.describe Cogitate::Models::Agent do
 
   its(:primary_identifier) { should eq(identifier) }
   it { should contractually_honor(Cogitate::Interfaces::AgentInterface) }
-  it { should delegate_method(:strategy).to(:primary_identifier) }
-  it { should delegate_method(:identifying_value).to(:primary_identifier) }
-  it { should delegate_method(:id).to(:primary_identifier) }
-  it { should delegate_method(:as_json).to(:serializer) }
-  it { should delegate_method(:encoded_id).to(:primary_identifier) }
+
+  Cogitate::Models::Identifier.interface_method_names.each do |method_name|
+    it { should delegate_method(method_name).to(:primary_identifier) }
+  end
 
   context '#add_identifier' do
     it 'will increment the identifiers' do
