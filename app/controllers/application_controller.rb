@@ -1,4 +1,5 @@
 require 'cogitate/interfaces'
+require 'cogitate/models/identifier'
 # The base controller for Cogitate
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
@@ -16,7 +17,8 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||=
     if session.key?(:user_identifying_value) && session.key?(:user_strategy)
-      Cogitate::Models::Identifier.new(strategy: session.fetch(:user_strategy), identifying_value: session.fetch(:user_identifying_value))
+      # Switched from `session.fetch(:user_strategy)` to `session[:user_strategy]` as per https://github.com/rails/rails/issues/21383
+      Cogitate::Models::Identifier.new(strategy: session[:user_strategy], identifying_value: session[:user_identifying_value])
     else
       false
     end
