@@ -51,6 +51,8 @@ module Cogitate
             public
 
             module_exec(&block) if block_given?
+
+            alias_method :name, :identifying_value unless instance_methods.include?(:name)
           end
         end
       end

@@ -11,6 +11,7 @@ RSpec.describe Cogitate::Models::Identifier::Verified::Netid do
     )
   end
   include Cogitate::RSpecMatchers
+  it { should contractually_honor Cogitate::Interfaces::IdentifierInterface }
   it { should contractually_honor(Cogitate::Interfaces::AuthenticationVectorNetidInterface) }
   it { should delegate_method(:identifying_value).to(:identifier) }
   it { should delegate_method(:<=>).to(:identifier) }

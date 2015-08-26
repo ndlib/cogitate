@@ -7,6 +7,7 @@ RSpec.describe Cogitate::Models::Identifier::Verified::Group do
   let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'group', identifying_value: '12') }
   subject { described_class.new(identifier: identifier, attributes: { name: 'A Group Name' }) }
   include Cogitate::RSpecMatchers
+  it { should contractually_honor Cogitate::Interfaces::IdentifierInterface }
   it { should contractually_honor(Cogitate::Interfaces::VerifiedGroupInterface) }
   it { should delegate_method(:identifying_value).to(:identifier) }
   it { should delegate_method(:<=>).to(:identifier) }

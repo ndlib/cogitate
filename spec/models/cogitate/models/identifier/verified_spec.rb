@@ -14,15 +14,27 @@ module Cogitate
                 'bar'
               end
             end
+
+            ExampleWithNameAttribute = Verified.build_named_strategy('name')
+            ExampleWithNameMethod = Verified.build_named_strategy('other') do
+              def name
+                'a name'
+              end
+            end
           end
 
           after do
             Verified.send(:remove_const, :Example)
+            Verified.send(:remove_const, :ExampleWithNameAttribute)
+            Verified.send(:remove_const, :ExampleWithNameMethod)
           end
 
           let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: '12') }
           subject { Example.new(identifier: identifier, attributes: { first_name: 'A First Name' }) }
           it { should delegate_method(:identifying_value).to(:identifier) }
+
+          include Cogitate::RSpecMatchers
+          it { should contractually_honor Cogitate::Interfaces::IdentifierInterface }
 
           it { should delegate_method(:<=>).to(:identifier) }
           it { should delegate_method(:strategy).to(:identifier) }
@@ -41,6 +53,18 @@ module Cogitate
           it 'will not obliterate the given identifier if the attributes have an identifier' do
             subject = Example.new(identifier: identifier, attributes: { identifier: 'something else' })
             expect(subject.send(:identifier)).to eq(identifier)
+          end
+
+          context '#name' do
+            it 'will not obliterate the name attribute if one is given' do
+              subject = ExampleWithNameAttribute.new(identifier: identifier, attributes: { name: 'another name' })
+              expect(subject.name).to eq('another name')
+            end
+
+            it 'will not obliterate the name method if one is given' do
+              subject = ExampleWithNameMethod.new(identifier: identifier, attributes: {})
+              expect(subject.name).to eq('a name')
+            end
           end
         end
       end
