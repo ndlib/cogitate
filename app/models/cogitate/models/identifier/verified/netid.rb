@@ -1,5 +1,5 @@
 require 'cogitate/models/identifier/verified'
-require 'active_support/core_ext/object/blank'
+require 'active_support/core_ext/object/blank' # Provides `nil.present?` and `''.present?` methods
 
 module Cogitate
   module Models
