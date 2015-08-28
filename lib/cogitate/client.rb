@@ -1,4 +1,5 @@
 require 'base64'
+require 'cogitate/exceptions'
 
 module Cogitate
   # Responsible for collecting the various client related behaviors.

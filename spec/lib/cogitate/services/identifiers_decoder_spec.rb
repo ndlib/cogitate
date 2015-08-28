@@ -28,7 +28,7 @@ module Cogitate
 
         it "will not convert a non-urlsafe base Base64 encoded #{scenario_entry[:given].inspect} to #{scenario_entry[:expected].inspect}" do
           encoded_payload = Base64.encode64(scenario_entry.fetch(:given))
-          expect { subject.call(encoded_payload) }.to raise_error(described_class::InvalidIdentifierEncoding)
+          expect { subject.call(encoded_payload) }.to raise_error(Cogitate::InvalidIdentifierEncoding)
         end
       end
 
@@ -37,7 +37,7 @@ module Cogitate
       ].each do |invalid_format|
         it "will fail to convert #{invalid_format.inspect}, a properly encoded object but with the wrong format" do
           encoded_payload = Base64.urlsafe_encode64(invalid_format)
-          expect { subject.call(encoded_payload) }.to raise_error(described_class::InvalidIdentifierFormat)
+          expect { subject.call(encoded_payload) }.to raise_error(Cogitate::InvalidIdentifierFormat)
         end
       end
 
