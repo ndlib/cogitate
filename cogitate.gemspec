@@ -5,7 +5,7 @@ require 'cogitate'
 
 # Note: This is a namespace grab. I'm working on cogitate-client as well.
 Gem::Specification.new do |spec|
-  spec.required_ruby_version = '>= 2.2.1'
+  spec.required_ruby_version = '~> 2.2.2'
   spec.name          = "cogitate"
   spec.version       = Cogitate::VERSION
   spec.authors       = ["Jeremy Friesen"]
