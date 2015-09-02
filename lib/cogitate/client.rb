@@ -23,5 +23,11 @@ module Cogitate
     def self.retrieve_token_from(ticket:)
       TicketToTokenCoercer.call(ticket: ticket)
     end
+
+    # @api public
+    #
+    # @param identifiers [Array<String>]
+    def self.primary_emails_associated_with(*)
+    end
   end
 end
