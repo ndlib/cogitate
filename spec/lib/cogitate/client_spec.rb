@@ -19,4 +19,10 @@ RSpec.describe Cogitate::Client do
     expect(Cogitate::Client::TokenToObjectCoercer).to receive(:call).with(token: token)
     described_class.extract_agent_from(token: token)
   end
+
+  it 'delegates .retrieve_primary_emails_associated_with to IdentifiersToEmailsExtractor' do
+    identifiers = double
+    expect(Cogitate::Client::IdentifiersToEmailsExtractor).to receive(:call).with(identifiers: identifiers)
+    described_class.retrieve_primary_emails_associated_with(identifiers: identifiers)
+  end
 end
