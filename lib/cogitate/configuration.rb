@@ -72,5 +72,11 @@ module Cogitate
     def url_for_claiming_a_ticket
       File.join(remote_server_base_url, '/claim')
     end
+
+    # What is the URL for retrieving the agents based on the given identifiers
+    # @note Cogitate::Client configuration (and not Cogitate::Server)
+    def url_for_retrieving_agents_for(urlsafe_base64_encoded_identifiers:)
+      File.join(remote_server_base_url, '/agents', urlsafe_base64_encoded_identifiers)
+    end
   end
 end

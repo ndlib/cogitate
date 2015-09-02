@@ -25,5 +25,9 @@ RSpec.describe Cogitate::Configuration do
     end
 
     its(:url_for_claiming_a_ticket) { should eq("http://google.com/claim") }
+
+    it 'exposes #url_for_retrieving_agents_for' do
+      expect(subject.url_for_retrieving_agents_for(urlsafe_base64_encoded_identifiers: '1234')).to eq("http://google.com/agents/1234")
+    end
   end
 end
