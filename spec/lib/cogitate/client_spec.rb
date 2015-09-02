@@ -1,6 +1,5 @@
 require 'spec_fast_helper'
 require 'cogitate/client'
-require 'cogitate/client/ticket_to_token_coercer'
 
 RSpec.describe Cogitate::Client do
   context '.encoded_identifier_for' do
@@ -13,5 +12,11 @@ RSpec.describe Cogitate::Client do
     ticket = double
     expect(Cogitate::Client::TicketToTokenCoercer).to receive(:call).with(ticket: ticket)
     described_class.retrieve_token_from(ticket: ticket)
+  end
+
+  it 'delegates .extract_agent_from to TicketToTokenCoercer' do
+    token = double
+    expect(Cogitate::Client::TokenToObjectCoercer).to receive(:call).with(token: token)
+    described_class.extract_agent_from(token: token)
   end
 end

@@ -1,6 +1,7 @@
 require 'base64'
 require 'cogitate/exceptions'
 require 'cogitate/client/ticket_to_token_coercer'
+require 'cogitate/client/token_to_object_coercer'
 
 module Cogitate
   # Responsible for collecting the various client related behaviors.
@@ -22,6 +23,11 @@ module Cogitate
     # @api public
     def self.retrieve_token_from(ticket:)
       TicketToTokenCoercer.call(ticket: ticket)
+    end
+
+    # @api public
+    def self.extract_agent_from(token:)
+      TokenToObjectCoercer.call(token: token)
     end
 
     # @api public
