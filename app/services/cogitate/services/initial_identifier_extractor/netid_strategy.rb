@@ -60,10 +60,10 @@ module Cogitate
         # @todo Should this be broken down into two separate classes? I have an #receive_unverified and #receive_verified method.
         class Host
           include Contracts
-          def initialize(invitation_strategy:, identifier:, group_visitation_service: default_group_visitation_service)
+          def initialize(invitation_strategy:, identifier:, membership_visitation_service: default_membership_visitation_service)
             self.invitation_strategy = invitation_strategy
             self.identifier = identifier
-            self.group_visitation_service = group_visitation_service
+            self.membership_visitation_service = membership_visitation_service
           end
 
           Contract(Cogitate::Interfaces::VisitorInterface => Cogitate::Interfaces::VisitorInterface)
@@ -74,7 +74,7 @@ module Cogitate
 
           private
 
-          attr_accessor :invitation_strategy, :identifier, :group_visitation_service
+          attr_accessor :invitation_strategy, :identifier, :membership_visitation_service
 
           def receive(visitor)
             send("receive_#{invitation_strategy}", visitor)
@@ -87,10 +87,10 @@ module Cogitate
           def receive_verified(visitor)
             visitor.add_identifier(identifier)
             visitor.add_verified_identifier(identifier)
-            group_visitation_service.call(identifier: identifier, visitor: visitor)
+            membership_visitation_service.call(identifier: identifier, visitor: visitor)
           end
 
-          def default_group_visitation_service
+          def default_membership_visitation_service
             require 'cogitate/services/identifier_visitations/visit_groups_for_verified_member'
             IdentifierVisitations::VisitGroupsForVerifiedMember
           end

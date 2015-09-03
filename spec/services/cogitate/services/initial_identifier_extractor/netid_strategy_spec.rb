@@ -51,14 +51,14 @@ module Cogitate
           let(:invitation_strategy) { :none }
           let(:guest) { double(visit: true) }
           let(:visitor) { double(add_identifier: true, add_verified_identifier: true) }
-          let(:group_visitation_service) { double(call: true) }
+          let(:membership_visitation_service) { double(call: true) }
           subject do
             described_class.new(
-              invitation_strategy: invitation_strategy, identifier: identifier, group_visitation_service: group_visitation_service
+              invitation_strategy: invitation_strategy, identifier: identifier, membership_visitation_service: membership_visitation_service
             )
           end
           before { allow(guest).to receive(:visit).with(identifier).and_yield(visitor) }
-          its(:default_group_visitation_service) { should respond_to(:call) }
+          its(:default_membership_visitation_service) { should respond_to(:call) }
           context ':verified invitation_strategy' do
             let(:invitation_strategy) { :verified }
             it 'will add the identity to the visitor' do
@@ -69,8 +69,8 @@ module Cogitate
               expect(visitor).to receive(:add_verified_identifier).with(identifier)
               subject.invite(guest)
             end
-            it 'will call the associated group_visitation_service' do
-              expect(group_visitation_service).to receive(:call).with(identifier: identifier, visitor: visitor)
+            it 'will call the associated membership_visitation_service' do
+              expect(membership_visitation_service).to receive(:call).with(identifier: identifier, visitor: visitor)
               subject.invite(guest)
             end
           end
@@ -84,8 +84,8 @@ module Cogitate
               expect(visitor).to_not receive(:add_verified_identifier)
               subject.invite(guest)
             end
-            it 'will NOT call the associated group_visitation_service' do
-              expect(group_visitation_service).to_not receive(:call)
+            it 'will NOT call the associated membership_visitation_service' do
+              expect(membership_visitation_service).to_not receive(:call)
               subject.invite(guest)
             end
           end

@@ -7,7 +7,9 @@ RSpec.describe Cogitate::Services::InitialIdentifierExtractor::GroupStrategy do
   let(:member_visitation_service) { double(call: true) }
   let(:repository) { double(with_verified_existing_group_for: true) }
   let(:is_verified) { true }
-  subject { described_class.new(identifier: identifier, repository: repository, member_visitation_service: member_visitation_service) }
+  subject do
+    described_class.new(identifier: identifier, repository: repository, member_visitation_service: member_visitation_service)
+  end
 
   its(:default_member_visitation_service) { should respond_to(:call) }
   its(:default_repository) { should respond_to(:with_verified_existing_group_for) }

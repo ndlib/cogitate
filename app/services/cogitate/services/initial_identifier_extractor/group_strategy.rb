@@ -12,10 +12,10 @@ module Cogitate
           new(identifier: identifier)
         end
 
-        def initialize(identifier:, repository: default_repository, member_visitation_service: default_member_visitation_service)
+        def initialize(identifier:, repository: default_repository, membership_visitation_service: default_membership_visitation_service)
           self.identifier = identifier
           self.repository = repository
-          self.member_visitation_service = member_visitation_service
+          self.membership_visitation_service = membership_visitation_service
         end
 
         def invite(guest)
@@ -25,7 +25,7 @@ module Cogitate
 
         private
 
-        attr_accessor :identifier, :repository, :member_visitation_service
+        attr_accessor :identifier, :repository, :membership_visitation_service
 
         def receive(visitor)
           identifier_is_verified = false
@@ -33,7 +33,7 @@ module Cogitate
             identifier_is_verified = true
             visitor.add_identifier(verified_identifier)
             visitor.add_verified_identifier(verified_identifier)
-            member_visitation_service.call(identifier: verified_identifier, visitor: visitor)
+            membership_visitation_service.call(identifier: verified_identifier, visitor: visitor)
           end
           visitor.add_identifier(identifier) unless identifier_is_verified
         end
@@ -43,7 +43,7 @@ module Cogitate
           Cogitate::QueryRepository.new
         end
 
-        def default_member_visitation_service
+        def default_membership_visitation_service
           require 'cogitate/services/identifier_visitations/visit_members_for_verified_group'
           IdentifierVisitations::VisitMembersForVerifiedGroup
         end
