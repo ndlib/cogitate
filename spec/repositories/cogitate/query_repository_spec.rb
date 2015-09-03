@@ -9,7 +9,7 @@ module Cogitate
     subject { described_class.new }
     let(:identifier_relationship_repository) { double(each_identifier_related_to: true) }
     its(:default_identifier_relationship_repository) { should respond_to(:each_identifier_related_to) }
-    let(:group_identifier) { Cogitate::Models::Identifier.new(strategy: described_class::GROUP_STRATEGY, identifying_value: 'a-group') }
+    let(:group_identifier) { Models::Identifier.new(strategy: Models::Identifier::GROUP_STRATEGY_NAME, identifying_value: 'a-group') }
     let(:verified_group) { double('A verified group') }
 
     context '#with_verified_group_identifier_related_to' do
@@ -43,6 +43,13 @@ module Cogitate
           expect { |b| subject.with_verified_existing_group_for(identifier: group_identifier, &b) }.to(
             yield_successive_args(kind_of(Cogitate::Models::Identifier::Verified::Group))
           )
+        end
+
+        it 'will not yield if the identifier ' do
+          non_group_identifier = Cogitate::Models::Identifier.new(
+            strategy: 'not-a-group', identifying_value: group_identifier.identifying_value
+          )
+          expect { |b| subject.with_verified_existing_group_for(identifier: non_group_identifier, &b) }.to_not yield_control
         end
       end
 
