@@ -15,7 +15,7 @@ module Cogitate
 
         include Cogitate::RSpecMatchers
         its(:default_repository) { should contractually_honor(Cogitate::Interfaces::FindNetidRepositoryInterface) }
-        its(:default_host_builder) { should contractually_honor(Cogitate::Interfaces::HostBuilderInterface) }
+        its(:default_host_builder) { should respond_to(:call) }
 
         context '.call' do
           it 'will be a convenience method' do

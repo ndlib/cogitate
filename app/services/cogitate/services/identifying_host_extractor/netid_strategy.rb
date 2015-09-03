@@ -22,7 +22,7 @@ module Cogitate
           KeywordArgs[
             identifier: Cogitate::Interfaces::IdentifierInterface,
             repository: Contracts::Optional[Cogitate::Interfaces::FindNetidRepositoryInterface],
-            host_builder: Contracts::Optional[Cogitate::Interfaces::HostBuilderInterface]
+            host_builder: Contracts::Optional[RespondTo[:call]]
           ] => Any
         )
         def initialize(identifier:, repository: default_repository, host_builder: default_host_builder)
@@ -57,15 +57,13 @@ module Cogitate
 
         # Responsible for inviting a guest to come and visit. A visiting guest will be received according to the invitation strategy.
         #
-        # @todo: Should this be broken down into two separate classes? I have an #receive_unverified and #receive_verified method.
+        # @todo Should this be broken down into two separate classes? I have an #receive_unverified and #receive_verified method.
         class Host
           include Contracts
-          Contract(Cogitate::Interfaces::HostInitializationInterface => Cogitate::Interfaces::HostInterface)
           def initialize(invitation_strategy:, identifier:, group_visitation_service: default_group_visitation_service)
             self.invitation_strategy = invitation_strategy
             self.identifier = identifier
             self.group_visitation_service = group_visitation_service
-            self
           end
 
           Contract(Cogitate::Interfaces::VisitorInterface => Cogitate::Interfaces::VisitorInterface)
