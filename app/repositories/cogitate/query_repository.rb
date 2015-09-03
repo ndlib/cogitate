@@ -19,9 +19,9 @@ module Cogitate
     # @param identifier [Cogitate::Interfaces::Identifier]
     def with_verified_group_identifier_related_to(identifier:)
       return enum_for(:with_verified_group_identifier_related_to, identifier: identifier) unless block_given?
-      identifier_relationship_repository.each_identifier_related_to(
-        identifier: identifier, strategy: Models::Identifier::GROUP_STRATEGY_NAME
-      ) { |group_identifier| with_verified_existing_group_for(identifier: group_identifier) { |verified_group| yield(verified_group) } }
+      each_identifier_related_to(identifier: identifier, strategy: Models::Identifier::GROUP_STRATEGY_NAME) do |group_identifier|
+        with_verified_existing_group_for(identifier: group_identifier) { |verified_group| yield(verified_group) }
+      end
       :with_verified_group_identifier_related_to
     end
 
@@ -40,6 +40,8 @@ module Cogitate
         Models::Identifier::Verified::Group.new(identifier: identifier, attributes: { name: group.name, description: group.description })
       )
     end
+
+    delegate :each_identifier_related_to, to: :identifier_relationship_repository
 
     private
 

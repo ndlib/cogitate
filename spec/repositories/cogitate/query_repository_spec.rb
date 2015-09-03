@@ -6,14 +6,16 @@ require 'group'
 
 module Cogitate
   RSpec.describe QueryRepository do
-    subject { described_class.new }
     let(:identifier_relationship_repository) { double(each_identifier_related_to: true) }
     its(:default_identifier_relationship_repository) { should respond_to(:each_identifier_related_to) }
     let(:group_identifier) { Models::Identifier.new(strategy: Models::Identifier::GROUP_STRATEGY_NAME, identifying_value: 'a-group') }
     let(:verified_group) { double('A verified group') }
 
+    subject { described_class.new(identifier_relationship_repository: identifier_relationship_repository) }
+
+    it { should delegate_method(:each_identifier_related_to).to(:identifier_relationship_repository) }
+
     context '#with_verified_group_identifier_related_to' do
-      subject { described_class.new(identifier_relationship_repository: identifier_relationship_repository) }
       let(:given_identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hello') }
       before do
         allow(identifier_relationship_repository).to receive(:each_identifier_related_to).and_yield(group_identifier)
@@ -34,8 +36,6 @@ module Cogitate
     end
 
     context '#with_verified_existing_group_for' do
-      subject { described_class.new(identifier_relationship_repository: identifier_relationship_repository) }
-
       context 'when the group exists' do
         before { ::Group.create!(id: group_identifier.identifying_value, name: 'Hello') }
 
