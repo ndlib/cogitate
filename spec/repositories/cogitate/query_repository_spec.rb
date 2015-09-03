@@ -37,7 +37,7 @@ module Cogitate
 
     context '#with_verified_existing_group_for' do
       context 'when the group exists' do
-        before { ::Group.create!(id: group_identifier.identifying_value, name: 'Hello') }
+        before { ::Group.new(identifying_value: group_identifier.identifying_value, name: 'Hello').save! }
 
         it 'will yield an Identifier::Verified::Group' do
           expect { |b| subject.with_verified_existing_group_for(identifier: group_identifier, &b) }.to(

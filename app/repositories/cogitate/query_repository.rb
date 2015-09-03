@@ -33,8 +33,8 @@ module Cogitate
     # @param identifier [Cogitate::Interfaces::Identifier]
     def with_verified_existing_group_for(identifier:)
       return enum_for(:with_verified_existing_group_for, identifier: identifier) unless block_given?
-      return if identifier.strategy != Models::Identifier::GROUP_STRATEGY_NAME
-      group = Group.find_by(id: identifier.identifying_value)
+      return unless identifier.strategy == Models::Identifier::GROUP_STRATEGY_NAME
+      group = Group.find_by(identifying_value: identifier.identifying_value)
       return if group.nil?
       yield(
         Models::Identifier::Verified::Group.new(identifier: identifier, attributes: { name: group.name, description: group.description })
