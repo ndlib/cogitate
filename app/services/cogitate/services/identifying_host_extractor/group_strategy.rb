@@ -44,8 +44,8 @@ module Cogitate
         end
 
         def default_member_visitation_service
-          # TODO: a placeholder
-          ->(*) {}
+          require 'cogitate/services/identifier_visitations/visit_members_for_verified_group'
+          IdentifierVisitations::VisitMembersForVerifiedGroup
         end
       end
     end

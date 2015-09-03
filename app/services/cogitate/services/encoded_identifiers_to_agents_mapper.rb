@@ -48,8 +48,8 @@ module Cogitate
       end
 
       def default_decoder
-        require 'cogitate/services/identifiers_decoder' unless defined?(IdentifiersDecoder)
-        IdentifiersDecoder
+        require 'cogitate/services/identifiers_decoder' unless defined?(Services::IdentifiersDecoder)
+        Services::IdentifiersDecoder
       end
 
       def default_converter

@@ -41,7 +41,8 @@ module Cogitate
       )
     end
 
-    delegate :each_identifier_related_to, to: :identifier_relationship_repository
+    extend Forwardable
+    def_delegator :identifier_relationship_repository, :each_identifier_related_to
 
     private
 
