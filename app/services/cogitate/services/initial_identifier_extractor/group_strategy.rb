@@ -1,7 +1,7 @@
 require 'cogitate/interfaces'
 module Cogitate
   module Services
-    module IdentifyingHostExtractor
+    module InitialIdentifierExtractor
       # Responsible for extracting the host that will oversee the visitation of the agent
       class GroupStrategy
         extend Contracts

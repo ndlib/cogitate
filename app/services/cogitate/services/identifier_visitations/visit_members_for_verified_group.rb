@@ -31,7 +31,7 @@ module Cogitate
           Cogitate::QueryRepository.new
         end
 
-        # @todo leverage Services::IdentifyingHostExtractor.call
+        # @todo leverage Services::InitialIdentifierExtractor.call
         def default_identifier_extractor
           ->(*) {}
         end

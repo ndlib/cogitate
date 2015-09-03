@@ -1,12 +1,12 @@
 require 'spec_fast_helper'
 require "cogitate/models/identifier"
-require 'cogitate/services/identifying_host_extractor'
+require 'cogitate/services/initial_identifier_extractor'
 
 module Cogitate
   module Services
-    RSpec.describe IdentifyingHostExtractor do
+    RSpec.describe InitialIdentifierExtractor do
       before do
-        module IdentifyingHostExtractor
+        module InitialIdentifierExtractor
           class MockStrategy
             def self.call(identifier:)
               identifier

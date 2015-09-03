@@ -6,12 +6,12 @@ module Cogitate
   module Services
     RSpec.describe AgentExtractor do
       let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'a_netid') }
-      let(:identifying_host_extractor) { double(call: true) }
-      subject { described_class.new(identifier: identifier, identifying_host_extractor: identifying_host_extractor) }
+      let(:initial_identifier_extractor) { double(call: true) }
+      subject { described_class.new(identifier: identifier, initial_identifier_extractor: initial_identifier_extractor) }
 
       include Cogitate::RSpecMatchers
 
-      its(:default_identifying_host_extractor) { should respond_to(:call) }
+      its(:default_identifier_extractor) { should respond_to(:call) }
       its(:default_visitor_builder) { should respond_to(:call) }
 
       context '.call' do
@@ -27,7 +27,7 @@ module Cogitate
         end
         it 'will leverage the identifying host extractor' do
           subject.call
-          expect(identifying_host_extractor).to have_received(:call).with(identifier: identifier, visitor: subject.send(:visitor))
+          expect(initial_identifier_extractor).to have_received(:call).with(identifier: identifier, visitor: subject.send(:visitor))
         end
       end
     end

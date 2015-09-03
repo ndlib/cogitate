@@ -1,13 +1,13 @@
 require 'contracts'
 require 'cogitate/interfaces'
 require 'active_support/inflector/methods'
-require 'cogitate/services/identifying_host_extractor/parroting_strategy'
+require 'cogitate/services/initial_identifier_extractor/parroting_strategy'
 
 module Cogitate
   module Services
-    # Responsible for inviting a guest to visit the given identifier.
+    # Responsible for handling the initial identifier extraction
     # @see .call for more details
-    module IdentifyingHostExtractor
+    module InitialIdentifierExtractor
       extend Contracts
 
       Contract(

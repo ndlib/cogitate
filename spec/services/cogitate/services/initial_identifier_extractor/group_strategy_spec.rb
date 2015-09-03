@@ -1,8 +1,8 @@
 require 'spec_fast_helper'
-require 'cogitate/services/identifying_host_extractor/group_strategy'
+require 'cogitate/services/initial_identifier_extractor/group_strategy'
 require 'cogitate/models/identifier'
 
-RSpec.describe Cogitate::Services::IdentifyingHostExtractor::GroupStrategy do
+RSpec.describe Cogitate::Services::InitialIdentifierExtractor::GroupStrategy do
   let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'group', identifying_value: 'a group') }
   let(:member_visitation_service) { double(call: true) }
   let(:repository) { double(with_verified_existing_group_for: true) }
