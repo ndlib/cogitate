@@ -1,7 +1,7 @@
 class AddingSipityGroupsForEtds < ActiveRecord::Migration
   def self.up
     graduate_school_etd_reviewers = 'Graduate School ETD Reviewers'
-    Group.find_or_create_by!(name: graduate_school_etd_reviewers)
+    Group.find_or_create_by!(identifying_value: graduate_school_etd_reviewers, name: graduate_school_etd_reviewers)
     RepositoryService::IdentifierRelationship.create!(
       left_strategy: Cogitate::Models::Identifier::GROUP_STRATEGY_NAME, left_identifying_value: graduate_school_etd_reviewers,
       right_strategy: "netid", right_identifying_value: 'shill2'

@@ -4,6 +4,5 @@ require 'active_record/base'
 # nor responsibility that those people fill. It is an alias for a collection
 # of people.
 class Group < ActiveRecord::Base
-  self.primary_key = :id
   delegate :to_s, to: :name
 end

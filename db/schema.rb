@@ -25,15 +25,15 @@ ActiveRecord::Schema.define(version: 20150813181332) do
   add_index "cogitate_models_identifier_tickets", ["ticket", "expires_at"], name: "idx_cogitate_models_identifier_ticket_expiry", using: :btree
   add_index "cogitate_models_identifier_tickets", ["ticket"], name: "index_cogitate_models_identifier_tickets_on_ticket", unique: true, using: :btree
 
-  create_table "groups", id: false, force: :cascade do |t|
-    t.string   "id",          limit: 255
-    t.string   "name",        limit: 255,   null: false
-    t.text     "description", limit: 65535
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+  create_table "groups", force: :cascade do |t|
+    t.string   "identifying_value", limit: 255
+    t.string   "name",              limit: 255,   null: false
+    t.text     "description",       limit: 65535
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
-  add_index "groups", ["id"], name: "index_groups_on_id", unique: true, using: :btree
+  add_index "groups", ["identifying_value"], name: "index_groups_on_identifying_value", unique: true, using: :btree
   add_index "groups", ["name"], name: "index_groups_on_name", unique: true, using: :btree
 
   create_table "repository_service_identifier_relationships", force: :cascade do |t|
