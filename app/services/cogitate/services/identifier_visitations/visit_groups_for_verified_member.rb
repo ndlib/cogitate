@@ -4,7 +4,7 @@ module Cogitate
   module Services
     module IdentifierVisitations
       # Responsible for coordinating a visit to all groups associated with the given identifier.
-      class VisitVerifiedGroup
+      class VisitGroupsForVerifiedMember
         include Contracts
 
         # @api public
@@ -13,7 +13,7 @@ module Cogitate
         end
 
         # @api private
-        # @see Cogitate::Serivces::IdentifierVisitations::VisitVerifiedGroup.call
+        # @see Cogitate::Serivces::IdentifierVisitations::VisitGroupsForVerifiedMember.call
         Contract(
           Contracts::KeywordArgs[
             group_member_identifier: Cogitate::Interfaces::IdentifierInterface,
