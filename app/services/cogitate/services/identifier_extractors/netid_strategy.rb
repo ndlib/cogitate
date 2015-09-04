@@ -9,9 +9,15 @@ module Cogitate
       # @api public
       class NetidStrategy
         extend Contracts
-        Contract(Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] => Cogitate::Interfaces::HostInterface)
-        def self.call(identifier:, **keywords)
-          new(identifier: identifier, **keywords).call
+        Contract(
+          Contracts::KeywordArgs[
+            identifier: Cogitate::Interfaces::IdentifierInterface,
+            membership_visitation_service: Cogitate::Interfaces::MembershipVisitationStrategyInterface
+          ] => Cogitate::Interfaces::HostInterface
+        )
+        # @api public
+        def self.call(identifier:, membership_visitation_service:)
+          new(identifier: identifier, membership_visitation_service: membership_visitation_service).call
         end
 
         include Contracts
@@ -21,30 +27,37 @@ module Cogitate
         Contract(
           KeywordArgs[
             identifier: Cogitate::Interfaces::IdentifierInterface,
+            membership_visitation_service: Cogitate::Interfaces::MembershipVisitationStrategyInterface,
             repository: Contracts::Optional[Cogitate::Interfaces::FindNetidRepositoryInterface],
             host_builder: Contracts::Optional[RespondTo[:call]]
           ] => Any
         )
-        def initialize(identifier:, repository: default_repository, host_builder: default_host_builder)
+        def initialize(identifier:, membership_visitation_service:, repository: default_repository, host_builder: default_host_builder)
           self.identifier = identifier
           self.repository = repository
           self.host_builder = host_builder
+          self.membership_visitation_service = membership_visitation_service
         end
 
         # @api public
         Contract(Contracts::None => Cogitate::Interfaces::HostInterface)
         def call
           remote_identifier = repository.find(identifier: identifier)
-          if remote_identifier.verified?
-            host_builder.call(invitation_strategy: :verified, identifier: remote_identifier)
-          else
-            host_builder.call(invitation_strategy: :unverified, identifier: remote_identifier)
-          end
+          host_builder.call(
+            identifier: remote_identifier,
+            membership_visitation_service: membership_visitation_service,
+            invitation_strategy: invitation_strategy(remote_identifier: remote_identifier)
+          )
         end
 
         private
 
-        attr_accessor :identifier, :repository, :host_builder
+        def invitation_strategy(remote_identifier:)
+          return :verified if remote_identifier.verified?
+          :unverified
+        end
+
+        attr_accessor :identifier, :repository, :host_builder, :membership_visitation_service
 
         def default_repository
           require 'cogitate/repositories/remote_netid_repository' unless defined?(Repositories::RemoteNetidRepository)
@@ -60,7 +73,7 @@ module Cogitate
         # @todo Should this be broken down into two separate classes? I have an #receive_unverified and #receive_verified method.
         class Host
           include Contracts
-          def initialize(invitation_strategy:, identifier:, membership_visitation_service: default_membership_visitation_service)
+          def initialize(invitation_strategy:, identifier:, membership_visitation_service:)
             self.invitation_strategy = invitation_strategy
             self.identifier = identifier
             self.membership_visitation_service = membership_visitation_service
@@ -88,11 +101,6 @@ module Cogitate
             visitor.add_identifier(identifier)
             visitor.add_verified_identifier(identifier)
             membership_visitation_service.call(identifier: identifier, visitor: visitor)
-          end
-
-          def default_membership_visitation_service
-            require 'cogitate/services/membership_visitation_strategies/visit_groups_for_verified_member'
-            MembershipVisitationStrategies::VisitGroupsForVerifiedMember
           end
         end
         private_constant :Host

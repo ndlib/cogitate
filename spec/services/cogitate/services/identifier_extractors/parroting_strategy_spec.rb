@@ -11,9 +11,10 @@ module Cogitate
         let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'duck', identifying_value: '123') }
         let(:guest) { double(visit: true) }
         let(:visitor) { double(add_identifier: true) }
+        let(:membership_visitation_service) { double(call: true) }
         before { allow(guest).to receive(:visit).and_yield(visitor) }
 
-        subject { described_class.call(identifier: identifier) }
+        subject { described_class.call(identifier: identifier, membership_visitation_service: membership_visitation_service) }
 
         its(:identifier) { should be_a(Cogitate::Models::Identifier::Unverified) }
 

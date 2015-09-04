@@ -6,13 +6,18 @@ module Cogitate
       class GroupStrategy
         extend Contracts
 
-        Contract(Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] => Cogitate::Interfaces::HostInterface)
+        Contract(
+          Contracts::KeywordArgs[
+            identifier: Cogitate::Interfaces::IdentifierInterface,
+            membership_visitation_service: Cogitate::Interfaces::MembershipVisitationStrategyInterface
+          ] => Cogitate::Interfaces::HostInterface
+        )
         # @api public
-        def self.call(identifier:)
-          new(identifier: identifier)
+        def self.call(identifier:, membership_visitation_service:)
+          new(identifier: identifier, membership_visitation_service: membership_visitation_service)
         end
 
-        def initialize(identifier:, repository: default_repository, membership_visitation_service: default_membership_visitation_service)
+        def initialize(identifier:, membership_visitation_service:, repository: default_repository)
           self.identifier = identifier
           self.repository = repository
           self.membership_visitation_service = membership_visitation_service
@@ -41,11 +46,6 @@ module Cogitate
         def default_repository
           require 'cogitate/query_repository' unless defined?(Cogitate::QueryRepository)
           Cogitate::QueryRepository.new
-        end
-
-        def default_membership_visitation_service
-          require 'cogitate/services/membership_visitation_strategies/visit_members_for_verified_group'
-          MembershipVisitationStrategies::VisitMembersForVerifiedGroup
         end
       end
     end

@@ -11,12 +11,13 @@ RSpec.describe Cogitate::Services::IdentifierExtractors::GroupStrategy do
     described_class.new(identifier: identifier, repository: repository, membership_visitation_service: membership_visitation_service)
   end
 
-  its(:default_membership_visitation_service) { should respond_to(:call) }
   its(:default_repository) { should respond_to(:with_verified_existing_group_for) }
 
   include Cogitate::RSpecMatchers
   it 'will expose .call as a convenience method' do
-    expect(described_class.call(identifier: identifier)).to contractually_honor(Cogitate::Interfaces::HostInterface)
+    expect(
+      described_class.call(identifier: identifier, membership_visitation_service: membership_visitation_service)
+    ).to contractually_honor(Cogitate::Interfaces::HostInterface)
   end
 
   let(:guest) { double(visit: true) }

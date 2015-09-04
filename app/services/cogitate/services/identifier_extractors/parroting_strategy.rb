@@ -9,13 +9,13 @@ module Cogitate
       class ParrotingStrategy
         extend Contracts
 
-        # @api public
         Contract(
           Contracts::KeywordArgs[
             identifier: Cogitate::Interfaces::IdentifierInterface,
-            membership_visitation_service: Contracts::Optional[Contracts::RespondTo[:call]]
+            membership_visitation_service: Cogitate::Interfaces::MembershipVisitationStrategyInterface
           ] => Cogitate::Interfaces::HostInterface
         )
+        # @api public
         def self.call(identifier:, **)
           new(identifier: identifier)
         end
