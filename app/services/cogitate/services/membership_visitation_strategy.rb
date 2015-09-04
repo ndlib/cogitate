@@ -17,7 +17,7 @@ module Cogitate
             default: :DoNotVisitMembershipsService
           }
         },
-        continuing: {
+        next: {
           verified: {
             default: :DoNotVisitMembershipsService
           },
