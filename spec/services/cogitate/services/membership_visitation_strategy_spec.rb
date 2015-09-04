@@ -1,7 +1,7 @@
 require 'spec_fast_helper'
 require 'cogitate/services/membership_visitation_strategy'
 
-RSpec.describe Cogitate::Service::MembershipVisitationStrategy do
+RSpec.describe Cogitate::Services::MembershipVisitationStrategy do
   subject { described_class }
   let(:identifier) { double(verified?: true, strategy: 'hello') }
   context '.find' do

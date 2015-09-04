@@ -4,7 +4,7 @@ require 'cogitate/services/membership_visitation_strategies/visit_members_for_ve
 require 'cogitate/exceptions'
 
 module Cogitate
-  module Service
+  module Services
     # A container for finding the appropriate strategy for membership visitation
     module MembershipVisitationStrategy
       LOOKUP_TABLE = {
