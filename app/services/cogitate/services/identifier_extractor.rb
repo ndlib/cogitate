@@ -7,7 +7,7 @@ module Cogitate
   module Services
     # Responsible for handling the initial identifier extraction
     # @see .call for more details
-    module InitialIdentifierExtractor
+    module IdentifierExtractor
       extend Contracts
 
       Contract(

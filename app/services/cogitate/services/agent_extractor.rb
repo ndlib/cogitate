@@ -10,29 +10,29 @@ module Cogitate
       end
 
       include Contracts
-      def initialize(identifier:, visitor_builder: default_visitor_builder, initial_identifier_extractor: default_identifier_extractor)
+      def initialize(identifier:, visitor_builder: default_visitor_builder, identifier_extractor: default_identifier_extractor)
         self.identifier = identifier
         self.visitor = visitor_builder.call(identifier: identifier)
-        self.initial_identifier_extractor = initial_identifier_extractor
+        self.identifier_extractor = identifier_extractor
       end
 
       Contract(Contracts::None => Cogitate::Interfaces::AgentInterface)
       def call
-        initial_identifier_extractor.call(identifier: identifier, visitor: visitor)
+        identifier_extractor.call(identifier: identifier, visitor: visitor)
         visitor.return_from_visitations
       end
 
       private
 
-      attr_accessor :identifier, :initial_identifier_extractor
+      attr_accessor :identifier, :identifier_extractor
       attr_reader :visitor
 
       Contract(Cogitate::Interfaces::VisitorV2Interface => Cogitate::Interfaces::VisitorV2Interface)
       attr_writer :visitor
 
       def default_identifier_extractor
-        require 'cogitate/services/identifier_extractors' unless defined?(InitialIdentifierExtractor)
-        InitialIdentifierExtractor
+        require 'cogitate/services/identifier_extractor' unless defined?(IdentifierExtractor)
+        IdentifierExtractor
       end
 
       def default_visitor_builder
