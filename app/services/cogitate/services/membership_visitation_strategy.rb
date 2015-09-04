@@ -32,13 +32,21 @@ module Cogitate
         Services::MembershipVisitationStrategies.const_get(membership_vistation_strategy)
       end
 
+      # @api private
       def self.subtable_for(identifier:, visitation_type:)
-        verification_type = identifier.verified? ? :verified : :unverified
-        LOOKUP_TABLE.fetch(visitation_type).fetch(verification_type)
+        LOOKUP_TABLE.fetch(visitation_type).fetch(verification_type_for(identifier: identifier))
       rescue KeyError
         raise Cogitate::InvalidMembershipVisitationKeys, identifier: identifier, visitation_type: visitation_type
       end
       private_class_method :subtable_for
+
+      # @api private
+      # @todo Should I require a verifiable identifier?
+      def self.verification_type_for(identifier:)
+        return :unverified unless identifier.respond_to?(:verified?)
+        return :unverified unless identifier.verified?
+        :verified
+      end
     end
   end
 end
