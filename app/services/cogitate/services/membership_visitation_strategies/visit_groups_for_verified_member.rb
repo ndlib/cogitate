@@ -18,13 +18,15 @@ module Cogitate
           Contracts::KeywordArgs[
             group_member_identifier: Cogitate::Interfaces::IdentifierInterface,
             guest: Cogitate::Interfaces::VisitorInterface,
-            repository: Optional[RespondTo[:with_verified_group_identifier_related_to]]
+            repository: Optional[RespondTo[:with_verified_group_identifier_related_to]],
+            identifier_extractor: Optional[RespondTo[:call]]
           ] => Contracts::RespondTo[:call]
         )
-        def initialize(group_member_identifier:, guest:, repository: default_repository)
+        def initialize(group_member_identifier:, guest:, repository: default_repository, identifier_extractor: default_identifier_extractor)
           self.group_member_identifier = group_member_identifier
           self.guest = guest
           self.repository = repository
+          self.identifier_extractor = identifier_extractor
           initialize_related_verified_group_identifiers!
           self
         end
@@ -52,17 +54,24 @@ module Cogitate
           Cogitate::Models::Identifier.new_for_implicit_verified_group_by_strategy(strategy: group_member_identifier.strategy)
         end
 
-        attr_accessor :group_member_identifier, :guest, :repository
+        attr_accessor :group_member_identifier, :guest, :repository, :identifier_extractor
 
         def receive(group_identifier:)
           guest.visit(group_identifier) do |visitor|
             visitor.add_identifier(group_identifier)
             visitor.add_verified_identifier(group_identifier)
+            identifier_extractor.call(identifier: group_identifier, visitor: guest, visitation_type: :next)
           end
         end
 
         def initialize_related_verified_group_identifiers!
           @related_verified_group_identifiers = repository.with_verified_group_identifier_related_to(identifier: group_member_identifier)
+        end
+
+        # @todo leverage Services::IdentifierExtractor.call
+        def default_identifier_extractor
+          require 'cogitate/services/identifier_extractor' unless defined?(Services::IdentifierExtractor)
+          IdentifierExtractor
         end
 
         attr_reader :related_verified_group_identifiers
