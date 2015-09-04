@@ -14,6 +14,7 @@ module Cogitate
             default: :VisitGroupsForVerifiedMember
           },
           unverified: {
+            'group' => :VisitMembersForVerifiedGroup,
             default: :DoNotVisitMembershipsService
           }
         },
