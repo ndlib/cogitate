@@ -3,7 +3,7 @@ require 'cogitate/interfaces'
 
 module Cogitate
   module Services
-    module InitialIdentifierExtractor
+    module IdentifierExtractors
       # This class is in place to say "You said you had this identifier, so I'll add it as an identity though I don't know much about it."
       # @api public
       class ParrotingStrategy

@@ -3,7 +3,7 @@ require 'cogitate/interfaces'
 
 module Cogitate
   module Services
-    module InitialIdentifierExtractor
+    module IdentifierExtractors
       # Responsible for determining the host that will be leveraged for inviting the agent.
       #
       # @api public

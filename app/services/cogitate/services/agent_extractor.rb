@@ -31,7 +31,7 @@ module Cogitate
       attr_writer :visitor
 
       def default_identifier_extractor
-        require 'cogitate/services/initial_identifier_extractor' unless defined?(InitialIdentifierExtractor)
+        require 'cogitate/services/identifier_extractors' unless defined?(InitialIdentifierExtractor)
         InitialIdentifierExtractor
       end
 

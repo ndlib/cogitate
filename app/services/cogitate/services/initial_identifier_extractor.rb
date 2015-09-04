@@ -1,7 +1,7 @@
 require 'contracts'
 require 'cogitate/interfaces'
 require 'active_support/inflector/methods'
-require 'cogitate/services/initial_identifier_extractor/parroting_strategy'
+require 'cogitate/services/identifier_extractors/parroting_strategy'
 
 module Cogitate
   module Services
@@ -41,7 +41,7 @@ module Cogitate
         # Instead of loading all of ActiveSupport make an explicit declaration.
         strategy_constant_name = ActiveSupport::Inflector.classify("#{identifier.strategy}_strategy")
         begin
-          const_get(strategy_constant_name)
+          IdentifierExtractors.const_get(strategy_constant_name)
         rescue NameError
           fallback_hosting_strategy
         end
@@ -49,7 +49,7 @@ module Cogitate
       private_class_method :find_hosting_strategy
 
       def self.fallback_hosting_strategy
-        ParrotingStrategy
+        IdentifierExtractors::ParrotingStrategy
       end
       private_class_method :fallback_hosting_strategy
 

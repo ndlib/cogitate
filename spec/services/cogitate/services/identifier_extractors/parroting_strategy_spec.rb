@@ -2,11 +2,11 @@ require 'spec_fast_helper'
 require 'cogitate/interfaces'
 require "cogitate/models/identifier"
 require 'cogitate/models/identifier/unverified'
-require 'cogitate/services/initial_identifier_extractor/parroting_strategy'
+require 'cogitate/services/identifier_extractors/parroting_strategy'
 
 module Cogitate
   module Services
-    module InitialIdentifierExtractor
+    module IdentifierExtractors
       RSpec.describe ParrotingStrategy do
         let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'duck', identifying_value: '123') }
         let(:guest) { double(visit: true) }

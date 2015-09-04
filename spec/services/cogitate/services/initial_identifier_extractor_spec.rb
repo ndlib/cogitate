@@ -6,7 +6,7 @@ module Cogitate
   module Services
     RSpec.describe InitialIdentifierExtractor do
       before do
-        module InitialIdentifierExtractor
+        module IdentifierExtractors
           class MockStrategy
             def self.call(identifier:, membership_visitation_service:)
               [identifier, membership_visitation_service]
@@ -16,7 +16,7 @@ module Cogitate
       end
       after do
         # Because autoload doesn't like me removing "live" modules
-        described_class.send(:remove_const, :MockStrategy)
+        IdentifierExtractors.send(:remove_const, :MockStrategy)
       end
       subject { described_class }
       let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'mock', identifying_value: 'hello') }
@@ -31,7 +31,7 @@ module Cogitate
       context 'with a defined existing strategy' do
         context '.call' do
           it 'will find the correct host the invite the visitor and return the visitor' do
-            expect(described_class::MockStrategy).to receive(:call).and_return(host)
+            expect(IdentifierExtractors::MockStrategy).to receive(:call).and_return(host)
             expect(host).to receive(:invite).with(visitor)
             described_class.call(identifier: identifier, visitor: visitor, membership_visitation_finder: membership_visitation_finder)
           end
@@ -39,7 +39,7 @@ module Cogitate
 
         context '.identifying_host_for' do
           it 'will find the correct container and call it' do
-            expect(described_class::MockStrategy).to receive(:call).and_return(host)
+            expect(IdentifierExtractors::MockStrategy).to receive(:call).and_return(host)
             described_class.identifying_host_for(
               identifier: identifier, visitation_type: :first, membership_visitation_finder: membership_visitation_finder
             )
@@ -52,7 +52,7 @@ module Cogitate
 
         context '.call' do
           it 'will find the correct host the invite the visitor and return the visitor' do
-            expect(described_class::ParrotingStrategy).to receive(:call).and_return(host)
+            expect(IdentifierExtractors::ParrotingStrategy).to receive(:call).and_return(host)
             expect(host).to receive(:invite).with(visitor)
             described_class.call(identifier: identifier, visitor: visitor)
           end
@@ -60,7 +60,7 @@ module Cogitate
 
         context '.identifying_host_for' do
           it 'will fallback to the parrot strategy' do
-            expect(described_class::ParrotingStrategy).to receive(:call).and_return(host)
+            expect(IdentifierExtractors::ParrotingStrategy).to receive(:call).and_return(host)
             described_class.identifying_host_for(
               identifier: identifier, visitation_type: :knuckles, membership_visitation_finder: membership_visitation_finder
             )

@@ -1,11 +1,11 @@
 require 'spec_fast_helper'
-require 'cogitate/services/initial_identifier_extractor/netid_strategy'
+require 'cogitate/services/identifier_extractors/netid_strategy'
 require 'cogitate/interfaces'
 require "cogitate/models/identifier"
 
 module Cogitate
   module Services
-    module InitialIdentifierExtractor
+    module IdentifierExtractors
       RSpec.describe NetidStrategy do
         let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hello') }
         let(:repository) { double(find: true) }
