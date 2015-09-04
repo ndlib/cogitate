@@ -1,6 +1,6 @@
 module Cogitate
   module Services
-    module MembershipVisitationStrategy
+    module MembershipVisitationStrategies
       # Responsible for coordinating a visit to all groups associated with the given identifier.
       class VisitMembersForVerifiedGroup
         # @api public

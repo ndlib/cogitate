@@ -1,7 +1,6 @@
 require 'contracts'
 require 'cogitate/interfaces'
 require 'active_support/inflector/methods'
-require 'cogitate/services/initial_identifier_extractor/parroting_strategy'
 
 module Cogitate
   module Services
@@ -12,23 +11,29 @@ module Cogitate
 
       Contract(
         Contracts::KeywordArgs[
-          identifier: Cogitate::Interfaces::IdentifierInterface, visitor: Cogitate::Interfaces::VisitorInterface
+          identifier: Cogitate::Interfaces::IdentifierInterface, visitor: Cogitate::Interfaces::VisitorInterface,
+          visitation_type: Contracts::Optional[Symbol]
         ] => Contracts::Any
       )
       # @todo Refine what the expected return value is
-      def self.call(identifier:, visitor:)
-        host = identifying_host_for(identifier: identifier)
+      def self.call(identifier:, visitor:, visitation_type: :first)
+        host = identifying_host_for(identifier: identifier, visitation_type: visitation_type)
         host.invite(visitor)
       end
 
+      Contract(
+        Contracts::KeywordArgs[
+          identifier: Cogitate::Interfaces::IdentifierInterface, visitation_type: Symbol,
+          membership_visitation_finder: Contracts::Optional[Contracts::RespondTo[:call]]
+        ] =>
+        Cogitate::Interfaces::HostInterface
+      )
       # @api public
       # @todo What is the constant missing behavior?
-      Contract(
-        Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] => Cogitate::Interfaces::HostInterface
-      )
-      def self.identifying_host_for(identifier:)
+      def self.identifying_host_for(identifier:, visitation_type:, membership_visitation_finder: default_membership_visitation_finder)
         hosting_strategy = find_hosting_strategy(identifier: identifier)
-        hosting_strategy.call(identifier: identifier)
+        membership_visitation_service = membership_visitation_finder.call(identifier: identifier, visitation_type: visitation_type)
+        hosting_strategy.call(identifier: identifier, membership_visitation_service: membership_visitation_service)
       end
 
       def self.find_hosting_strategy(identifier:)
@@ -43,9 +48,16 @@ module Cogitate
       private_class_method :find_hosting_strategy
 
       def self.fallback_hosting_strategy
+        require 'cogitate/services/initial_identifier_extractor/parroting_strategy' unless defined?(ParrotingStrategy)
         ParrotingStrategy
       end
       private_class_method :fallback_hosting_strategy
+
+      def self.default_membership_visitation_finder
+        require 'cogitate/services/membership_visitation_strategy' unless defined?(Services::MembershipVisitationStrategy)
+        Services::MembershipVisitationStrategy.method(:find)
+      end
+      private_class_method :default_membership_visitation_finder
     end
   end
 end

@@ -1,6 +1,6 @@
 module Cogitate
   module Services
-    module MembershipVisitationStrategy
+    module MembershipVisitationStrategies
       # Sometimes we don't want to delve too deeply across the group boundary.
       module DoNotVisitMembershipsService
         # @api public

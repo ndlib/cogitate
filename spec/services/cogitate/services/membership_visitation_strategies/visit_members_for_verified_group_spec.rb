@@ -1,8 +1,8 @@
 require 'spec_fast_helper'
 require 'cogitate/models/identifier'
-require 'cogitate/services/membership_visitation_strategy/visit_members_for_verified_group'
+require 'cogitate/services/membership_visitation_strategies/visit_members_for_verified_group'
 
-RSpec.describe Cogitate::Services::MembershipVisitationStrategy::VisitMembersForVerifiedGroup do
+RSpec.describe Cogitate::Services::MembershipVisitationStrategies::VisitMembersForVerifiedGroup do
   let(:group_identifier) { Cogitate::Models::Identifier.new(strategy: 'group', identifying_value: 'hello') }
   let(:guest) { double(visit: true) }
   let(:visitor) { double(add_identifier: true, add_verified_identifier: true) }

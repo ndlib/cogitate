@@ -1,6 +1,6 @@
-require 'cogitate/services/membership_visitation_strategy/do_not_visit_memberships_service'
-require 'cogitate/services/membership_visitation_strategy/visit_groups_for_verified_member'
-require 'cogitate/services/membership_visitation_strategy/visit_members_for_verified_group'
+require 'cogitate/services/membership_visitation_strategies/do_not_visit_memberships_service'
+require 'cogitate/services/membership_visitation_strategies/visit_groups_for_verified_member'
+require 'cogitate/services/membership_visitation_strategies/visit_members_for_verified_group'
 require 'cogitate/exceptions'
 
 module Cogitate
@@ -29,7 +29,7 @@ module Cogitate
       def self.find(identifier:, visitation_type:)
         subtable = subtable_for(identifier: identifier, visitation_type: visitation_type)
         membership_vistation_strategy = subtable.fetch(identifier.strategy, subtable.fetch(:default))
-        Services::MembershipVisitationStrategy.const_get(membership_vistation_strategy)
+        Services::MembershipVisitationStrategies.const_get(membership_vistation_strategy)
       end
 
       def self.subtable_for(identifier:, visitation_type:)

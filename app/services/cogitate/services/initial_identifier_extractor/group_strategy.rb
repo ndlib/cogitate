@@ -44,8 +44,8 @@ module Cogitate
         end
 
         def default_membership_visitation_service
-          require 'cogitate/services/membership_visitation_strategy/visit_members_for_verified_group'
-          MembershipVisitationStrategy::VisitMembersForVerifiedGroup
+          require 'cogitate/services/membership_visitation_strategies/visit_members_for_verified_group'
+          MembershipVisitationStrategies::VisitMembersForVerifiedGroup
         end
       end
     end

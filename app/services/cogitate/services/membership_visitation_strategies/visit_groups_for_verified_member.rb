@@ -2,7 +2,7 @@ require 'cogitate/interfaces'
 require 'cogitate/models/identifier'
 module Cogitate
   module Services
-    module MembershipVisitationStrategy
+    module MembershipVisitationStrategies
       # Responsible for coordinating a visit to all groups associated with the given identifier.
       class VisitGroupsForVerifiedMember
         include Contracts
@@ -13,7 +13,7 @@ module Cogitate
         end
 
         # @api private
-        # @see Cogitate::Serivces::MembershipVisitationStrategy::VisitGroupsForVerifiedMember.call
+        # @see Cogitate::Serivces::MembershipVisitationStrategies::VisitGroupsForVerifiedMember.call
         Contract(
           Contracts::KeywordArgs[
             group_member_identifier: Cogitate::Interfaces::IdentifierInterface,

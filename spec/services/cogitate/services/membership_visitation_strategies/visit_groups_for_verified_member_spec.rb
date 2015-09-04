@@ -1,10 +1,10 @@
 require 'spec_fast_helper'
-require 'cogitate/services/membership_visitation_strategy/visit_groups_for_verified_member'
+require 'cogitate/services/membership_visitation_strategies/visit_groups_for_verified_member'
 require 'cogitate/query_repository'
 require "cogitate/models/identifier"
 module Cogitate
   module Services
-    module MembershipVisitationStrategy
+    module MembershipVisitationStrategies
       RSpec.describe VisitGroupsForVerifiedMember do
         let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hello') }
         let(:guest) { double(visit: true) }
