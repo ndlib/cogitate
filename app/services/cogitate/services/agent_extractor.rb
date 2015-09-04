@@ -18,7 +18,7 @@ module Cogitate
 
       Contract(Contracts::None => Cogitate::Interfaces::AgentInterface)
       def call
-        identifier_extractor.call(identifier: identifier, visitor: visitor)
+        identifier_extractor.call(identifier: identifier, visitor: visitor, visitation_type: :first)
         visitor.return_from_visitations
       end
 

@@ -27,7 +27,9 @@ module Cogitate
         end
         it 'will leverage the identifying host extractor' do
           subject.call
-          expect(identifier_extractor).to have_received(:call).with(identifier: identifier, visitor: subject.send(:visitor))
+          expect(identifier_extractor).to have_received(:call).with(
+            identifier: identifier, visitor: subject.send(:visitor), visitation_type: :first
+          )
         end
       end
     end
