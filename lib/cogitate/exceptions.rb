@@ -17,7 +17,9 @@ module Cogitate
   # When the thing we have decoded is not properly formated, this exception is to provide clarity
   class InvalidMembershipVisitationKeys < RuntimeError
     def initialize(identifier:, visitation_type:)
-      super("Unable to find MembershipVisitationStrategy for visitation_type: #{visitation_type.inspect}, identifier: #{identifier.inspect}")
+      super(
+        "Unable to find membership visitation service for visitation_type: #{visitation_type.inspect}, identifier: #{identifier.inspect}"
+      )
     end
   end
 end
