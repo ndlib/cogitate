@@ -9,22 +9,11 @@ module Cogitate
     module MembershipVisitationStrategy
       LOOKUP_TABLE = {
         first: {
-          verified: {
-            'group' => :VisitMembersForVerifiedGroup,
-            default: :VisitGroupsForVerifiedMember
-          },
-          unverified: {
-            'group' => :VisitMembersForVerifiedGroup,
-            default: :DoNotVisitMembershipsService
-          }
+          'group' => :VisitMembersForVerifiedGroup,
+          default: :VisitGroupsForVerifiedMember
         },
         next: {
-          verified: {
-            default: :DoNotVisitMembershipsService
-          },
-          unverified: {
-            default: :DoNotVisitMembershipsService
-          }
+          default: :DoNotVisitMembershipsService
         }
       }.freeze
       def self.find(identifier:, visitation_type:)
@@ -35,19 +24,11 @@ module Cogitate
 
       # @api private
       def self.subtable_for(identifier:, visitation_type:)
-        LOOKUP_TABLE.fetch(visitation_type).fetch(verification_type_for(identifier: identifier))
+        LOOKUP_TABLE.fetch(visitation_type)
       rescue KeyError
         raise Cogitate::InvalidMembershipVisitationKeys, identifier: identifier, visitation_type: visitation_type
       end
       private_class_method :subtable_for
-
-      # @api private
-      # @todo Should I require a verifiable identifier?
-      def self.verification_type_for(identifier:)
-        return :unverified unless identifier.respond_to?(:verified?)
-        return :unverified unless identifier.verified?
-        :verified
-      end
     end
   end
 end
