@@ -10,8 +10,13 @@ module Cogitate
         extend Contracts
 
         # @api public
-        Contract(Contracts::KeywordArgs[identifier: Cogitate::Interfaces::IdentifierInterface] => Cogitate::Interfaces::HostInterface)
-        def self.call(identifier:)
+        Contract(
+          Contracts::KeywordArgs[
+            identifier: Cogitate::Interfaces::IdentifierInterface,
+            membership_visitation_service: Contracts::Optional[Contracts::RespondTo[:call]]
+          ] => Cogitate::Interfaces::HostInterface
+        )
+        def self.call(identifier:, **)
           new(identifier: identifier)
         end
 
