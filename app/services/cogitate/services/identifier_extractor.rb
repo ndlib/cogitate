@@ -30,7 +30,6 @@ module Cogitate
         Cogitate::Interfaces::HostInterface
       )
       # @api public
-      # @todo What is the constant missing behavior?
       def self.identifying_host_for(identifier:, visitation_type:, membership_visitation_finder: default_membership_visitation_finder)
         hosting_strategy = find_hosting_strategy(identifier: identifier)
         membership_visitation_service = membership_visitation_finder.call(identifier: identifier, visitation_type: visitation_type)
