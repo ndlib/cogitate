@@ -4,14 +4,14 @@ require 'cogitate/models/identifier'
 
 RSpec.describe Cogitate::Services::InitialIdentifierExtractor::GroupStrategy do
   let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'group', identifying_value: 'a group') }
-  let(:member_visitation_service) { double(call: true) }
+  let(:membership_visitation_service) { double(call: true) }
   let(:repository) { double(with_verified_existing_group_for: true) }
   let(:is_verified) { true }
   subject do
-    described_class.new(identifier: identifier, repository: repository, member_visitation_service: member_visitation_service)
+    described_class.new(identifier: identifier, repository: repository, membership_visitation_service: membership_visitation_service)
   end
 
-  its(:default_member_visitation_service) { should respond_to(:call) }
+  its(:default_membership_visitation_service) { should respond_to(:call) }
   its(:default_repository) { should respond_to(:with_verified_existing_group_for) }
 
   include Cogitate::RSpecMatchers
@@ -33,9 +33,9 @@ RSpec.describe Cogitate::Services::InitialIdentifierExtractor::GroupStrategy do
       subject.invite(guest)
       expect(visitor).to have_received(:add_verified_identifier).with(identifier)
     end
-    it 'will call the member_visitation_service' do
+    it 'will call the membership_visitation_service' do
       subject.invite(guest)
-      expect(member_visitation_service).to have_received(:call).with(identifier: identifier, visitor: visitor)
+      expect(membership_visitation_service).to have_received(:call).with(identifier: identifier, visitor: visitor)
     end
   end
 
@@ -49,9 +49,9 @@ RSpec.describe Cogitate::Services::InitialIdentifierExtractor::GroupStrategy do
       subject.invite(guest)
       expect(visitor).to_not have_received(:add_verified_identifier)
     end
-    it 'will NOT call the member_visitation_service' do
+    it 'will NOT call the membership_visitation_service' do
       subject.invite(guest)
-      expect(member_visitation_service).to_not have_received(:call)
+      expect(membership_visitation_service).to_not have_received(:call)
     end
   end
 end

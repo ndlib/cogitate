@@ -91,8 +91,8 @@ module Cogitate
           end
 
           def default_membership_visitation_service
-            require 'cogitate/services/identifier_visitations/visit_groups_for_verified_member'
-            IdentifierVisitations::VisitGroupsForVerifiedMember
+            require 'cogitate/services/membership_visitation_strategy/visit_groups_for_verified_member'
+            MembershipVisitationStrategy::VisitGroupsForVerifiedMember
           end
         end
         private_constant :Host
