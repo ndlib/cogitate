@@ -11,9 +11,8 @@ module Cogitate
         new(identifiers: identifiers, **keywords).call
       end
 
-      def initialize(identifiers:, response_parser: default_response_parser, configuration: default_configuration)
+      def initialize(identifiers:, configuration: default_configuration)
         self.identifiers = identifiers
-        self.response_parser = response_parser
         self.configuration = configuration
         initialize_urlsafe_base64_encoded_identifiers!
         initialize_url_for_request!
@@ -21,7 +20,7 @@ module Cogitate
 
       def call
         response = RestClient.get(url_for_request)
-        response_parser.call(response: response)
+        parse(response: response.body)
       end
 
       private
@@ -46,8 +45,12 @@ module Cogitate
         )
       end
 
-      def default_response_parser
-        ->(*) {}
+      def parse(response:)
+        data = JSON.parse(response).fetch('data')
+        data.each_with_object({}) do |datum, mem|
+          mem[datum.fetch('id')] = datum.fetch('attributes').fetch('emails')
+          mem
+        end
       end
 
       def default_configuration
