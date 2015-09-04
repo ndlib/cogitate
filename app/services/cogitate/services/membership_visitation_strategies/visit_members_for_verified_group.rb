@@ -18,7 +18,7 @@ module Cogitate
         # @api public
         def call
           repository.each_identifier_related_to(identifier: group_identifier) do |member_identifier|
-            identifier_extractor.call(identifier: member_identifier, visitor: guest)
+            identifier_extractor.call(identifier: member_identifier, visitor: guest, visitation_type: :next)
           end
         end
 
@@ -33,7 +33,8 @@ module Cogitate
 
         # @todo leverage Services::IdentifierExtractor.call
         def default_identifier_extractor
-          ->(*) {}
+          require 'cogitate/services/identifier_extractor' unless defined?(Services::IdentifierExtractor)
+          IdentifierExtractor
         end
       end
     end

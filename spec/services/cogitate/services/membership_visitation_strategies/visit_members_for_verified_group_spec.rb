@@ -27,6 +27,6 @@ RSpec.describe Cogitate::Services::MembershipVisitationStrategies::VisitMembersF
     member_identifier = double
     expect(repository).to receive(:each_identifier_related_to).and_yield(member_identifier)
     subject.call
-    expect(identifier_extractor).to have_received(:call).with(identifier: member_identifier, visitor: guest)
+    expect(identifier_extractor).to have_received(:call).with(identifier: member_identifier, visitor: guest, visitation_type: :next)
   end
 end
