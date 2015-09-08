@@ -19,6 +19,10 @@ module Cogitate
       # @api public
       #
       # There are implicit groups that exist and are associated with a given strategy.
+      # This method exists to create a consistent group name.
+      #
+      # @param strategy [String] What is the scope of this identifier (i.e. a Netid, email)
+      # @return [Cogitate::Models::Identifier]
       def self.new_for_implicit_verified_group_by_strategy(strategy:)
         new(strategy: GROUP_STRATEGY_NAME, identifying_value: %(All Verified "#{strategy.to_s.downcase}" Users))
       end
