@@ -62,6 +62,7 @@ module Cogitate
 
     # What is the authentication URL of the client's configured Cogitate server
     # @note Cogitate::Client configuration (and not Cogitate::Server)
+    # @return String
     def url_for_authentication
       query_params = "?after_authentication_callback_url=#{CGI.escape(after_authentication_callback_url)}"
       File.join(remote_server_base_url, '/authenticate') << query_params
@@ -69,12 +70,15 @@ module Cogitate
 
     # What is the URL for claiming a ticket
     # @note Cogitate::Client configuration (and not Cogitate::Server)
+    # @return String
     def url_for_claiming_a_ticket
       File.join(remote_server_base_url, '/claim')
     end
 
     # What is the URL for retrieving the agents based on the given identifiers
     # @note Cogitate::Client configuration (and not Cogitate::Server)
+    # @param urlsafe_base64_encoded_identifiers [String]
+    # @return String
     def url_for_retrieving_agents_for(urlsafe_base64_encoded_identifiers:)
       File.join(remote_server_base_url, '/api/agents', urlsafe_base64_encoded_identifiers)
     end
