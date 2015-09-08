@@ -22,6 +22,13 @@ module Cogitate
     end
 
     # @api public
+    def self.extract_strategy_and_identifying_value(encoded_string)
+      Base64.urlsafe_decode64(encoded_string).split("\t")
+    rescue ArgumentError
+      raise Cogitate::InvalidIdentifierEncoding, encoded_string: encoded_string
+    end
+
+    # @api public
     def self.retrieve_token_from(ticket:)
       TicketToTokenCoercer.call(ticket: ticket)
     end

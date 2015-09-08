@@ -8,6 +8,19 @@ RSpec.describe Cogitate::Client do
     end
   end
 
+  context '.extract_strategy_and_identifying_value' do
+    it 'will return two strings' do
+      identifier_id = described_class.encoded_identifier_for(strategy: 'netid', identifying_value: 'hworld')
+      strategy, identifying_value = described_class.extract_strategy_and_identifying_value(identifier_id)
+      expect(strategy).to eq('netid')
+      expect(identifying_value).to eq('hworld')
+    end
+
+    it 'will raise an error if it is poor encoding' do
+      expect { described_class.extract_strategy_and_identifying_value('hworld') }.to raise_error(Cogitate::InvalidIdentifierEncoding)
+    end
+  end
+
   it 'delegates .retrieve_token_from to TicketToTokenCoercer' do
     ticket = double
     expect(Cogitate::Client::TicketToTokenCoercer).to receive(:call).with(ticket: ticket)
