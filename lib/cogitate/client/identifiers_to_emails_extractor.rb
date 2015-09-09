@@ -11,7 +11,7 @@ module Cogitate
         new(identifiers: identifiers, **keywords).call
       end
 
-      def initialize(identifiers:, configuration: default_configuration, response_parser: default_response_parser)
+      def initialize(identifiers:, response_parser: default_response_parser, configuration: default_configuration)
         self.identifiers = identifiers
         self.configuration = configuration
         self.response_parser = response_parser
@@ -46,16 +46,9 @@ module Cogitate
         )
       end
 
-      def parse(response:)
-        data = JSON.parse(response).fetch('data')
-        data.each_with_object({}) do |datum, mem|
-          mem[datum.fetch('id')] = datum.fetch('attributes').fetch('emails')
-          mem
-        end
-      end
-
       def default_response_parser
-        method(:parse)
+        require 'cogitate/client/response_parsers/email_extractor'
+        Client::ResponseParsers::EmailExtractor
       end
 
       def default_configuration
