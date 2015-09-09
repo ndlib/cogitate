@@ -42,8 +42,23 @@ module Cogitate
     # @api public
     #
     # @param identifiers [Array<String>]
-    def self.retrieve_primary_emails_associated_with(identifiers:, response_parser: ResponseParsers::EmailExtractor)
+    def self.retrieve_primary_emails_associated_with(identifiers:)
+      request(identifiers: identifiers, response_parser: ResponseParsers::EmailExtractor)
+    end
+
+    # @api public
+    #
+    # @param identifiers [Array<String>]
+    # @param response_parser [#call(response:)]
+    def self.request(identifiers:, response_parser: default_response_parser)
       Request.call(identifiers: identifiers, response_parser: response_parser)
     end
+
+    # @api private
+    def self.default_response_parser
+      require 'cogitate/client/response_parsers/basic_extractor' unless defined?(ResponseParsers::BasicExtractor)
+      ResponseParsers::BasicExtractor
+    end
+    private_class_method :default_response_parser
   end
 end

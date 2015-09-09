@@ -1,7 +1,7 @@
 require 'spec_fast_helper'
-require 'cogitate/client/response_parsers/data_extractor'
+require 'cogitate/client/response_parsers/basic_extractor'
 
-RSpec.describe Cogitate::Client::ResponseParsers::DataExtractor do
+RSpec.describe Cogitate::Client::ResponseParsers::BasicExtractor do
   let(:json) { %({"data": "hello"}) }
 
   context '.call' do

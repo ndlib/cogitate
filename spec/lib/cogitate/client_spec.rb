@@ -34,11 +34,20 @@ RSpec.describe Cogitate::Client do
     described_class.extract_agent_from(token: token)
   end
 
-  it 'delegates .retrieve_primary_emails_associated_with to IdentifiersToEmailsExtractor' do
+  it 'delegates .retrieve_primary_emails_associated_with to Cogitate::Client::Request' do
     identifiers = double
     expect(Cogitate::Client::Request).to receive(:call).with(
       identifiers: identifiers, response_parser: Cogitate::Client::ResponseParsers::EmailExtractor
     )
     described_class.retrieve_primary_emails_associated_with(identifiers: identifiers)
   end
+
+  it 'delegates .request to Cogitate::Client::Request' do
+    identifiers = double
+    response_parser = double
+    expect(Cogitate::Client::Request).to receive(:call).with(identifiers: identifiers, response_parser: response_parser)
+    described_class.request(identifiers: identifiers, response_parser: response_parser)
+  end
+
+  its(:default_response_parser) { should respond_to(:call) }
 end
