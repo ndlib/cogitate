@@ -1,5 +1,6 @@
 require 'spec_fast_helper'
 require 'cogitate/client'
+require 'cogitate/client/response_parsers/email_extractor'
 
 RSpec.describe Cogitate::Client do
   context '.encoded_identifier_for' do
@@ -35,7 +36,9 @@ RSpec.describe Cogitate::Client do
 
   it 'delegates .retrieve_primary_emails_associated_with to IdentifiersToEmailsExtractor' do
     identifiers = double
-    expect(Cogitate::Client::IdentifiersToEmailsExtractor).to receive(:call).with(identifiers: identifiers)
+    expect(Cogitate::Client::Request).to receive(:call).with(
+      identifiers: identifiers, response_parser: Cogitate::Client::ResponseParsers::EmailExtractor
+    )
     described_class.retrieve_primary_emails_associated_with(identifiers: identifiers)
   end
 end

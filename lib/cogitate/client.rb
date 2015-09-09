@@ -2,7 +2,8 @@ require 'base64'
 require 'cogitate/exceptions'
 require 'cogitate/client/ticket_to_token_coercer'
 require 'cogitate/client/token_to_object_coercer'
-require 'cogitate/client/identifiers_to_emails_extractor'
+require 'cogitate/client/response_parsers/email_extractor'
+require 'cogitate/client/request'
 
 module Cogitate
   # Responsible for collecting the various client related behaviors.
@@ -41,8 +42,8 @@ module Cogitate
     # @api public
     #
     # @param identifiers [Array<String>]
-    def self.retrieve_primary_emails_associated_with(identifiers:)
-      IdentifiersToEmailsExtractor.call(identifiers: identifiers)
+    def self.retrieve_primary_emails_associated_with(identifiers:, response_parser: ResponseParsers::EmailExtractor)
+      Request.call(identifiers: identifiers, response_parser: response_parser)
     end
   end
 end
