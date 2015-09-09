@@ -6,13 +6,14 @@ RSpec.describe Cogitate::Client::IdentifiersToEmailsExtractor do
   let(:identifier_1) { Cogitate::Client.encoded_identifier_for(strategy: 'netid', identifying_value: 'hworld') }
   let(:identifier_2) { Cogitate::Client.encoded_identifier_for(strategy: 'orcid', identifying_value: '0001-0002-0003-0004') }
   let(:configuration) { double(url_for_retrieving_agents_for: 'http://world.com') }
-  its(:default_configuration) { should respond_to(:url_for_retrieving_agents_for) }
   let(:body) { File.read(File.expand_path('../../../../fixtures/agents.response.json', __FILE__)) }
   let(:response_from_request) { double(body: body) }
 
   subject do
     described_class.new(identifiers: [identifier_1, identifier_2], configuration: configuration)
   end
+  its(:default_configuration) { should respond_to(:url_for_retrieving_agents_for) }
+  its(:default_response_parser) { should respond_to(:call) }
 
   before { allow(RestClient).to receive(:get).and_return(response_from_request) }
 
