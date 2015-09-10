@@ -1,6 +1,6 @@
 {
   "links": {
-    "self": "http://localhost:3000/api/agents/Z3JvdXAJR3JhZHVhdGUgU2Nob29sIEVURCBSZXZpZXdlcnM="
+    "self": "http://localhost:3001/api/agents/Z3JvdXAJR3JhZHVhdGUgU2Nob29sIEVURCBSZXZpZXdlcnMKbmV0aWQJamZyaWVzZW4="
   },
   "data": [{
     "type": "agents",
@@ -50,6 +50,54 @@
         "full_name": "Shari Sweet",
         "ndguid": "nd.edu.ndkb8bv7",
         "email": "shill2@nd.edu"
+      }
+    }]
+  }, {
+    "type": "agents",
+    "id": "bmV0aWQJamZyaWVzZW4=",
+    "links": {
+      "self": "http://localhost:3000/api/agents/bmV0aWQJamZyaWVzZW4="
+    },
+    "attributes": {
+      "strategy": "netid",
+      "identifying_value": "jfriesen",
+      "emails": ["jfriesen@nd.edu"]
+    },
+    "relationships": {
+      "identifiers": [{
+        "type": "identifiers",
+        "id": "bmV0aWQJamZyaWVzZW4="
+      }, {
+        "type": "identifiers",
+        "id": "Z3JvdXAJQWxsIFZlcmlmaWVkICJuZXRpZCIgVXNlcnM="
+      }],
+      "verified_identifiers": [{
+        "type": "identifiers",
+        "id": "bmV0aWQJamZyaWVzZW4="
+      }, {
+        "type": "identifiers",
+        "id": "Z3JvdXAJQWxsIFZlcmlmaWVkICJuZXRpZCIgVXNlcnM="
+      }]
+    },
+    "included": [{
+      "type": "identifiers",
+      "id": "bmV0aWQJamZyaWVzZW4=",
+      "attributes": {
+        "identifying_value": "jfriesen",
+        "strategy": "netid",
+        "first_name": "Jeremy",
+        "last_name": "Friesen",
+        "netid": "jfriesen",
+        "full_name": "Jeremy Friesen",
+        "ndguid": "nd.edu.ndmv5tr8",
+        "email": "jfriesen@nd.edu"
+      }
+    }, {
+      "type": "identifiers",
+      "id": "Z3JvdXAJQWxsIFZlcmlmaWVkICJuZXRpZCIgVXNlcnM=",
+      "attributes": {
+        "identifying_value": "All Verified \"netid\" Users",
+        "strategy": "group"
       }
     }]
   }]
