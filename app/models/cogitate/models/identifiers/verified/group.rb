@@ -1,9 +1,9 @@
 require 'cogitate/interfaces'
-require 'cogitate/models/identifier/verified'
+require 'cogitate/models/identifiers/verified'
 
 module Cogitate
   module Models
-    class Identifier
+    module Identifiers
       # :nodoc:
       module Verified
         Group = Verified.build_named_strategy('name', 'description')

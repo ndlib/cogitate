@@ -5,7 +5,7 @@ require 'cogitate/models/identifier'
 module Cogitate
   module Models
     # An identifier that has been verified, and may be decorated with additional information
-    class Identifier
+    module Identifiers
       # Identifier's that have been verified can be used for authorization.
       module Verified
         # Responsible for building a verified identifier with additional attributes.

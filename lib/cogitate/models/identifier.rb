@@ -1,6 +1,6 @@
-require 'cogitate/client'
 require 'contracts'
 require 'cogitate/interfaces'
+require 'base64'
 
 module Cogitate
   module Models
@@ -95,7 +95,7 @@ module Cogitate
       #
       # @return [String] a URL safe encoding of the object's identifying attributes
       def encoded_id
-        Cogitate::Client.encoded_identifier_for(strategy: strategy, identifying_value: identifying_value)
+        Base64.urlsafe_encode64("#{strategy}\t#{identifying_value}")
       end
 
       alias_method :id, :encoded_id

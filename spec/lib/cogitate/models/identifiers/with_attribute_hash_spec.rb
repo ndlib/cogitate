@@ -1,9 +1,9 @@
 require 'spec_fast_helper'
 require 'cogitate/models/identifier'
-require 'cogitate/models/identifier/with_attribute_hash'
+require 'cogitate/models/identifiers/with_attribute_hash'
 require 'shoulda/matchers'
 
-RSpec.describe Cogitate::Models::Identifier::WithAttributeHash do
+RSpec.describe Cogitate::Models::Identifiers::WithAttributeHash do
   let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hworld') }
   let(:attributes) { { 'first_name' => 'A First Name' } }
   subject { described_class.new(identifier: identifier, attributes: attributes) }

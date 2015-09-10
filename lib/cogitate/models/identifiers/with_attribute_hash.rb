@@ -2,7 +2,7 @@ require 'cogitate/interfaces'
 require 'cogitate/models/identifier'
 module Cogitate
   module Models
-    class Identifier
+    module Identifiers
       # Responsible for exposing
       class WithAttributeHash
         include Contracts

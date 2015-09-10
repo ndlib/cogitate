@@ -1,9 +1,9 @@
-require 'cogitate/models/identifier/verified'
+require 'cogitate/models/identifiers/verified'
 require 'active_support/core_ext/object/blank' # Provides `nil.present?` and `''.present?` methods
 
 module Cogitate
   module Models
-    class Identifier
+    module Identifiers
       # :nodoc:
       module Verified
         Netid = Verified.build_named_strategy('first_name', 'last_name', 'netid', 'full_name', 'ndguid', 'email') do

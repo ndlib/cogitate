@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'cogitate/query_repository'
 require "cogitate/models/identifier"
-require 'cogitate/models/identifier/verified/group'
+require 'cogitate/models/identifiers/verified/group'
 require 'group'
 
 module Cogitate
@@ -39,9 +39,9 @@ module Cogitate
       context 'when the group exists' do
         before { ::Group.new(identifying_value: group_identifier.identifying_value, name: 'Hello').save! }
 
-        it 'will yield an Identifier::Verified::Group' do
+        it 'will yield an Identifiers::Verified::Group' do
           expect { |b| subject.with_verified_existing_group_for(identifier: group_identifier, &b) }.to(
-            yield_successive_args(kind_of(Cogitate::Models::Identifier::Verified::Group))
+            yield_successive_args(kind_of(Cogitate::Models::Identifiers::Verified::Group))
           )
         end
 

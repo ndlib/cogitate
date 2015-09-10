@@ -3,7 +3,7 @@ require 'cogitate/models/identifier'
 
 module Cogitate
   module Models
-    class Identifier
+    module Identifiers
       # An identifier that has not been verified via some mechanism.
       class Unverified
         include Contracts

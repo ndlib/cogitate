@@ -1,5 +1,4 @@
-require 'cogitate/models/identifier'
-require 'cogitate/models/identifier/with_attribute_hash'
+require 'cogitate/models/identifiers/with_attribute_hash'
 
 module Cogitate
   module Client
@@ -15,7 +14,7 @@ module Cogitate
         base_identifier = identifier_decoder.call(encoded_identifier: encoded_identifier)
         included_object = included.detect { |obj| obj['id'] == encoded_identifier }
         if included_object
-          Models::Identifier::WithAttributeHash.new(identifier: base_identifier, attributes: included_object.fetch('attributes', {}))
+          Models::Identifiers::WithAttributeHash.new(identifier: base_identifier, attributes: included_object.fetch('attributes', {}))
         else
           base_identifier
         end

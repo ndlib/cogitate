@@ -1,5 +1,5 @@
 require 'cogitate/models/identifier'
-require 'cogitate/models/identifier/verified/group'
+require 'cogitate/models/identifiers/verified/group'
 
 module Cogitate
   # A class that is responsible for querying persistence layers and returning a business object.
@@ -29,7 +29,7 @@ module Cogitate
     #
     # If you provide an identifier that is an existing group it will yield the verified group identifier. Otherwise it will not yield.
     #
-    # @yieldparam verified_identifier [Models::Identifier::Verified::Group]
+    # @yieldparam verified_identifier [Models::Identifiers::Verified::Group]
     # @param identifier [Cogitate::Interfaces::Identifier]
     def with_verified_existing_group_for(identifier:)
       return enum_for(:with_verified_existing_group_for, identifier: identifier) unless block_given?
@@ -37,7 +37,7 @@ module Cogitate
       group = Group.find_by(identifying_value: identifier.identifying_value)
       return if group.nil?
       yield(
-        Models::Identifier::Verified::Group.new(identifier: identifier, attributes: { name: group.name, description: group.description })
+        Models::Identifiers::Verified::Group.new(identifier: identifier, attributes: { name: group.name, description: group.description })
       )
     end
 

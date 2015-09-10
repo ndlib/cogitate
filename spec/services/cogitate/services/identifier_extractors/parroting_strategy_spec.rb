@@ -1,7 +1,7 @@
 require 'spec_fast_helper'
 require 'cogitate/interfaces'
 require "cogitate/models/identifier"
-require 'cogitate/models/identifier/unverified'
+require 'cogitate/models/identifiers/unverified'
 require 'cogitate/services/identifier_extractors/parroting_strategy'
 
 module Cogitate
@@ -16,7 +16,7 @@ module Cogitate
 
         subject { described_class.call(identifier: identifier, membership_visitation_service: membership_visitation_service) }
 
-        its(:identifier) { should be_a(Cogitate::Models::Identifier::Unverified) }
+        its(:identifier) { should be_a(Cogitate::Models::Identifiers::Unverified) }
 
         context '.call' do
           include Cogitate::RSpecMatchers
@@ -25,7 +25,7 @@ module Cogitate
 
         context '#invite' do
           it 'will add the identity' do
-            expect(visitor).to receive(:add_identifier).with(kind_of(Cogitate::Models::Identifier::Unverified))
+            expect(visitor).to receive(:add_identifier).with(kind_of(Cogitate::Models::Identifiers::Unverified))
             subject.invite(guest)
           end
         end

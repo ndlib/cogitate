@@ -25,7 +25,7 @@ module Cogitate
         # @param identifier [Cogitate::Interfaces::IdentifierInterface]
         # @param identifier_builder [#call(identifier:)] I want make sure that I have an unverified identifier
         #
-        # @todo What if we already have a Identifier::Unverified?
+        # @todo What if we already have a Identifiers::Unverified?
         def initialize(identifier:, identifier_builder: default_identifier_builder)
           self.identifier = identifier_builder.call(identifier: identifier)
         end
@@ -40,8 +40,8 @@ module Cogitate
         attr_accessor :identifier
 
         def default_identifier_builder
-          require 'cogitate/models/identifier/unverified' unless defined?(Models::Identifier::Unverified)
-          Models::Identifier::Unverified.method(:new)
+          require 'cogitate/models/identifiers/unverified' unless defined?(Models::Identifiers::Unverified)
+          Models::Identifiers::Unverified.method(:new)
         end
       end
     end

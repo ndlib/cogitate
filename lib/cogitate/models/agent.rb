@@ -16,7 +16,7 @@ module Cogitate
     class Agent
       # @api public
       def self.build_with_identifying_information(strategy:, identifying_value:, **keywords, &block)
-        identifier = Identifier.new(strategy: strategy, identifying_value: identifying_value)
+        identifier = Cogitate::Models::Identifier.new(strategy: strategy, identifying_value: identifying_value)
         new(identifier: identifier, **keywords, &block)
       end
 

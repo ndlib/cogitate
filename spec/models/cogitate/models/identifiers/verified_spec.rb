@@ -1,11 +1,11 @@
 require 'spec_fast_helper'
 require "cogitate/models/identifier"
 require 'shoulda/matchers'
-require 'cogitate/models/identifier/verified'
+require 'cogitate/models/identifiers/verified'
 
 module Cogitate
   module Models
-    class Identifier
+    module Identifiers
       module Verified
         RSpec.describe '.build_named_strategy' do
           before do
