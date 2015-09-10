@@ -2,7 +2,7 @@ require 'spec_fast_helper'
 require 'cogitate/client/response_parsers/email_extractor'
 
 RSpec.describe Cogitate::Client::ResponseParsers::EmailExtractor do
-  let(:response) { File.read(File.expand_path('../../../../../fixtures/agents.response.json', __FILE__)) }
+  let(:response) { FixtureFile.read('agents.response.json') }
   subject { described_class }
 
   it 'will parse the response from Cogitate mapping the emails to each of the given identifiers' do

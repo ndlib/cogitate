@@ -2,7 +2,7 @@ require 'spec_fast_helper'
 require 'cogitate/client/token_to_object_coercer'
 
 RSpec.describe Cogitate::Client::TokenToObjectCoercer do
-  let(:token) { File.read(File.expand_path('../../../../fixtures/agent_token.jwt.txt', __FILE__)) }
+  let(:token) { FixtureFile.read('agent_token.jwt.txt') }
   let(:token_to_data) { double('TokenToDataCoercer', call: data) }
   let(:data_to_object) { double('data_to_object_coercer', call: agent) }
   let(:data) { double('Data') }
