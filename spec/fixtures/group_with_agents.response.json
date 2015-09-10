@@ -1,0 +1,56 @@
+{
+  "links": {
+    "self": "http://localhost:3000/api/agents/Z3JvdXAJR3JhZHVhdGUgU2Nob29sIEVURCBSZXZpZXdlcnM="
+  },
+  "data": [{
+    "type": "agents",
+    "id": "Z3JvdXAJR3JhZHVhdGUgU2Nob29sIEVURCBSZXZpZXdlcnM=",
+    "links": {
+      "self": "http://localhost:3000/api/agents/Z3JvdXAJR3JhZHVhdGUgU2Nob29sIEVURCBSZXZpZXdlcnM="
+    },
+    "attributes": {
+      "strategy": "group",
+      "identifying_value": "Graduate School ETD Reviewers",
+      "emails": ["shill2@nd.edu"]
+    },
+    "relationships": {
+      "identifiers": [{
+        "type": "identifiers",
+        "id": "Z3JvdXAJR3JhZHVhdGUgU2Nob29sIEVURCBSZXZpZXdlcnM="
+      }, {
+        "type": "identifiers",
+        "id": "bmV0aWQJc2hpbGwy"
+      }],
+      "verified_identifiers": [{
+        "type": "identifiers",
+        "id": "Z3JvdXAJR3JhZHVhdGUgU2Nob29sIEVURCBSZXZpZXdlcnM="
+      }, {
+        "type": "identifiers",
+        "id": "bmV0aWQJc2hpbGwy"
+      }]
+    },
+    "included": [{
+      "type": "identifiers",
+      "id": "Z3JvdXAJR3JhZHVhdGUgU2Nob29sIEVURCBSZXZpZXdlcnM=",
+      "attributes": {
+        "identifying_value": "Graduate School ETD Reviewers",
+        "strategy": "group",
+        "name": "Graduate School ETD Reviewers",
+        "description": null
+      }
+    }, {
+      "type": "identifiers",
+      "id": "bmV0aWQJc2hpbGwy",
+      "attributes": {
+        "identifying_value": "shill2",
+        "strategy": "netid",
+        "first_name": "Shari",
+        "last_name": "Sweet",
+        "netid": "shill2",
+        "full_name": "Shari Sweet",
+        "ndguid": "nd.edu.ndkb8bv7",
+        "email": "shill2@nd.edu"
+      }
+    }]
+  }]
+}
