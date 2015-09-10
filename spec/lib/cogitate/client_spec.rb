@@ -42,6 +42,12 @@ RSpec.describe Cogitate::Client do
     described_class.retrieve_primary_emails_associated_with(identifiers: identifiers)
   end
 
+  it 'delegates .request_agents_without_group_membership to .request' do
+    identifiers = double
+    expect(described_class).to receive(:request).with(identifiers: identifiers, response_parser: :AgentsWithoutGroupMembership)
+    described_class.request_agents_without_group_membership(identifiers: identifiers)
+  end
+
   it 'delegates .request to Cogitate::Client::Request' do
     identifiers = double
     response_parser = double(call: true)

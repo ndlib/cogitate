@@ -2,7 +2,7 @@ require 'base64'
 require 'cogitate/exceptions'
 require 'cogitate/client/ticket_to_token_coercer'
 require 'cogitate/client/token_to_object_coercer'
-require 'cogitate/client/response_parsers/email_extractor'
+require 'cogitate/client/response_parsers'
 require 'cogitate/client/request'
 
 module Cogitate
@@ -42,13 +42,6 @@ module Cogitate
     # @api public
     #
     # @param identifiers [Array<String>]
-    def self.retrieve_primary_emails_associated_with(identifiers:)
-      request(identifiers: identifiers, response_parser: :Email)
-    end
-
-    # @api public
-    #
-    # @param identifiers [Array<String>]
     # @param response_parser [#call(response:)]
     def self.request(identifiers:, response_parser: :AgentsWithDetailedIdentfiers)
       coerced_parser = response_parser_for(response_parser)
@@ -60,6 +53,20 @@ module Cogitate
     # @return #call(identifier:)
     def self.response_parser_for(object)
       ResponseParsers.fetch(object)
+    end
+
+    # @api public
+    #
+    # @param identifiers [Array<String>]
+    def self.retrieve_primary_emails_associated_with(identifiers:, response_parser: :Email)
+      request(identifiers: identifiers, response_parser: response_parser)
+    end
+
+    # @api public
+    #
+    # @param identifiers [Array<String>]
+    def self.request_agents_without_group_membership(identifiers:, response_parser: :AgentsWithoutGroupMembership)
+      request(identifiers: identifiers, response_parser: response_parser)
     end
   end
 end
