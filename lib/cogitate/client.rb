@@ -51,8 +51,15 @@ module Cogitate
     # @param identifiers [Array<String>]
     # @param response_parser [#call(response:)]
     def self.request(identifiers:, response_parser: :AgentsWithDetailedIdentfiers)
-      coerced_parser = ResponseParsers.fetch(response_parser)
+      coerced_parser = response_parser_for(response_parser)
       Request.call(identifiers: identifiers, response_parser: coerced_parser)
+    end
+
+    # @api public
+    # @param object [String, Symbol, #call]
+    # @return #call(identifier:)
+    def self.response_parser_for(object)
+      ResponseParsers.fetch(object)
     end
   end
 end

@@ -48,4 +48,8 @@ RSpec.describe Cogitate::Client do
     expect(Cogitate::Client::Request).to receive(:call).with(identifiers: identifiers, response_parser: response_parser)
     described_class.request(identifiers: identifiers, response_parser: response_parser)
   end
+
+  it 'will fetch a response parser' do
+    expect(described_class.response_parser_for(:Basic)).to respond_to(:call)
+  end
 end
