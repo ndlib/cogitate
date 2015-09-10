@@ -37,20 +37,24 @@ module Cogitate
       private
 
       def assign_identifiers_to_agent
-        data.fetch('relationships').fetch('identifiers').each do |stub|
-          identifier = identifier_builder.call(encoded_identifier: stub.fetch('id'), included: data.fetch('included', []))
-          next unless identifier_guard.call(identifier: identifier)
+        with_assigning_relationship_for(key: 'identifiers') do |identifier|
           agent.add_identifier(identifier)
         end
       end
 
       def assign_verified_identifiers_to_agent
-        data.fetch('relationships').fetch('verified_identifiers').each do |stub|
-          identifier = identifier_builder.call(encoded_identifier: stub.fetch('id'), included: data.fetch('included', []))
-          next unless identifier_guard.call(identifier: identifier)
+        with_assigning_relationship_for(key: 'verified_identifiers') do |identifier|
           agent.add_verified_identifier(identifier)
           next unless identifier.respond_to?(:email)
           agent.add_email(identifier.email)
+        end
+      end
+
+      def with_assigning_relationship_for(key:)
+        data.fetch('relationships').fetch(key).each do |relationship|
+          identifier = identifier_builder.call(encoded_identifier: relationship.fetch('id'), included: data.fetch('included', []))
+          next unless identifier_guard.call(identifier: identifier)
+          yield(identifier)
         end
       end
 
