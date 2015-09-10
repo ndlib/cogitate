@@ -1,5 +1,3 @@
-require 'cogitate/models/agent'
-
 module Cogitate
   module Client
     # Responsible for transforming a well formed Hash into an Agent and its constituent parts.
