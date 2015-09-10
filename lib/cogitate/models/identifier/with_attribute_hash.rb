@@ -7,7 +7,7 @@ module Cogitate
       class WithAttributeHash
         include Contracts
         Contract(
-          Contracts::KeywordArgs[identifier: ::Cogitate::Interfaces::IdentifierInterface, attributes: Contracts::HashOf[String, String]] =>
+          Contracts::KeywordArgs[identifier: ::Cogitate::Interfaces::IdentifierInterface, attributes: Contracts::HashOf[String, Any]] =>
           Contracts::Any
         )
         def initialize(identifier:, attributes: {})
