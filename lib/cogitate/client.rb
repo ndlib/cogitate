@@ -56,8 +56,8 @@ module Cogitate
 
     # @api private
     def self.default_response_parser
-      require 'cogitate/client/response_parsers/basic_extractor' unless defined?(ResponseParsers::BasicExtractor)
-      ResponseParsers::BasicExtractor
+      require 'cogitate/client/response_parsers/agents_with_detailed_identifiers_extractor'
+      ResponseParsers::AgentsWithDetailedIdentifiersExtractor
     end
     private_class_method :default_response_parser
   end
