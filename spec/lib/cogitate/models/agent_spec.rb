@@ -14,6 +14,11 @@ RSpec.describe Cogitate::Models::Agent do
     it { should contractually_honor(Cogitate::Interfaces::AgentInterface) }
   end
 
+  context '.build_with_encoded_id' do
+    subject { described_class.build_with_encoded_id(encoded_identifier: 'Z3JvdXAJQWxsIFZlcmlmaWVkICJuZXRpZCIgVXNlcnM=') }
+    it { should contractually_honor(Cogitate::Interfaces::AgentInterface) }
+  end
+
   it 'will yield an agent if a block is given on initialization' do
     expect { |b| described_class.new(identifier: identifier, &b) }.to yield_successive_args(kind_of(described_class))
   end

@@ -1,4 +1,5 @@
 require 'cogitate/interfaces'
+require 'cogitate/client'
 require 'cogitate/models/identifier'
 require 'base64'
 
@@ -17,6 +18,12 @@ module Cogitate
       def self.build_with_identifying_information(strategy:, identifying_value:, **keywords, &block)
         identifier = Identifier.new(strategy: strategy, identifying_value: identifying_value)
         new(identifier: identifier, **keywords, &block)
+      end
+
+      # @api public
+      def self.build_with_encoded_id(encoded_identifier:)
+        strategy, identifying_value = Cogitate::Client.extract_strategy_and_identifying_value(encoded_identifier)
+        build_with_identifying_information(strategy: strategy, identifying_value: identifying_value)
       end
 
       include Contracts
