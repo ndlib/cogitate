@@ -44,10 +44,8 @@ RSpec.describe Cogitate::Client do
 
   it 'delegates .request to Cogitate::Client::Request' do
     identifiers = double
-    response_parser = double
+    response_parser = double(call: true)
     expect(Cogitate::Client::Request).to receive(:call).with(identifiers: identifiers, response_parser: response_parser)
     described_class.request(identifiers: identifiers, response_parser: response_parser)
   end
-
-  its(:default_response_parser) { should respond_to(:call) }
 end
