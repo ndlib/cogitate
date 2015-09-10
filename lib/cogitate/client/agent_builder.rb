@@ -40,7 +40,7 @@ module Cogitate
 
       def assign_identifiers_to_agent
         data.fetch('relationships').fetch('identifiers').each do |stub|
-          identifier = identifier_builder.call(encoded_identifier: stub.fetch('id'), included: data.fetch('included', {}))
+          identifier = identifier_builder.call(encoded_identifier: stub.fetch('id'), included: data.fetch('included', []))
           next unless identifier_guard.call(identifier: identifier)
           agent.add_identifier(identifier)
         end
@@ -48,7 +48,7 @@ module Cogitate
 
       def assign_verified_identifiers_to_agent
         data.fetch('relationships').fetch('verified_identifiers').each do |stub|
-          identifier = identifier_builder.call(encoded_identifier: stub.fetch('id'), included: data.fetch('included', {}))
+          identifier = identifier_builder.call(encoded_identifier: stub.fetch('id'), included: data.fetch('included', []))
           next unless identifier_guard.call(identifier: identifier)
           agent.add_verified_identifier(identifier)
           next unless identifier.respond_to?(:email)
