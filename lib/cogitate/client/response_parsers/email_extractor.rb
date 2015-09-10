@@ -1,3 +1,4 @@
+require 'json'
 module Cogitate
   module Client
     module ResponseParsers
