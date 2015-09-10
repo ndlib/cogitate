@@ -7,6 +7,7 @@ module Cogitate
       subject { described_class.new(data) }
 
       its(:default_identifier_builder) { should respond_to(:call) }
+      its(:default_agent_builder) { should respond_to(:call) }
 
       it 'will expose .call as the public api' do
         expect_any_instance_of(described_class).to receive(:call)
@@ -18,26 +19,37 @@ module Cogitate
       end
 
       context '#call' do
-        let(:identifier_builder) { double('IdentifierBuilder', call: true) }
-        let(:agent_identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hworld') }
-        subject { described_class.new(data, identifier_builder: identifier_builder) }
-        let(:agent) { subject.call }
-        before do
-          allow(identifier_builder).to receive(:call).with(encoded_identifier: "bmV0aWQJaHdvcmxk").and_return(agent_identifier)
-          allow(identifier_builder).to receive(:call).with(
-            encoded_identifier: "bmV0aWQJaHdvcmxk", included: data.fetch('included')
-          ).and_return(agent_identifier)
+        let(:agent) { Cogitate::Models::Agent.build_with_identifying_information(strategy: 'netid', identifying_value: 'hworld') }
+        let(:agent_builder) { ->(*) { agent } }
+        subject { described_class.new(data, agent_builder: agent_builder, identifier_guard: identifier_guard) }
+        context 'with a guard that allows everything' do
+          let(:identifier_guard) { double(call: true) }
+          before { subject.call }
+          its(:call) { should be_a(Cogitate::Models::Agent) }
+          it 'will extract and assign emails to the agent' do
+            expect(agent.with_emails.to_a).to eq(['hworld@nd.edu'])
+          end
+          it 'will extract and assign identifiers to the agent' do
+            expect(agent.with_identifiers.to_a.map(&:encoded_id)).to eq(['bmV0aWQJaHdvcmxk'])
+          end
+          it 'will extract and assign verified_identifiers to the agent' do
+            expect(agent.with_identifiers.to_a.map(&:encoded_id)).to eq(['bmV0aWQJaHdvcmxk'])
+          end
         end
-        it 'will extract and assign emails to the agent' do
-          expect(agent.with_emails.to_a).to eq(['hworld@nd.edu'])
+
+        context 'with a guard that does not allow anything' do
+          let(:identifier_guard) { double(call: false) }
+          before { subject.call }
+          it 'will extract and assign emails to the agent' do
+            expect(agent.with_emails.to_a).to eq([])
+          end
+          it 'will extract and assign identifiers to the agent' do
+            expect(agent.with_identifiers.to_a).to eq([])
+          end
+          it 'will extract and assign verified_identifiers to the agent' do
+            expect(agent.with_verified_identifiers.to_a).to eq([])
+          end
         end
-        it 'will extract and assign identifiers to the agent' do
-          expect(agent.with_identifiers.to_a).to eq([agent_identifier])
-        end
-        it 'will extract and assign verified_identifiers to the agent' do
-          expect(agent.with_verified_identifiers.to_a).to eq([agent_identifier])
-        end
-        its(:call) { should be_a(Cogitate::Models::Agent) }
       end
 
       context '#call result (without dependency injection)' do

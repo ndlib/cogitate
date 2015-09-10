@@ -21,15 +21,16 @@ module Cogitate
       end
 
       # @api private
-      def initialize(data, identifier_builder: default_identifier_builder)
+      def initialize(data, identifier_guard: default_identifier_guard, **keywords)
         self.data = data
-        self.identifier_builder = identifier_builder
+        self.identifier_guard = identifier_guard
+        self.identifier_builder = keywords.fetch(:identifier_builder) { default_identifier_builder }
+        self.agent_builder = keywords.fetch(:agent_builder) { default_agent_builder }
         set_agent!
       end
 
       # @api private
       def call
-        assign_emails_to_agent
         assign_identifiers_to_agent
         assign_verified_identifiers_to_agent
         agent
@@ -37,30 +38,29 @@ module Cogitate
 
       private
 
-      def assign_emails_to_agent
-        data.fetch('attributes').fetch('emails').each { |email| agent.add_email(email) }
-      end
-
       def assign_identifiers_to_agent
         data.fetch('relationships').fetch('identifiers').each do |stub|
           identifier = identifier_builder.call(encoded_identifier: stub.fetch('id'), included: data.fetch('included', {}))
+          next unless identifier_guard.call(identifier: identifier)
           agent.add_identifier(identifier)
         end
       end
 
       def assign_verified_identifiers_to_agent
         data.fetch('relationships').fetch('verified_identifiers').each do |stub|
-          identifier = identifier_builder.call(encoded_identifier: stub.fetch('id'), included: data.fetch('included', []))
+          identifier = identifier_builder.call(encoded_identifier: stub.fetch('id'), included: data.fetch('included', {}))
+          next unless identifier_guard.call(identifier: identifier)
           agent.add_verified_identifier(identifier)
+          next unless identifier.respond_to?(:email)
+          agent.add_email(identifier.email)
         end
       end
 
-      attr_accessor :data, :identifier_builder
+      attr_accessor :data, :identifier_builder, :identifier_guard, :agent_builder
       attr_reader :agent
 
       def set_agent!
-        identifier = identifier_builder.call(encoded_identifier: data.fetch('id'))
-        @agent = Models::Agent.new(identifier: identifier)
+        @agent = agent_builder.call(encoded_identifier: data.fetch('id'))
       end
 
       # @api private
@@ -68,6 +68,16 @@ module Cogitate
       def default_identifier_builder
         require 'cogitate/client/identifier_builder' unless defined? Services::IdentifierBuilder
         Client::IdentifierBuilder
+      end
+
+      # @api private
+      def default_agent_builder
+        require 'cogitate/models/agent' unless defined? Cogitate::Models::Agent
+        Cogitate::Models::Agent.method(:build_with_encoded_id)
+      end
+
+      def default_identifier_guard
+        -> (*) { true }
       end
     end
   end
