@@ -18,11 +18,14 @@ module Cogitate
       end
 
       def call
-        response = RestClient.get(url_for_request)
-        response_parser.call(response: response.body)
+        response = client_request_handler.call(url: url_for_request)
+        response_parser.call(response: response)
       end
 
       private
+
+      extend Forwardable
+      def_delegator :configuration, :client_request_handler
 
       attr_accessor :response_parser, :configuration
 
