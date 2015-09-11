@@ -18,7 +18,7 @@ group :development, :test do
   gem 'rspec-its'
   gem 'shoulda-matchers'
   gem 'rest-client'
-  gem 'rubocop' 
+  gem 'rubocop'
 end
 
 group :development do
