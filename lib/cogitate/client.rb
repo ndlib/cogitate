@@ -1,4 +1,5 @@
 require 'base64'
+require 'cogitate'
 require 'cogitate/exceptions'
 require 'cogitate/client/ticket_to_token_coercer'
 require 'cogitate/client/token_to_object_coercer'
@@ -8,6 +9,21 @@ require 'cogitate/client/request'
 module Cogitate
   # Responsible for collecting the various client related behaviors.
   module Client
+    # @api public
+    #
+    # Allows for a predictable and repeatable way for a developer to alter the configuration of Cogitate.
+    # This is something most helpful under tests.
+    #
+    # @note This is a convenience method for testing; Woe is yeah that uses this in a non-test environment
+    def self.with_custom_configuration(**keywords)
+      old_configuration = Cogitate.configuration
+      configuration = Cogitate::Configuration.new(**keywords)
+      Cogitate.configuration = configuration
+      yield
+    ensure
+      Cogitate.configuration = old_configuration
+    end
+
     # @api public
     #
     # A URL safe encoding of the given `strategy` and `identifying_value`

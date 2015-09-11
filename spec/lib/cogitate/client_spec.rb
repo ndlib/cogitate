@@ -3,6 +3,22 @@ require 'cogitate/client'
 require 'cogitate/client/response_parsers/email_extractor'
 
 RSpec.describe Cogitate::Client do
+  context '.with_custom_configuration' do
+    it 'will inject a new configuration within the block scope' do
+      old_configuration = Cogitate.configuration
+      described_class.with_custom_configuration do
+        expect(Cogitate.configuration).to_not eq(old_configuration)
+      end
+      expect(Cogitate.configuration).to eq(old_configuration)
+    end
+
+    it 'allows for custom configuration' do
+      described_class.with_custom_configuration(client_request_handler: :hello) do
+        expect(Cogitate.configuration.client_request_handler).to eq(:hello)
+      end
+      expect(Cogitate.configuration.client_request_handler).to_not eq(:hello)
+    end
+  end
   context '.encoded_identifier_for' do
     it 'should return a string' do
       expect(described_class.encoded_identifier_for(strategy: 'netid', identifying_value: 'hworld')).to be_a(String)
