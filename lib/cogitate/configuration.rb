@@ -47,10 +47,11 @@ module Cogitate
       :tokenizer_issuer_claim
     ].freeze
 
-    def initialize(**keywords)
+    def initialize(client_request_handler: default_client_request_handler, **keywords)
       CONFIG_ATTRIBUTE_NAMES.each do |name|
         send("#{name}=", keywords.fetch(name)) if keywords.key?(name)
       end
+      self.client_request_handler = client_request_handler
     end
 
     CONFIG_ATTRIBUTE_NAMES.each do |method_name|
@@ -81,6 +82,18 @@ module Cogitate
     # @return String
     def url_for_retrieving_agents_for(urlsafe_base64_encoded_identifiers:)
       File.join(remote_server_base_url, '/api/agents', urlsafe_base64_encoded_identifiers)
+    end
+
+    # What will be negotiating the remote request to the Cogitate::Server
+    #
+    # @return [#call(url:)]
+    # @see #default_client_request_handler for interface
+    attr_accessor :client_request_handler
+
+    private
+
+    def default_client_request_handler
+      -> (url:) { RestClient.get(url).body }
     end
   end
 end

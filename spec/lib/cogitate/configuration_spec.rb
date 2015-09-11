@@ -1,4 +1,6 @@
+require 'spec_fast_helper'
 require 'cogitate/configuration'
+require 'rest-client'
 
 RSpec.describe Cogitate::Configuration do
   subject { described_class.new }
@@ -11,6 +13,23 @@ RSpec.describe Cogitate::Configuration do
       it 'will raise an exception if not set' do
         expect { subject.public_send(method_name) }.to raise_error(described_class::ConfigurationError)
       end
+    end
+  end
+
+  its(:default_client_request_handler) { should respond_to(:call) }
+
+  context '#default_client_request_handler' do
+    it 'will have :url keyword parameter' do
+      expect(subject.send(:default_client_request_handler).parameters).to eq([[:keyreq, :url]])
+    end
+  end
+
+  context 'calling the #client_request_handler' do
+    it 'will return the body of a RestClient request' do
+      url = 'http://hello.com'
+      response = double(body: 'The Body')
+      expect(RestClient).to receive(:get).with(url).and_return(response)
+      expect(subject.client_request_handler.call(url: url)).to eq(response.body)
     end
   end
 
