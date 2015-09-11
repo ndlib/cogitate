@@ -15,9 +15,9 @@ module Cogitate
     # This is something most helpful under tests.
     #
     # @note This is a convenience method for testing; Woe is yeah that uses this in a non-test environment
-    def self.with_custom_configuration(**keywords)
+    def self.with_custom_configuration(remote_server_base_url: 'http://localhost:3000', **keywords)
       old_configuration = Cogitate.configuration
-      configuration = Cogitate::Configuration.new(**keywords)
+      configuration = Cogitate::Configuration.new(remote_server_base_url: remote_server_base_url, **keywords)
       Cogitate.configuration = configuration
       yield
     ensure
