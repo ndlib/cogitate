@@ -18,8 +18,7 @@ group :development, :test do
   gem 'rspec-its'
   gem 'shoulda-matchers'
   gem 'rest-client'
-  # Needed until rubocop 0.4.1 is released; See https://github.com/bbatsov/rubocop/commit/f367cb81b60f4a164c82650c055820797be9551f
-  gem 'rubocop', github: 'bbatsov/rubocop'
+  gem 'rubocop' 
 end
 
 group :development do
