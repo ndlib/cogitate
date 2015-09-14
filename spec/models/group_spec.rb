@@ -1,4 +1,5 @@
-require 'rails_helper'
+require 'spec_active_record_helper'
+require 'group'
 
 RSpec.describe Group, type: :model do
   context 'class configuration' do

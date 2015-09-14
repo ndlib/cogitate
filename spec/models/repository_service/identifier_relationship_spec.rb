@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_active_record_helper'
 require "cogitate/models/identifier"
 require 'repository_service/identifier_relationship'
 
