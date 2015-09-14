@@ -1,4 +1,5 @@
-require 'rails_helper'
+require 'spec_active_record_helper'
+require 'cogitate/models/identifier_ticket'
 
 RSpec.describe Cogitate::Models::IdentifierTicket, type: :model do
   let(:encoded_id) { "bmV0aWQJaHdvcmxk" }

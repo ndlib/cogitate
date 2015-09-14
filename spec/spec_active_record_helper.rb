@@ -5,6 +5,7 @@ require 'spec_fast_helper'
 unless defined?(Rails)
   database_config = Psych.load_file(File.expand_path('../../config/database.yml', __FILE__))
   ActiveRecord::Base.establish_connection(database_config.fetch('test'))
+  Time.zone ||= 'UTC'
 end
 
 RSpec.configure do |config|
