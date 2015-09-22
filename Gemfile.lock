@@ -105,7 +105,7 @@ GEM
     haml (4.0.7)
       tilt
     hashie (3.4.2)
-    highline (1.7.3)
+    highline (1.7.6)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
@@ -123,7 +123,7 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
-    mime-types (2.6.1)
+    mime-types (2.6.2)
     mini_portile (0.6.2)
     minitest (5.8.0)
     multi_json (1.11.2)
