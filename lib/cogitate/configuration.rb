@@ -93,7 +93,10 @@ module Cogitate
     private
 
     def default_client_request_handler
-      -> (url:) { RestClient.get(url).body }
+      lambda do |url:|
+        require 'rest-client' unless defined?(RestClient)
+        RestClient.get(url).body
+      end
     end
   end
 end
