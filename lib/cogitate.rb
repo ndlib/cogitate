@@ -9,7 +9,7 @@ require 'cogitate/configuration'
 #   * User authentication through various providers
 module Cogitate
   # This version reflects the gem version for release
-  VERSION = '0.0.1'.freeze
+  VERSION = '0.0.2'.freeze
 
   def self.configure
     yield(configuration)
