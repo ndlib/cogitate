@@ -14,6 +14,15 @@ module Cogitate
     # Allows for a predictable and repeatable way for a developer to alter the configuration of Cogitate.
     # This is something most helpful under tests.
     #
+    # @example
+    #   Coigtate::Client.with_custom_configuration do
+    #     Do things with the alternate Cogitate end-point
+    #   end
+    #
+    # @param remote_server_base_url [String] Where is a remote instance of Cogitate running?
+    # @param keywords [Hash] See Cogitate::Configuration for the detailed parameters.
+    # @return void
+    #
     # @note This is a convenience method for testing; Woe is yeah that uses this in a non-test environment
     def self.with_custom_configuration(remote_server_base_url: 'http://localhost:3000', **keywords)
       old_configuration = Cogitate.configuration
