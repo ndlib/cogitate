@@ -1,3 +1,4 @@
+require 'forwardable'
 require 'active_support/core_ext/array/wrap'
 
 module Cogitate

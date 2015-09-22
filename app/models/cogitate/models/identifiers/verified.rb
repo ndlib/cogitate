@@ -1,3 +1,4 @@
+require 'forwardable'
 require 'cogitate/interfaces'
 require 'active_support/core_ext/class/attribute'
 require 'cogitate/models/identifier'

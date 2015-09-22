@@ -1,3 +1,4 @@
+require 'forwardable'
 require 'set'
 require 'cogitate/interfaces'
 require 'cogitate/models/agent'

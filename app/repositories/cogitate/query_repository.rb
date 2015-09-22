@@ -1,3 +1,4 @@
+require 'forwardable'
 require 'cogitate/models/identifier'
 require 'cogitate/models/identifiers/verified/group'
 

@@ -1,5 +1,7 @@
+require 'forwardable'
 require 'cogitate/interfaces'
 require 'cogitate/models/identifier'
+
 module Cogitate
   module Models
     module Identifiers
