@@ -1,3 +1,5 @@
+require 'rails/railtie'
+
 module Cogitate
   # :nodoc:
   class Railtie < Rails::Railtie
