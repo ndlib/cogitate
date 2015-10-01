@@ -65,7 +65,7 @@ class SessionsController < ApplicationController
 
   # @api private
   class NewActionConstraintHandler
-    REGEXP_VALIDATOR_OF_AFTER_AUTHENTICATION_CALLBACK_URL = %r{^https://}.freeze
+    REGEXP_VALIDATOR_OF_AFTER_AUTHENTICATION_CALLBACK_URL = (Rails.env.development? ? %r{^https?://} : %r{^https://}).freeze
 
     def initialize(controller:, query_key: SessionsController::QUERY_KEY_FOR_AFTER_AUTHENTICATION_CALLBACK_URL)
       self.controller = controller
