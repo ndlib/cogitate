@@ -16,6 +16,12 @@ Welcome to Cogitate, a federated identity management system for managing:
   * Parroted identities (ask for the identity of a Kroger Card number, you'll get back a Kroger card number)
 * User authentication through various providers
 
+## Sequence Diagram for Cogitate Integration
+
+Below is a diagram detailed the request cycle for integration with Cogitate.
+
+![Sequence Diagram for Cogitate Integration](artifacts/sequence-diagram-for-cogitate-integration.png)
+
 ## Heads Up
 
 Mixed within this repository are two concerns:

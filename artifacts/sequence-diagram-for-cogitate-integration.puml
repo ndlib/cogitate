@@ -1,0 +1,21 @@
+# Render via PlantUML
+# Generated via plantuml-preview (https://github.com/peele/plantuml-preview) in Atom
+@startuml
+
+title Sequence Diagram for Cogitate Integration
+
+Browser -> Application : GET /
+Browser <- Application : Homepage
+Browser -> Cogitate : GET /authenticate?after_authentication_callback_url=:url\n(i.e. Click Sign In)
+Cogitate --> "Remote Authentication Service" : Redirect
+Browser <- "Remote Authentication Service" : Authentication Form
+Browser -> "Remote Authentication Service" : POST Authentication Credentials
+Cogitate <-- "Remote Authentication Service" : Redirect
+Cogitate <--> "Remote Authentication Service" : Negotiate Authentication Strategy
+Application <-- Cogitate : Redirect with ticket
+Application --> Cogitate : Redeem ticket
+Cogitate --> Cogitate : Convert Ticket to Agent Token
+Application <-- Cogitate : Send Agent token
+Browser <- Application: Redirect to :after_authentication_callback_url
+
+@enduml
