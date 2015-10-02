@@ -4,18 +4,19 @@
 
 title Sequence Diagram for Cogitate Integration
 
-Browser -> Application : GET /
-Browser <- Application : Homepage
-Browser -> Cogitate : GET /authenticate?after_authentication_callback_url=:url\n(i.e. Click Sign In)
+Browser -> Application : GET /authenticate
+Application --> Application : Store :before_authentication_location
+Application --> Cogitate : Redirect with\napplication's :after_authentication_callback_url
 Cogitate --> "Remote Authentication Service" : Redirect
 Browser <- "Remote Authentication Service" : Authentication Form
 Browser -> "Remote Authentication Service" : POST Authentication Credentials
 Cogitate <-- "Remote Authentication Service" : Redirect
-Cogitate <--> "Remote Authentication Service" : Negotiate Authentication Strategy
-Application <-- Cogitate : Redirect with ticket
+Cogitate <--> "Remote Authentication Service" : Negotiate Authentication Strategy\n(i.e. OAuth 2 handshake)
+Application <-- Cogitate : Redirect with ticket\nto :after_authentication_callback_url
 Application --> Cogitate : Redeem ticket
 Cogitate --> Cogitate : Convert Ticket to Agent Token
 Application <-- Cogitate : Send Agent token
-Browser <- Application: Redirect to :after_authentication_callback_url
+Application --> Application : Store Agent in session
+Browser <- Application: Redirect to :before_authentication_location
 
 @enduml
