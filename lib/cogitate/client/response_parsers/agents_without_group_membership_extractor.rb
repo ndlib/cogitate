@@ -9,7 +9,7 @@ module Cogitate
       module AgentsWithoutGroupMembershipExtractor
         def self.call(response:)
           identifier_guard = method(:identifier_is_not_a_group?)
-          JSON.parse(response).fetch('data').map { |datum| DataToObjectCoercer.call(datum, identifier_guard: identifier_guard) }
+          JSON.parse(response).fetch('data').map { |data| DataToObjectCoercer.call(data: data, identifier_guard: identifier_guard) }
         end
 
         # @api private

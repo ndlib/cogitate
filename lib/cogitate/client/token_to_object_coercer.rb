@@ -17,7 +17,7 @@ module Cogitate
 
       def call
         data = token_to_data_coercer.call(token: token)
-        data_to_object_coercer.call(data)
+        data_to_object_coercer.call(data: data)
       end
 
       private

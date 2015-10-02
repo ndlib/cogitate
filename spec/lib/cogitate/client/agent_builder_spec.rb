@@ -4,24 +4,24 @@ require 'cogitate/client/agent_builder'
 module Cogitate
   module Client
     RSpec.describe AgentBuilder do
-      subject { described_class.new(data) }
+      subject { described_class.new(data: data) }
 
       its(:default_identifier_builder) { should respond_to(:call) }
       its(:default_agent_builder) { should respond_to(:call) }
 
       it 'will expose .call as the public api' do
         expect_any_instance_of(described_class).to receive(:call)
-        described_class.call(data)
+        described_class.call(data: data)
       end
 
       it 'will raise a KeyError if the data is not well formed' do
-        expect { described_class.call({}) }.to raise_error(KeyError)
+        expect { described_class.call(data: {}) }.to raise_error(KeyError)
       end
 
       context '#call' do
         let(:agent) { Cogitate::Models::Agent.build_with_identifying_information(strategy: 'netid', identifying_value: 'hworld') }
         let(:agent_builder) { ->(*) { agent } }
-        subject { described_class.new(data, agent_builder: agent_builder, identifier_guard: identifier_guard) }
+        subject { described_class.new(data: data, agent_builder: agent_builder, identifier_guard: identifier_guard) }
         context 'with a guard that allows everything' do
           let(:identifier_guard) { double(call: true) }
           before { subject.call }
@@ -53,7 +53,7 @@ module Cogitate
       end
 
       context '#call result (without dependency injection)' do
-        subject { described_class.new(data).call }
+        subject { described_class.new(data: data).call }
         its(:strategy) { should eq('netid') }
         its(:identifying_value) { should eq('hworld') }
         context '#with_emails' do

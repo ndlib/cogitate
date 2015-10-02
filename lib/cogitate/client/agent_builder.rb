@@ -14,12 +14,12 @@ module Cogitate
       # @option keywords [#call] :identifier_builder converts the 'id' into an Cogitate::Models::Identifier
       # @return [Cogitate::Models::Agent]
       # @raise KeyError if the input data is not well formed
-      def self.call(data, **keywords)
-        new(data, **keywords).call
+      def self.call(data:, **keywords)
+        new(data: data, **keywords).call
       end
 
       # @api private
-      def initialize(data, identifier_guard: default_identifier_guard, **keywords)
+      def initialize(data:, identifier_guard: default_identifier_guard, **keywords)
         self.data = data
         self.identifier_guard = identifier_guard
         self.identifier_builder = keywords.fetch(:identifier_builder) { default_identifier_builder }

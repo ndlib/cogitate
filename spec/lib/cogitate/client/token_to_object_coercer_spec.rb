@@ -29,7 +29,7 @@ RSpec.describe Cogitate::Client::TokenToObjectCoercer do
 
     it 'will call the token_to_agent_coercer to build the agent' do
       subject.call
-      expect(data_to_object).to have_received(:call).with(data)
+      expect(data_to_object).to have_received(:call).with(data: data)
     end
   end
 end

@@ -8,7 +8,7 @@ RSpec.describe Cogitate::Client::ResponseParsers::AgentsWithoutGroupMembershipEx
 
     it 'will call DataToObjectCoercer for each datum' do
       expect(Cogitate::Client::DataToObjectCoercer).to receive(:call).with(
-        kind_of(Hash), identifier_guard: described_class.method(:identifier_is_not_a_group?)
+        data: kind_of(Hash), identifier_guard: described_class.method(:identifier_is_not_a_group?)
       ).exactly(2).times
       described_class.call(response: json)
     end

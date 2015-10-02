@@ -11,11 +11,11 @@ module Cogitate
 
       it 'will map a type: "agents" to an Agent' do
         expect(builder).to receive(:call).and_return(:built)
-        expect(described_class.call(data, type_to_builder_map: { 'agents' => builder })).to eq(:built)
+        expect(described_class.call(data: data, type_to_builder_map: { 'agents' => builder })).to eq(:built)
       end
 
       it "will fail with a KeyError if the data's type does not exist in the map" do
-        expect { described_class.call(data, type_to_builder_map: { 'shoe' => builder }) }.to raise_error(KeyError)
+        expect { described_class.call(data: data, type_to_builder_map: { 'shoe' => builder }) }.to raise_error(KeyError)
       end
 
       let(:data) { { "type" => "agents", "id" => "bmV0aWQJaHdvcmxk" } }

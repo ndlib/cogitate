@@ -25,6 +25,16 @@ RSpec.describe Cogitate::Client do
     end
   end
 
+  context '.retrieve_data_from' do
+    it 'will retrieve_token_from then extract the token' do
+      ticket = double
+      token = double
+      expect(described_class).to receive(:retrieve_token_from).with(ticket: ticket).and_return(token)
+      expect(Cogitate::Services::Tokenizer).to receive(:from_token).with(token: token)
+      described_class.retrieve_data_from(ticket: ticket)
+    end
+  end
+
   context '.extract_strategy_and_identifying_value' do
     it 'will return two strings' do
       identifier_id = described_class.encoded_identifier_for(strategy: 'netid', identifying_value: 'hworld')

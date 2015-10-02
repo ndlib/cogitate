@@ -7,7 +7,7 @@ module Cogitate
       # Responsible for parsing a Cogitate response and just getting the basic data
       module AgentsWithDetailedIdentifiersExtractor
         def self.call(response:)
-          JSON.parse(response).fetch('data').map { |datum| DataToObjectCoercer.call(datum) }
+          JSON.parse(response).fetch('data').map { |data| DataToObjectCoercer.call(data: data) }
         end
       end
     end
