@@ -15,6 +15,9 @@ RSpec.describe Cogitate::Models::Identifiers::WithAttributeHash do
   its(:attributes) { should eq('first_name' => 'A First Name', 'last_name' => 'A Last Name') }
   its(:first_name) { should eq('A First Name') }
   its(:as_json) do
-    should eq('strategy' => 'netid', 'identifying_value' => 'hworld', 'first_name' => 'A First Name', 'last_name' => 'A Last Name')
+    should eq(
+      'strategy' => 'netid', 'identifying_value' => 'hworld', 'name' => 'hworld', 'first_name' => 'A First Name',
+      'last_name' => 'A Last Name'
+    )
   end
 end

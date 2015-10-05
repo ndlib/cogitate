@@ -20,7 +20,7 @@ module Cogitate
         end
 
         def as_json(*)
-          { 'strategy' => strategy, 'identifying_value' => identifying_value }.merge(attributes)
+          { 'name' => name, 'identifying_value' => identifying_value, 'strategy' => strategy }.merge(attributes)
         end
 
         extend Forwardable
