@@ -5,14 +5,16 @@ require 'shoulda/matchers'
 
 RSpec.describe Cogitate::Models::Identifiers::WithAttributeHash do
   let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hworld') }
-  let(:attributes) { { 'first_name' => 'A First Name' } }
+  let(:attributes) { { 'first_name' => 'A First Name', last_name: 'A Last Name' } }
   subject { described_class.new(identifier: identifier, attributes: attributes) }
 
   Cogitate::Models::Identifier.interface_method_names.each do |method_name|
     it { should delegate_method(method_name).to(:identifier) }
   end
 
-  its(:attributes) { should eq('first_name' => 'A First Name') }
+  its(:attributes) { should eq('first_name' => 'A First Name', 'last_name' => 'A Last Name') }
   its(:first_name) { should eq('A First Name') }
-  its(:as_json) { should eq('strategy' => 'netid', 'identifying_value' => 'hworld', 'first_name' => 'A First Name') }
+  its(:as_json) do
+    should eq('strategy' => 'netid', 'identifying_value' => 'hworld', 'first_name' => 'A First Name', 'last_name' => 'A Last Name')
+  end
 end

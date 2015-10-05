@@ -9,8 +9,9 @@ module Cogitate
       class WithAttributeHash
         include Contracts
         Contract(
-          Contracts::KeywordArgs[identifier: ::Cogitate::Interfaces::IdentifierInterface, attributes: Contracts::HashOf[String, Any]] =>
-          Contracts::Any
+          Contracts::KeywordArgs[
+            identifier: ::Cogitate::Interfaces::IdentifierInterface, attributes: Contracts::HashOf[Contracts::Or[String, Symbol], Any]
+          ] => Contracts::Any
         )
         def initialize(identifier:, attributes: {})
           self.identifier = identifier
@@ -31,7 +32,6 @@ module Cogitate
         private
 
         attr_accessor :identifier
-        attr_writer :attributes
 
         def method_missing(method_name, *args, &block)
           attributes.fetch(method_name.to_s) { super }
@@ -39,6 +39,13 @@ module Cogitate
 
         def respond_to_missing?(method_name, *args)
           attributes.key?(method_name.to_s) || super
+        end
+
+        def attributes=(input)
+          @attributes = input.each_with_object({}) do |(key, value), mem|
+            mem[key.to_s] = value
+            mem
+          end
         end
       end
     end
