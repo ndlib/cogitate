@@ -2,6 +2,7 @@
 require 'rspec/core'
 require 'rspec/its'
 require 'support/matchers'
+
 unless defined?(Rails) # If we are in a Rails context this is overkill.
   Dir[File.expand_path('../../app/*', __FILE__)].each do |dir|
     $LOAD_PATH << dir
@@ -30,10 +31,12 @@ class FixtureFile < SimpleDelegator
     super(File.new(self.class.path_for(slug), *args, &block))
   end
 end
+require 'shoulda/matchers/independent/delegate_method_matcher'
 
 RSpec.configure do |config|
   config.order = :random
 
+  config.include Shoulda::Matchers::Independent
   # Seed global randomization in this process using the `--seed` CLI option.
   # Setting this allows you to use `--seed` to deterministically reproduce
   # test failures related to randomization by passing the same `--seed` value

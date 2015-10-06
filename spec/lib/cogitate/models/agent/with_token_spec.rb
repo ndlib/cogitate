@@ -9,7 +9,7 @@ RSpec.describe Cogitate::Models::Agent::WithToken do
   let(:identifier) { Cogitate::Models::Identifier.new(strategy: 'netid', identifying_value: 'hworld') }
   let(:agent) { Cogitate::Models::Agent.new(identifier: identifier) }
   subject { described_class.new(agent: agent, token: token) }
-  it { should delegate_method(:with_emails).to(:__getobj__) }
+  it { should respond_to(:with_emails) }
   its(:to_token) { should eq(token) }
 
   include Cogitate::RSpecMatchers
