@@ -11,12 +11,14 @@ end
 
 Rails.application.load_tasks
 
-Rake::Task["default"].clear if Rake::Task.task_defined?('default')
-
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.pattern = "./spec/**/*_spec.rb"
+unless Rake::Task.task_defined?('spec')
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec) do |t|
+    t.pattern = "./spec/**/*_spec.rb"
+  end
 end
+
+Rake::Task["default"].clear if Rake::Task.task_defined?('default')
 
 if defined?(Commitment)
   # BEGIN `commitment:install` generator
