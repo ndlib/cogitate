@@ -17,7 +17,8 @@ set :rails_env, 'staging'
 set :deploy_to, '/home/app/cogitate'
 set :user, 'app'
 set :domain, fetch(:host, 'cogitate-staging.library.nd.edu')
-set :bundle_without, %w{development test doc}.join(' ')
+set :bundle_without, %w{development test documentation}.join(' ')
+set :bundle_flags, "--deployment"
 set :shared_directories, %w(log)
 set :shared_files, %w()
 set :linked_files, ['config/database.yml']
