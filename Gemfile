@@ -11,6 +11,7 @@ gem 'jwt'
 gem 'data_migrator', github: 'jeremyf/data-migrator'
 gem 'airbrake', github: 'jeremyf/airbrake'
 gem 'rest-client'
+gem 'commitment', require: false
 
 group :development do
   gem 'web-console'
@@ -19,7 +20,6 @@ end
 
 group :test do
   gem 'rspec-rails'
-  gem 'commitment', require: false
   gem 'rspec-its'
   gem 'shoulda-matchers'
   gem 'rubocop'
