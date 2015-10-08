@@ -10,6 +10,7 @@ gem 'omniauth-cas'
 gem 'jwt'
 gem 'data_migrator', github: 'jeremyf/data-migrator'
 gem 'airbrake', github: 'jeremyf/airbrake'
+gem 'rest-client'
 
 group :development do
   gem 'web-console'
@@ -21,7 +22,6 @@ group :test do
   gem 'commitment', require: false
   gem 'rspec-its'
   gem 'shoulda-matchers'
-  gem 'rest-client'
   gem 'rubocop'
 end
 
