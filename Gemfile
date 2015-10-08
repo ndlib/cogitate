@@ -9,6 +9,7 @@ gem 'omniauth'
 gem 'omniauth-cas'
 gem 'jwt'
 gem 'data_migrator', github: 'jeremyf/data-migrator'
+gem 'airbrake', github: 'jeremyf/airbrake'
 
 group :development do
   gem 'web-console'

@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/jeremyf/airbrake.git
+  revision: 1e3c1c7c8ee9b2f7195243ac3e012f639b090171
+  specs:
+    airbrake (4.3.0)
+      builder
+      multi_json
+
+GIT
   remote: git://github.com/jeremyf/data-migrator.git
   revision: 65bf22799c6c9914fb35ef96891f438f0ffa84fe
   specs:
@@ -270,6 +278,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  airbrake!
   capistrano
   capistrano-bundler
   capistrano-passenger
