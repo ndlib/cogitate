@@ -13,6 +13,11 @@ Rails.application.load_tasks
 
 Rake::Task["default"].clear if Rake::Task.task_defined?('default')
 
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.pattern = "./spec/**/*_spec.rb"
+end
+
 if defined?(Commitment)
   # BEGIN `commitment:install` generator
   # This was added via commitment:install generator. You are free to change this.
