@@ -7,14 +7,22 @@ begin
   require 'commitment/railtie'
 rescue LoadError
   $stderr.puts "Who will honor your commitments?"
+  # Just kidding. Its okay because we don't need the commitment tasks in all environments.
 end
 
 Rails.application.load_tasks
 
+# Because all of the conditional logic was confusing task definitions.
+# On my local machine specs were run once; However on travis without this
+# unless statement, specs were run twice.
 unless Rake::Task.task_defined?('spec')
-  require 'rspec/core/rake_task'
-  RSpec::Core::RakeTask.new(:spec) do |t|
-    t.pattern = "./spec/**/*_spec.rb"
+  begin
+    require 'rspec/core/rake_task'
+    RSpec::Core::RakeTask.new(:spec) do |t|
+      t.pattern = "./spec/**/*_spec.rb"
+    end
+  rescue LoadError
+    $stdout.puts "RSpec failed to load; You won't be able to run tests."
   end
 end
 
@@ -35,7 +43,7 @@ if defined?(Commitment)
     ]
   )
   # END `commitment:install` generator
-else
+elsif defined?(RSpec)
   task(default: 'spec')
 end
 
