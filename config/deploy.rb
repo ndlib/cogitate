@@ -21,7 +21,7 @@ set :secret_repo_name, Proc.new{
   end
 }
 
-set :passenger_restart_with_touch, false
+set :passenger_restart_with_touch, true
 
 namespace :deploy do
 
