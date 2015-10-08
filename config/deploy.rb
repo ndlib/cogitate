@@ -1,8 +1,6 @@
 # config valid only for Capistrano 3.1
 lock '3.4.0'
-set :default_env, {
-  path: "/opt/ruby/current/bin:$PATH"
-}
+set :default_env, path: "/opt/ruby/current/bin:$PATH"
 set :bundle_roles, [:app, :work]
 set :bundle_flags, "--deployment --path=vendor/bundle"
 set :bundle_cmd, "/opt/ruby/current/bin/bundle"
@@ -13,7 +11,7 @@ set :repo_url, "https://github.com/ndlib/cogitate.git"
 set :branch, ENV['BRANCH_NAME'] || 'master'
 set :keep_releases, 5
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
-set :secret_repo_name, Proc.new{
+set :secret_repo_name, proc {
   case fetch(:rails_env)
   when 'staging' then 'secret_staging'
   when 'pre_production' then 'secret_pprd'
