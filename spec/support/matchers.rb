@@ -1,4 +1,3 @@
-require 'pry'
 require 'contracts'
 module Cogitate
   module RSpecMatchers

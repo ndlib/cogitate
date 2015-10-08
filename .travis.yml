@@ -7,7 +7,7 @@ rvm:
 
 script: 'bundle exec rake spec:travis'
 
-bundler_args: --without development debug documentation
+bundler_args: --without development debug documentation deployment
 
 before_install:
   - gem install bundler
