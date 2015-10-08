@@ -20,17 +20,9 @@ set :secret_repo_name, Proc.new{
   when 'production' then 'secret_prod'
   end
 }
+set :passenger_restart_with_touch, true
 
 namespace :deploy do
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      execute "touch #{release_path}/tmp/restart.txt"
-    end
-  end
-
   task :db_create do
     on roles(:app) do
       within release_path do
@@ -51,39 +43,6 @@ namespace :deploy do
       end
     end
   end
-
-  desc 'Perform db migrations via db/migrate'
-  task :db_migrate do
-    on roles(:app) do
-      within release_path do
-        with rails_env: fetch(:rails_env) do
-          execute :rake, "db:migrate"
-        end
-      end
-    end
-  end
-
-  desc 'Precompile assets as we are not checking in a version'
-  task :precompile_assets do
-    on roles(:app) do
-      within release_path do
-        with rails_env: fetch(:rails_env) do
-          execute :rake, "assets:precompile"
-         end
-       end
-     end
-   end
-
-  desc 'Prepare for a dog and pony show on the staging server'
-  task :reset_the_dog_and_pony_show do
-    on roles(:app) do
-      within release_path do
-        with rails_env: 'staging' do
-          execute :rake, "db:drop db:create db:schema:load db:seed cogitate:environment_bootstrapper"
-        end
-      end
-    end
-  end
 end
 
 namespace :configuration do
@@ -96,8 +55,8 @@ namespace :configuration do
   end
 end
 
-before 'deploy:db_migrate', 'configuration:copy_secrets'
-after 'deploy', 'deploy:db_migrate'
+before 'deploy:migrate', 'configuration:copy_secrets'
+after 'deploy:migrate', 'deploy:data_migrate'
 after 'deploy', 'deploy:cleanup'
 after 'deploy', 'deploy:restart'
 
