@@ -3,14 +3,19 @@
 
 require File.expand_path('../config/application', __FILE__)
 require "bundler/gem_tasks"
+begin
+  require 'commitment/railtie'
+rescue LoadError
+  $stderr.puts "Who will honor your commitments?"
+end
 
 Rails.application.load_tasks
 
-if Rails.env.development? || Rails.env.test?
-  require 'commitment/railtie'
+Rake::Task["default"].clear if Rake::Task.task_defined?('default')
+
+if defined?(Commitment)
   # BEGIN `commitment:install` generator
   # This was added via commitment:install generator. You are free to change this.
-  Rake::Task["default"].clear if Rake::Task.task_defined?('default')
   task(
     default: [
       'commitment:rubocop',
@@ -23,9 +28,11 @@ if Rails.env.development? || Rails.env.test?
     ]
   )
   # END `commitment:install` generator
+else
+  task(default: 'spec')
+end
 
-  namespace :spec do
-    desc 'Run the Travis CI specs'
-    task travis: ['db:create', 'db:schema:load', :default]
-  end
+namespace :spec do
+  desc 'Run the Travis CI specs'
+  task travis: ['db:create', 'db:schema:load', :default]
 end
