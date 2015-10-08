@@ -10,9 +10,12 @@ gem 'omniauth-cas'
 gem 'jwt'
 gem 'data_migrator', github: 'jeremyf/data-migrator'
 
-group :development, :test do
+group :development do
   gem 'web-console'
   gem 'pry-byebug'
+end
+
+group :test do
   gem 'rspec-rails'
   gem 'commitment', require: false
   gem 'rspec-its'
@@ -21,7 +24,7 @@ group :development, :test do
   gem 'rubocop'
 end
 
-group :development do
+group :deployment do
   gem 'capistrano'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
