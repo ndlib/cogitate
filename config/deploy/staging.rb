@@ -1,32 +1,43 @@
-set :stage, :staging
-
 # Simple Role Syntax
 # ==================
-# Supports bulk-adding hosts to roles, the primary
-# server in each group is considered to be the first
-# unless any hosts have the primary property set.
-role :app, %w{deploy@example.com}
-role :web, %w{deploy@example.com}
-role :db,  %w{deploy@example.com}
+# Supports bulk-adding hosts to roles, the primary server in each group
+# is considered to be the first unless any hosts have the primary
+# property set.  Don't declare `role :all`, it's a meta role.
 
 # Extended Server Syntax
 # ======================
-# This can be used to drop a more detailed server
-# definition into the server list. The second argument
-# something that quacks like a hash can be used to set
-# extended properties on the server.
-server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
+# This can be used to drop a more detailed server definition into the
+# server list. The second argument is a, or duck-types, Hash and is
+# used to set extended properties on the server.
 
-# you can set custom ssh options
-# it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
-# you can see them in [net/ssh documentation](http://net-ssh.github.io/net-ssh/classes/Net/SSH.html#method-c-start)
-# set it globally
+SSHKit.config.command_map[:bundle] = '/opt/ruby/current/bin/bundle'
+SSHKit.config.command_map[:rake] = "#{fetch(:bundle)} exec rake"
+set :branch, ENV['BRANCH_NAME'] || 'master'
+set :rails_env, 'staging'
+set :deploy_to, '/home/app/cogitate'
+set :user, 'app'
+set :domain, fetch(:host, 'cogitate-staging.library.nd.edu')
+set :bundle_without, %w{development test doc}.join(' ')
+set :shared_directories, %w(log)
+set :shared_files, %w()
+set :linked_files, ['config/database.yml']
+server fetch(:domain), user: fetch(:user), roles: %w{web app db}
+
+# Custom SSH Options
+# ==================
+# You may pass any option but keep in mind that net/ssh understands a
+# limited set of options, consult[net/ssh documentation](http://net-ssh.github.io/net-ssh/classes/Net/SSH.html#method-c-start).
+#
+# Global options
+# --------------
 #  set :ssh_options, {
 #    keys: %w(/home/rlisowski/.ssh/id_rsa),
 #    forward_agent: false,
 #    auth_methods: %w(password)
 #  }
-# and/or per server
+#
+# And/or per server (overrides global)
+# ------------------------------------
 # server 'example.com',
 #   user: 'user_name',
 #   roles: %w{web app},
@@ -37,6 +48,3 @@ server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
-# setting per server overrides global ssh_options
-
-# fetch(:default_env).merge!(rails_env: :staging)
