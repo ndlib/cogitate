@@ -25,6 +25,14 @@ set :passenger_restart_with_touch, true
 
 namespace :deploy do
 
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      execute "touch #{release_path}/tmp/restart.txt"
+    end
+  end
+
   task :db_create do
     on roles(:app) do
       within release_path do
