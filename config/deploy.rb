@@ -21,8 +21,6 @@ set :secret_repo_name, Proc.new{
   end
 }
 
-set :passenger_restart_with_touch, true
-
 namespace :deploy do
 
   desc 'Restart application'
@@ -106,4 +104,3 @@ after 'deploy', 'deploy:restart'
 
 require './config/boot'
 require 'airbrake/capistrano3'
-require 'capistrano/passenger'
