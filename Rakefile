@@ -10,7 +10,7 @@ if Rails.env.development? || Rails.env.test?
   require 'commitment/railtie'
   # BEGIN `commitment:install` generator
   # This was added via commitment:install generator. You are free to change this.
-  Rake::Task["default"].clear
+  Rake::Task["default"].clear if Rake::Task.task_defined?('default')
   task(
     default: [
       'commitment:rubocop',
