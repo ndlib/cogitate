@@ -6,5 +6,6 @@ Figaro.require_keys(
   'cogitate_services_remote_server_base_url',
   'hesburgh_api_auth_token',
   'hesburgh_api_host',
+  'secret_key_base',
   'omniauth_cas_url'
 )
