@@ -217,3 +217,4 @@ It was also clear that our institutional service was inadequate due to the natur
 
 * Generating documentation: `$ bundle exec yardoc --plugin contracts`
 * Running the test suite: `$ rake`
+* Run each test in isolation: `$ bin/rspec_isolated`

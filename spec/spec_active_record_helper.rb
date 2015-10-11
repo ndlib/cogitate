@@ -1,6 +1,7 @@
 # This helper provides at least a x4 speed increase over the 'spec_slow_helper'.
 require 'active_record'
 require 'spec_fast_helper'
+require 'psych'
 
 unless defined?(Rails)
   database_config = Psych.load_file(File.expand_path('../../config/database.yml', __FILE__))
