@@ -1,0 +1,18 @@
+# Use the following configuration when running the reek command
+#
+# ```console
+# $ bundle exec reek -c .reek.config app/
+# ```
+#
+# See https://github.com/troessner/reek for more details
+---
+LongParameterList:
+  enabled: true
+  max_params: 4
+  overrides:
+    initialize:
+      max_params: 5
+UtilityFunction:
+  enabled: false
+PrimaDonnaMethod:
+  enabled: false
