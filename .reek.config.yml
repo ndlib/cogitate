@@ -16,3 +16,9 @@ UtilityFunction:
   enabled: false
 PrimaDonnaMethod:
   enabled: false
+NestedIterators:
+  exclude:
+    - Cogitate::Models::Identifiers::Verified#self.build_named_strategy
+TooManyStatements:
+  exclude:
+    - Cogitate::Models::Identifiers::Verified#self.build_named_strategy
