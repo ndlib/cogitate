@@ -33,6 +33,12 @@ module Cogitate
     FindNetidRepositoryInterface = RespondTo[:find]
 
     MembershipVisitationStrategyInterface = RespondTo[:call]
+    HostBuilderInterface = {
+      Contracts::KeywordArgs[
+        identifier: Cogitate::Interfaces::IdentifierInterface,
+        membership_visitation_service: Cogitate::Interfaces::MembershipVisitationStrategyInterface
+      ] => Cogitate::Interfaces::HostInterface
+    }
 
     VerifiableIdentifierInterface = And[IdentifierInterface, RespondTo[:verified?]]
     VerifiedGroupInterface = And[VerifiableIdentifierInterface, RespondTo[:name, :description]]

@@ -66,3 +66,7 @@ Style/WordArray:
 Style/BracesAroundHashParameters:
   Exclude:
     - lib/cogitate/services/identifiers_decoder.rb
+
+Style/ConstantName:
+  Exclude:
+    - lib/cogitate/interfaces.rb

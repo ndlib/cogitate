@@ -9,12 +9,7 @@ module Cogitate
       # @api public
       class NetidStrategy
         extend Contracts
-        Contract(
-          Contracts::KeywordArgs[
-            identifier: Cogitate::Interfaces::IdentifierInterface,
-            membership_visitation_service: Cogitate::Interfaces::MembershipVisitationStrategyInterface
-          ] => Cogitate::Interfaces::HostInterface
-        )
+        Contract(Cogitate::Interfaces::HostBuilderInterface)
         # @api public
         def self.call(identifier:, membership_visitation_service:)
           new(identifier: identifier, membership_visitation_service: membership_visitation_service).call
