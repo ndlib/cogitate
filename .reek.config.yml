@@ -19,6 +19,7 @@ PrimaDonnaMethod:
 NestedIterators:
   exclude:
     - Cogitate::Models::Identifiers::Verified#self.build_named_strategy
+    - Cogitate::QueryRepository#with_verified_group_identifier_related_to
 TooManyStatements:
   exclude:
     - Cogitate::Models::Identifiers::Verified#self.build_named_strategy
