@@ -96,10 +96,10 @@ module Cogitate
           JSON.parse(response).fetch('people').first
         end
 
-        def url
-          base_uri = URI.parse(Figaro.env.hesburgh_api_host!)
+        def url(env: Figaro.env)
+          base_uri = URI.parse(env.hesburgh_api_host!)
           base_uri.path = "/1.0/people/by_netid/#{netid}.json"
-          base_uri.query = "auth_token=#{Figaro.env.hesburgh_api_auth_token!}"
+          base_uri.query = "auth_token=#{env.hesburgh_api_auth_token!}"
           base_uri.to_s
         end
       end
