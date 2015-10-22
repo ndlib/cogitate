@@ -37,4 +37,7 @@ group :documentation do
   gem 'yard'
   gem 'yard-contracts'
   gem 'yard-activerecord'
+  gem 'reek', require: false
+  gem 'flog', require: false
+  gem 'flay', require: false
 end
