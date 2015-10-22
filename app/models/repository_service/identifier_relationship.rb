@@ -27,9 +27,7 @@ module RepositoryService
     # @api private
     def self.each_left_identifier_related_to(identifier:, strategy: nil)
       scope = strategy.nil? ? self : where(left_strategy: strategy)
-      scope.where(
-        right_strategy: identifier.strategy, right_identifying_value: identifier.identifying_value
-      ).find_each do |relationship|
+      scope.where(right_strategy: identifier.strategy, right_identifying_value: identifier.identifying_value).find_each do |relationship|
         yield(build_identifier(strategy: relationship.left_strategy, identifying_value: relationship.left_identifying_value))
       end
     end
@@ -38,9 +36,7 @@ module RepositoryService
     # @api private
     def self.each_right_identifier_related_to(identifier:, strategy: nil)
       scope = strategy.nil? ? self : where(right_strategy: strategy)
-      scope.where(
-        left_strategy: identifier.strategy, left_identifying_value: identifier.identifying_value
-      ).find_each do |relationship|
+      scope.where(left_strategy: identifier.strategy, left_identifying_value: identifier.identifying_value).find_each do |relationship|
         yield(build_identifier(strategy: relationship.right_strategy, identifying_value: relationship.right_identifying_value))
       end
     end
