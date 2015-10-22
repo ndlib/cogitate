@@ -30,3 +30,4 @@ TooManyStatements:
 FeatureEnvy:
   exclude:
     - Cogitate::Repositories::RemoteNetidRepository::NetidQueryService#url
+    - Cogitate::Client::DataToObjectCoercer#call
