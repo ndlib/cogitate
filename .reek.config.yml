@@ -16,6 +16,9 @@ UtilityFunction:
   enabled: false
 PrimaDonnaMethod:
   enabled: false
+DuplicateMethodCall:
+  exclude:
+    - Cogitate::Models::Agent::Serializer
 NestedIterators:
   exclude:
     - Cogitate::Models::Identifiers::Verified#self.build_named_strategy
@@ -24,6 +27,7 @@ TooManyStatements:
   exclude:
     - Cogitate::Models::Identifiers::Verified#self.build_named_strategy
     - Cogitate::Services::IdentifierExtractors::GroupStrategy#receive
+    - Cogitate::Models::Agent::Serializer#prepare_relationships_and_inclusions!
   overrides:
     initialize:
       max_statements: 7
@@ -31,3 +35,4 @@ FeatureEnvy:
   exclude:
     - Cogitate::Repositories::RemoteNetidRepository::NetidQueryService#url
     - Cogitate::Client::DataToObjectCoercer#call
+    - Cogitate::Models::Agent::Serializer#prepare_relationships_and_inclusions!
