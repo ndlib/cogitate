@@ -24,6 +24,9 @@ TooManyStatements:
   exclude:
     - Cogitate::Models::Identifiers::Verified#self.build_named_strategy
     - Cogitate::Services::IdentifierExtractors::GroupStrategy#receive
+  overrides:
+    initialize:
+      max_statements: 7
 FeatureEnvy:
   exclude:
     - Cogitate::Repositories::RemoteNetidRepository::NetidQueryService#url
