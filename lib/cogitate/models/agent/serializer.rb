@@ -66,8 +66,8 @@ module Cogitate
 
         attr_reader :included_objects_as_json, :identities_as_json, :verified_identities_as_json
 
-        def url_for_identifier(encoded_identifier)
-          "#{Figaro.env.protocol}://#{Figaro.env.domain_name}/api/agents/#{encoded_identifier}"
+        def url_for_identifier(encoded_identifier, env: Figaro.env)
+          "#{env.protocol}://#{env.domain_name}/api/agents/#{encoded_identifier}"
         end
       end
     end
