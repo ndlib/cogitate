@@ -88,9 +88,11 @@ module Cogitate
     #
     # @return [#call(url:)]
     # @see #default_client_request_handler for interface
-    attr_accessor :client_request_handler
+    attr_reader :client_request_handler
 
     private
+
+    attr_writer :client_request_handler
 
     def default_client_request_handler
       lambda do |url:|
