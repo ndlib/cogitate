@@ -36,7 +36,7 @@ module Cogitate
       return enum_for(:with_verified_existing_group_for, identifier: identifier) unless block_given?
       return unless identifier.strategy == Models::Identifier::GROUP_STRATEGY_NAME
       group = Group.find_by(identifying_value: identifier.identifying_value)
-      return if group.nil?
+      return unless group
       yield(
         Models::Identifiers::Verified::Group.new(identifier: identifier, attributes: { name: group.name, description: group.description })
       )
