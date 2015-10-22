@@ -20,7 +20,7 @@ module Cogitate
             guest: Cogitate::Interfaces::VisitorInterface,
             repository: Optional[RespondTo[:with_verified_group_identifier_related_to]],
             identifier_extractor: Optional[RespondTo[:call]]
-          ] => Contracts::RespondTo[:call]
+          ] => Contracts::Any
         )
         def initialize(group_member_identifier:, guest:, repository: default_repository, identifier_extractor: default_identifier_extractor)
           self.group_member_identifier = group_member_identifier
@@ -28,7 +28,6 @@ module Cogitate
           self.repository = repository
           self.identifier_extractor = identifier_extractor
           initialize_related_verified_group_identifiers!
-          self
         end
 
         # @api public
