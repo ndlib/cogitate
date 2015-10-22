@@ -21,7 +21,6 @@ module RepositoryService
       return enum_for(:each_identifier_related_to, identifier: identifier, strategy: strategy) unless block_given?
       each_right_identifier_related_to(identifier: identifier, strategy: strategy) { |related_identifier| yield(related_identifier) }
       each_left_identifier_related_to(identifier: identifier, strategy: strategy) { |related_identifier| yield(related_identifier) }
-      nil
     end
 
     # @api private
