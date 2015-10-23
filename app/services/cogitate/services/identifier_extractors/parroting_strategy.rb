@@ -12,7 +12,7 @@ module Cogitate
         Contract(
           Contracts::KeywordArgs[
             identifier: Cogitate::Interfaces::IdentifierInterface,
-            membership_visitation_service: Cogitate::Interfaces::MembershipVisitationStrategyInterface
+            membership_visitation_service: Contracts::Optional[Cogitate::Interfaces::MembershipVisitationStrategyInterface]
           ] => Cogitate::Interfaces::HostInterface
         )
         # @api public
