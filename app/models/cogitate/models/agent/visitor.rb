@@ -13,7 +13,9 @@ module Cogitate
         extend Contracts
         Contract(
           Contracts::KeywordArgs[
-            identifier: Cogitate::Interfaces::IdentifierInterface, communication_channels_builder: Contracts::Optional[RespondTo[:call]]
+            identifier: Cogitate::Interfaces::IdentifierInterface,
+            communication_channels_builder: Contracts::Optional[RespondTo[:call]],
+            agent_builder: Contracts::Optional[RespondTo[:call]]
           ] => Cogitate::Interfaces::VisitorV2Interface
         )
         def self.build(identifier:, agent_builder: default_agent_builder, **keywords)
@@ -27,7 +29,6 @@ module Cogitate
 
         private_class_method :default_agent_builder
 
-        include Contracts
         Contract(
           Contracts::KeywordArgs[
             agent: Cogitate::Interfaces::AgentInterface,
