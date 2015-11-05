@@ -65,7 +65,7 @@ GEM_NAMES.each do |gem_name|
       file.puts "Updating #{gem_name} dependency"
       file.puts ""
 
-      message = "$ ./script/#{File.basename(__FILE__)} #{gem_name}"
+      message = "`$ ./script/#{File.basename(__FILE__)} #{gem_name}`"
       CONFIG_KEYS.each_with_object(message) do |key, mem|
         if ENV.key?(key.to_s)
           mem = "#{key}=\"#{ENV[key.to_s].to_s}\" #{mem}"
