@@ -255,7 +255,7 @@ GEM
       rainbow (~> 2.0)
       sass (~> 3.4.1)
     sexp_processor (4.6.0)
-    shoulda-matchers (3.0.0)
+    shoulda-matchers (3.0.1)
       activesupport (>= 4.0.0)
     simplecov (0.10.0)
       docile (~> 1.1.0)
