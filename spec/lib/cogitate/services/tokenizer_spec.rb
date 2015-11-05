@@ -28,7 +28,7 @@ RSpec.describe Cogitate::Services::Tokenizer do
 
     it 'will be decodable via the JWT module with an enforceable issue' do
       token = subject.to_token(data: data)
-      expect { JWT.decode(token, password, false, 'iss' => 'bogus', verify_iss: true) }.to raise_error(JWT::InvalidIssuerError)
+      expect { JWT.decode(token, password, false, iss: 'bogus', verify_iss: true) }.to raise_error(JWT::InvalidIssuerError)
     end
   end
 

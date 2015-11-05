@@ -41,7 +41,7 @@ module Cogitate
       end
 
       def from_token(token:)
-        JWT.decode(token, coerced_password, false, 'iss' => issuer_claim, verify_iss: true).first.fetch('data')
+        JWT.decode(token, coerced_password, false, iss: issuer_claim, verify_iss: true).first.fetch('data')
       end
 
       private
