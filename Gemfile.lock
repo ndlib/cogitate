@@ -218,7 +218,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.0.0)
     rake (10.4.2)
-    reek (3.7.0)
+    reek (3.7.1)
       codeclimate-engine-rb (~> 0.1.0)
       parser (~> 2.2, >= 2.2.2.5)
       private_attr (~> 1.1)
