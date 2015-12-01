@@ -23,6 +23,7 @@ group :test do
   gem 'rspec-its'
   gem 'shoulda-matchers'
   gem 'rubocop'
+  gem 'generator_spec', require: false
 end
 
 group :deployment do
