@@ -86,7 +86,7 @@ GEM
     capistrano-bundler (1.1.4)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
-    capistrano-passenger (0.1.1)
+    capistrano-passenger (0.2.0)
       capistrano (~> 3.0)
     capistrano-rails (1.1.5)
       capistrano (~> 3.1)
@@ -101,7 +101,6 @@ GEM
     coderay (1.1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    colorize (0.7.7)
     commitment (0.1.4)
       brakeman
       codeclimate-test-reporter
@@ -287,8 +286,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
-    sshkit (1.7.1)
-      colorize (>= 0.7.0)
+    sshkit (1.8.1)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     temple (0.7.6)
