@@ -38,7 +38,7 @@ module Cogitate
         identifier: Cogitate::Interfaces::IdentifierInterface,
         membership_visitation_service: Cogitate::Interfaces::MembershipVisitationStrategyInterface
       ] => Cogitate::Interfaces::HostInterface
-    }
+    }.freeze
 
     VerifiableIdentifierInterface = And[IdentifierInterface, RespondTo[:verified?]]
     VerifiedGroupInterface = And[VerifiableIdentifierInterface, RespondTo[:name, :description]]

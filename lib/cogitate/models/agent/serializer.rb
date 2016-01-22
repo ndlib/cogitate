@@ -22,7 +22,7 @@ module Cogitate
           prepare_relationships_and_inclusions!
           {
             'type' => JSON_API_TYPE, 'id' => agent.encoded_id,
-            'links' => { 'self' => "#{url_for_identifier(agent.encoded_id)}" },
+            'links' => { 'self' => url_for_identifier(agent.encoded_id).to_s },
             'attributes' => { 'strategy' => agent.strategy, 'identifying_value' => agent.identifying_value, 'emails' => emails_as_json },
             'relationships' => { 'identifiers' => identities_as_json, 'verified_identifiers' => verified_identities_as_json },
             'included' => included_objects_as_json

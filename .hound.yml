@@ -22,7 +22,11 @@ AllCops:
     - 'db/schema.rb'
     - 'db/migrate/**/*'
     - 'db/data/**/*'
-  RunRailsCops: true
+  TargetRubyVersion: 2.2
+
+Rails:
+  Enabled: true
+
 
 AbcSize:
   Exclude:

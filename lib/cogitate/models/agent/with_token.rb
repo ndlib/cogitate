@@ -19,9 +19,7 @@ module Cogitate
 
         attr_accessor :agent, :token
 
-        public
-
-        alias_method :to_token, :token
+        alias to_token token
         public :to_token
       end
     end
