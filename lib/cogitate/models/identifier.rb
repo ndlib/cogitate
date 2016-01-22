@@ -66,7 +66,7 @@ module Cogitate
       # @see #<=>
       attr_reader :identifying_value
 
-      alias_method :name, :identifying_value
+      alias name identifying_value
 
       # The JSON representation of this object
       #
@@ -98,7 +98,7 @@ module Cogitate
         Base64.urlsafe_encode64("#{strategy}\t#{identifying_value}")
       end
 
-      alias_method :id, :encoded_id
+      alias id encoded_id
 
       private
 

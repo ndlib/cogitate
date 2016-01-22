@@ -28,19 +28,25 @@ RSpec.describe Cogitate::Models::Agent::Serializer do
       expect(json.fetch('attributes')).to eq(
         'strategy' => identifier.strategy, 'identifying_value' => identifier.identifying_value, 'emails' => ['hello@world.com']
       )
-      expect(json.fetch('included')).to eq([
-        { "type" => "identifiers", "id" => identifier.encoded_id, "attributes" => identifier.as_json },
-        { "type" => "identifiers", "id" => unverified_identifier.encoded_id, "attributes" => unverified_identifier.as_json },
-        { "type" => "identifiers", "id" => verified_identifier.encoded_id, "attributes" => verified_identifier.as_json }
-      ])
-      expect(json.fetch('relationships').fetch('identifiers')).to eq([
-        { "type" => "identifiers", "id" => identifier.encoded_id },
-        { "type" => "identifiers", "id" => unverified_identifier.encoded_id }
-      ])
-      expect(json.fetch('relationships').fetch('verified_identifiers')).to eq([
-        { "type" => "identifiers", "id" => identifier.encoded_id },
-        { "type" => "identifiers", "id" => verified_identifier.encoded_id }
-      ])
+      expect(json.fetch('included')).to eq(
+        [
+          { "type" => "identifiers", "id" => identifier.encoded_id, "attributes" => identifier.as_json },
+          { "type" => "identifiers", "id" => unverified_identifier.encoded_id, "attributes" => unverified_identifier.as_json },
+          { "type" => "identifiers", "id" => verified_identifier.encoded_id, "attributes" => verified_identifier.as_json }
+        ]
+      )
+      expect(json.fetch('relationships').fetch('identifiers')).to eq(
+        [
+          { "type" => "identifiers", "id" => identifier.encoded_id },
+          { "type" => "identifiers", "id" => unverified_identifier.encoded_id }
+        ]
+      )
+      expect(json.fetch('relationships').fetch('verified_identifiers')).to eq(
+        [
+          { "type" => "identifiers", "id" => identifier.encoded_id },
+          { "type" => "identifiers", "id" => verified_identifier.encoded_id }
+        ]
+      )
     end
   end
 end

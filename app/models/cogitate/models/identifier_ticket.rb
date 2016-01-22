@@ -9,7 +9,7 @@ module Cogitate
       self.table_name = 'cogitate_models_identifier_tickets'
 
       def self.create_ticket_from_identifier(identifier:, ticket:, expires_at: 2.minutes.from_now)
-        self.create!(encoded_id: identifier.encoded_id, ticket: ticket, expires_at: expires_at)
+        create!(encoded_id: identifier.encoded_id, ticket: ticket, expires_at: expires_at)
       end
 
       def self.find_current_identifier_for(ticket:, as_of: Time.zone.now, identifier_decoder: default_identifier_decoder)
