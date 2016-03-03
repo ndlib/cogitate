@@ -35,8 +35,8 @@ module Cogitate
 
         decoded_string.split("\n").each_with_object([]) do |strategy_value, object|
           strategy, value = strategy_value.split("\t")
-          if strategy.to_s.size == 0 || value.to_s.size == 0
-            fail Cogitate::InvalidIdentifierFormat, decoded_string: decoded_string
+          if strategy.to_s.empty? || value.to_s.empty?
+            raise Cogitate::InvalidIdentifierFormat, decoded_string: decoded_string
           end
           object << identifier_builder.call(strategy: strategy, identifying_value: value)
         end
