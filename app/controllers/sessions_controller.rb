@@ -81,7 +81,7 @@ class SessionsController < ApplicationController
 
     def after_authentication_callback_url
       return @after_authentication_callback_url if valid?
-      fail "#{@after_authentication_callback_url.inspect} is not a valid URL for an after authentication callback"
+      raise "#{@after_authentication_callback_url.inspect} is not a valid URL for an after authentication callback"
     end
 
     private

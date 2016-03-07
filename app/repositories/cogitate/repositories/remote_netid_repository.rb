@@ -80,7 +80,7 @@ module Cogitate
 
         def parsed_response
           @parsed_response ||= begin
-            return {} if netid.length == 0
+            return {} if netid.empty?
             parse
           rescue OpenURI::HTTPError
             {}

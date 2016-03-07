@@ -57,7 +57,7 @@ module Cogitate
     CONFIG_ATTRIBUTE_NAMES.each do |method_name|
       attr_writer method_name
       define_method(method_name) do
-        instance_variable_get("@#{method_name}") || fail(ConfigurationError, method_name)
+        instance_variable_get("@#{method_name}") || raise(ConfigurationError, method_name)
       end
     end
 
